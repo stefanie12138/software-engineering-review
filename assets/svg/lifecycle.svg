@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="220" viewBox="0 0 800 220">
+  <rect width="800" height="220" fill="#f8f9fa"/>
+  <text x="400" y="35" text-anchor="middle" font-size="22" font-weight="bold" fill="#1565c0">软件生命周期</text>
+  
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#1565c0"/>
+    </marker>
+  </defs>
+  
+  <rect x="50" y="90" width="100" height="50" rx="6" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="100" y="120" text-anchor="middle" font-size="14" fill="#333">需求分析</text>
+  <line x1="150" y1="115" x2="180" y2="115" stroke="#1565c0" stroke-width="2" marker-end="url(#arr)"/>
+  
+  <rect x="180" y="90" width="100" height="50" rx="6" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="230" y="120" text-anchor="middle" font-size="14" fill="#333">概要设计</text>
+  <line x1="280" y1="115" x2="310" y2="115" stroke="#1565c0" stroke-width="2" marker-end="url(#arr)"/>
+  
+  <rect x="310" y="90" width="100" height="50" rx="6" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="360" y="120" text-anchor="middle" font-size="14" fill="#333">详细设计</text>
+  <line x1="410" y1="115" x2="440" y2="115" stroke="#1565c0" stroke-width="2" marker-end="url(#arr)"/>
+  
+  <rect x="440" y="90" width="100" height="50" rx="6" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="490" y="120" text-anchor="middle" font-size="14" fill="#333">编码实现</text>
+  <line x1="540" y1="115" x2="570" y2="115" stroke="#1565c0" stroke-width="2" marker-end="url(#arr)"/>
+  
+  <rect x="570" y="90" width="100" height="50" rx="6" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="620" y="120" text-anchor="middle" font-size="14" fill="#333">测试</text>
+  <line x1="670" y1="115" x2="700" y2="115" stroke="#1565c0" stroke-width="2" marker-end="url(#arr)"/>
+  
+  <rect x="700" y="90" width="80" height="50" rx="6" fill="#fff3e0" stroke="#ef6c00" stroke-width="1.5"/>
+  <text x="740" y="120" text-anchor="middle" font-size="14" fill="#333">维护</text>
+  
+  <text x="400" y="185" text-anchor="middle" font-size="13" fill="#666">软件从提出开发到最终退役的全过程</text>
+</svg>

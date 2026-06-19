@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300">
+  <rect width="760" height="300" fill="#f8f9fa"/>
+  <text x="380" y="35" text-anchor="middle" font-size="22" font-weight="bold" fill="#1565c0">黑盒测试 vs 白盒测试</text>
+  
+  <rect x="60" y="70" width="280" height="200" rx="10" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+  <text x="200" y="105" text-anchor="middle" font-size="18" font-weight="bold" fill="#0d47a1">黑盒测试</text>
+  <text x="200" y="140" text-anchor="middle" font-size="14" fill="#333">关注外部功能</text>
+  <text x="200" y="170" text-anchor="middle" font-size="13" fill="#555">等价类划分</text>
+  <text x="200" y="195" text-anchor="middle" font-size="13" fill="#555">边界值分析</text>
+  <text x="200" y="220" text-anchor="middle" font-size="13" fill="#555">决策表 / 因果图</text>
+  <text x="200" y="250" text-anchor="middle" font-size="12" fill="#666">不看代码，看输入输出</text>
+  
+  <rect x="420" y="70" width="280" height="200" rx="10" fill="#fff3e0" stroke="#ef6c00" stroke-width="2"/>
+  <text x="560" y="105" text-anchor="middle" font-size="18" font-weight="bold" fill="#e65100">白盒测试</text>
+  <text x="560" y="140" text-anchor="middle" font-size="14" fill="#333">关注内部结构</text>
+  <text x="560" y="170" text-anchor="middle" font-size="13" fill="#555">语句覆盖</text>
+  <text x="560" y="195" text-anchor="middle" font-size="13" fill="#555">分支覆盖</text>
+  <text x="560" y="220" text-anchor="middle" font-size="13" fill="#555">路径 / 基本路径覆盖</text>
+  <text x="560" y="250" text-anchor="middle" font-size="12" fill="#666">看代码，设计测试用例</text>
+  
+  <text x="380" y="285" text-anchor="middle" font-size="13" fill="#666">二者互补，常结合使用</text>
+</svg>
