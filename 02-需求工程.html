@@ -1,0 +1,2646 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第4-6讲：需求工程</title>
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+        delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+        ]
+    });"></script>
+
+    
+<style>
+:root {
+    --bg: #fafafa;
+    --fg: #222;
+    --accent: #1565c0;
+    --card-bg: #fff;
+    --border: #e0e0e0;
+}
+* { box-sizing: border-box; }
+body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", "Noto Sans CJK SC", sans-serif;
+    line-height: 1.8;
+    color: var(--fg);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    background: var(--card-bg);
+    box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    min-height: 100vh;
+}
+h1, h2, h3, h4 {
+    color: var(--accent);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+h1 { font-size: 2rem; border-bottom: 3px solid var(--accent); padding-bottom: 0.5rem; }
+h2 { font-size: 1.6rem; border-bottom: 2px solid #e0e0e0; padding-bottom: 0.3rem; }
+h3 { font-size: 1.3rem; }
+h4 { font-size: 1.1rem; color: #333; }
+p { margin: 0.8rem 0; }
+ul, ol { margin: 0.8rem 0; padding-left: 1.8rem; }
+li { margin: 0.3rem 0; }
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1rem 0;
+    font-size: 0.95rem;
+}
+th, td {
+    border: 1px solid var(--border);
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+}
+th { background: #f5f5f5; font-weight: 600; }
+tr:nth-child(even) { background: #fafafa; }
+code {
+    background: #f4f4f4;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 0.9em;
+}
+pre {
+    background: #263238;
+    color: #aed581;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    line-height: 1.5;
+}
+pre code { background: transparent; color: inherit; padding: 0; }
+blockquote {
+    border-left: 4px solid var(--accent);
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    background: #f0f7ff;
+    color: #333;
+}
+img { max-width: 100%; height: auto; display: block; margin: 1rem auto; }
+.index-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: var(--fg);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+.card h2 { margin-top: 0; color: var(--accent); border: none; padding: 0; }
+.card p { color: #555; margin: 0.5rem 0 0; }
+.footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    color: #777;
+    font-size: 0.9rem;
+}
+</style>
+
+</head>
+<body>
+<div class="container">
+<h1 id="4-6">第4-6讲：需求工程</h1>
+<blockquote>
+<p>本讲范围：2.1 需求工程基础、2.2 获取软件需求、2.3 分析软件需求。
+对应课程：软件工程（西安电子科技大学）。</p>
+</blockquote>
+<hr />
+<h2 id="_1">一、知识点讲解</h2>
+<h3 id="21">2.1 需求工程基础</h3>
+<blockquote>
+<p><strong>本章知识图谱</strong>
+<img alt="本章知识图谱" src="assets/8.1_knowledge_map_page9.png" /></p>
+</blockquote>
+<h4 id="1">1. 软件开发的本质</h4>
+<p>软件开发的本质，是把<strong>软件利益相关方（stakeholder）</strong>对现实世界的“期望和要求”转化为可运行的软件系统。该过程需要融合<strong>领域知识</strong>与<strong>技术知识</strong>：</p>
+<ul>
+<li><strong>领域相关</strong>：用户、客户、组织从业务角度提出期望和要求；</li>
+<li><strong>技术相关</strong>：软件工程师基于计算机技术给出解决方案；</li>
+<li><strong>融合需求和技术</strong>：最终产出文档、模型、程序、数据等软件制品。</li>
+</ul>
+<p>开发软件系统的前提是明确用户的期望和要求，即<strong>软件需求</strong>。</p>
+<!-- 图：软件开发本质示意图——利益相关方提出要求，软件工程师运用软件工程过程、方法学和工具，产出文档、模型、程序、数据等软件制品 -->
+
+<h4 id="2">2. 软件系统的利益相关方</h4>
+<p><strong>利益相关方</strong>指从软件系统中受益或与软件系统相关的人、组织或系统：</p>
+<ul>
+<li><strong>受益</strong>：使用、获益、盈利；</li>
+<li><strong>相关</strong>：发生操作和交互、存在关联性。</li>
+</ul>
+<p>表现形式包括：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用户（User）</td>
+<td>最终使用软件的人</td>
+<td>旅客、患者</td>
+</tr>
+<tr>
+<td>客户（Customer）</td>
+<td>从中获取利益的组织</td>
+<td>国家铁路集团、医院</td>
+</tr>
+<tr>
+<td>开发者（Developer）</td>
+<td>负责开发软件系统的人</td>
+<td>软件工程师、需求工程师</td>
+</tr>
+<tr>
+<td>系统（System）</td>
+<td>与待开发系统进行交互的系统</td>
+<td>支付网关、身份认证系统</td>
+</tr>
+<tr>
+<td>组织（Organization）</td>
+<td>提出系统开发和使用软件的机构</td>
+<td>学校、企业、政府部门</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>示例：Mini-12306 软件的利益相关方</strong>
+- 旅客：需要购票、退票、改签等功能；
+- 售票员：帮助旅客完成购票、退票、改签等服务；
+- 系统管理员：设置系统配置信息（如提前预售天数）。</p>
+</blockquote>
+<h4 id="3-software-requirement">3. 软件需求（Software Requirement）的定义</h4>
+<p><strong>定义1（从利益相关方角度）</strong>：软件系统的利益相关方对软件系统的功能和质量，以及软件运行环境、交付进度等方面提出的期望和要求。</p>
+<p><strong>定义2（从软件本身角度）</strong>：软件需求是指软件用于解决现实世界问题时所表现出的功能和性能等方面的要求。</p>
+<p>简言之，软件需求刻画了软件系统<strong>能做什么（What to do）</strong>、应表现出怎样的行为、需满足哪些条件和约束。</p>
+<h4 id="4">4. 软件需求的类别</h4>
+<p>软件需求通常分为三大类：</p>
+<h5 id="1functional-requirement">（1）功能性需求（Functional Requirement）</h5>
+<p>能够完成的功能及在某些场景下可展现的外部可见行为或效果。</p>
+<blockquote>
+<p>例：Mini-12306 的注册、登录、查询车次、购票、退票、改签。</p>
+</blockquote>
+<h5 id="2quality-requirement">（2）软件质量方面的需求（Quality Requirement）</h5>
+<ul>
+<li><strong>外部质量属性</strong>：用户、客户关心的、外部可展现的，如性能、可靠性、易用性、安全性、私密性；</li>
+<li><strong>内部质量属性</strong>：开发者关心的、隐藏在内部的，如可扩展性、可维护性、可理解性、可重用性、可移植性、可互操作性。</li>
+</ul>
+<h5 id="3constraint-requirement">（3）软件开发约束性需求（Constraint Requirement）</h5>
+<p>开发成本、交付进度、技术选型、遵循标准、运行环境等方面的要求。</p>
+<blockquote>
+<p>非功能性需求 = 软件质量需求 + 约束需求。</p>
+</blockquote>
+<p><strong>需求类别汇总表：</strong></p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>内涵</th>
+<th>关注的利益相关方</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>功能性需求</td>
+<td>软件具有的功能、行为和服务</td>
+<td>用户、客户、开发者群体、其他系统</td>
+<td>分析和识别老人语音呼叫；分析异常状况</td>
+</tr>
+<tr>
+<td>内部质量需求</td>
+<td>软件的内部质量属性</td>
+<td>开发者群体</td>
+<td>可维护性、可扩展性、可理解性、可重用性</td>
+</tr>
+<tr>
+<td>外部质量需求</td>
+<td>软件的外部质量属性</td>
+<td>用户、客户、开发者群体、其他系统</td>
+<td>界面操作在1秒内响应；视频延迟不超过2秒</td>
+</tr>
+<tr>
+<td>开发约束性需求</td>
+<td>软件开发需满足的要求</td>
+<td>客户、开发者群体、其他系统</td>
+<td>6个月内交付；运行在Android之上；采用Java实现</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>示例：Mini-12306 软件的需求</strong>
+- 功能性需求：注册、登录、查询车次、购票、退票、改签等；
+- 质量需求：界面反应控制在1秒内；保护旅客个人敏感信息；抵御外部网络攻击；
+- 约束需求：开发成本控制在100万元以内；6个月内交付；App需部署在Android、iOS、鸿蒙等操作系统。</p>
+</blockquote>
+<h4 id="5">5. 软件需求的特点</h4>
+<table>
+<thead>
+<tr>
+<th>特点</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>隐式性</strong></td>
+<td>需求来自利益相关方，隐式存在，很难辨别，容易遗漏</td>
+</tr>
+<tr>
+<td><strong>隐晦性</strong></td>
+<td>在利益相关方潜意识中，不易表达；表述常存在模糊、歧义、二义性</td>
+</tr>
+<tr>
+<td><strong>多源性</strong></td>
+<td>存在多个利益相关方，需求可能冲突、不一致</td>
+</tr>
+<tr>
+<td><strong>易变性</strong></td>
+<td>用户对软件的期望经常变化，贯穿整个生命周期</td>
+</tr>
+<tr>
+<td><strong>领域知识的相关性</strong></td>
+<td>需求内涵与所在领域知识密切相关（如12306与铁路旅客服务领域）</td>
+</tr>
+<tr>
+<td><strong>价值不均性</strong></td>
+<td>不同需求对用户/客户的价值不同，需区分主要/次要、核心/外围需求</td>
+</tr>
+</tbody>
+</table>
+<p>如何从利益相关者获取完整、清晰、一致和有价值的软件需求，是需求工程的核心挑战。</p>
+<h4 id="6">6. 软件需求的质量要求</h4>
+<table>
+<thead>
+<tr>
+<th>质量要求</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>有价值（Valuable）</strong></td>
+<td>基于计算机软件的解决方案能有效提高问题解决效率和质量，促进业务创新</td>
+</tr>
+<tr>
+<td><strong>正确（Right）</strong></td>
+<td>反映利益相关方的期望，不能曲解或误解</td>
+</tr>
+<tr>
+<td><strong>完整（Complete）</strong></td>
+<td>不能有遗漏或丢失</td>
+</tr>
+<tr>
+<td><strong>无二义（Unambiguous）</strong></td>
+<td>描述清晰、准确，避免歧义</td>
+</tr>
+<tr>
+<td><strong>可行（Feasible）</strong></td>
+<td>在技术、经济等方面可行</td>
+</tr>
+<tr>
+<td><strong>一致（Consistent）</strong></td>
+<td>需求之间不应存在冲突</td>
+</tr>
+<tr>
+<td><strong>可追踪（Traceable）</strong></td>
+<td>可追踪到需求源头</td>
+</tr>
+<tr>
+<td><strong>可验证（Verifiable）</strong></td>
+<td>可找到方式检验需求是否在系统中实现</td>
+</tr>
+</tbody>
+</table>
+<h4 id="7">7. 软件需求的重要性</h4>
+<ol>
+<li><strong>软件的价值和意义所在</strong>：需求决定软件为何而存在；</li>
+<li><strong>软件开发的基础和前提</strong>：后续设计、实现、测试都围绕需求展开；</li>
+<li><strong>软件验收的标准和依据</strong>：软件是否满足需求是验收的核心标准。</li>
+</ol>
+<!-- 图：需求在软件开发中的作用闭环——利益相关方提出需求，作为开发依据和价值所在，最终产出软件系统，作为验收标准 -->
+
+<p>如果需求存在以下问题，将带来严重后果：</p>
+<ul>
+<li>提不出有价值的需求：软件失去意义；</li>
+<li>不清晰的需求：开发团队理解偏差；</li>
+<li>不完整的需求：漏掉关键功能；</li>
+<li>不一致的需求：同一需求有多种表述，导致设计冲突。</li>
+</ul>
+<h4 id="8-requirements-engineering">8. 需求工程（Requirements Engineering）</h4>
+<p><strong>定义</strong>：用工程化的理念和方法来指导软件需求实践。它提供了一系列的过程、策略、方法学和工具，帮助需求工程师加强对业务或领域问题及其环境的理解，获取和分析软件需求，指导软件需求的文档化和评审，以尽可能获得准确、一致和完整的软件需求，产生软件需求的相关软件制品。</p>
+<p>所谓“工程化”，即提供相关的过程、步骤、方法、工具等。</p>
+<h5 id="_2">需求工程的一般性过程</h5>
+<pre><code>获取  →  分析  →  文档化  →  确认和验证
+初步软件需求 → 软件需求模型 → 软件需求文档 → 确认后的软件需求
+              ↑___________________________________↓
+                        软件需求管理
+</code></pre>
+<ol>
+<li><strong>获取（Elicitation）</strong>：得到或产生初步软件需求；</li>
+<li><strong>分析（Analysis）</strong>：精化、细化需求，发现缺陷，建立需求模型；</li>
+<li><strong>文档化（Documentation）</strong>：撰写软件需求规格说明书；</li>
+<li><strong>确认和验证（Validation &amp; Verification）</strong>：与用户确认、评审、验证；</li>
+<li><strong>软件需求管理（Management）</strong>：贯穿全过程，包括变更管理、追溯管理、配置管理。</li>
+</ol>
+<h5 id="_3">需求工程的特点</h5>
+<ul>
+<li><strong>知识密集型</strong>：需要软件工程、需求工程、业务领域等多学科知识；</li>
+<li><strong>多方共同参与</strong>：用户、客户、领域专家、开发者、质量保证人员等共同参与；</li>
+<li><strong>多种形式和源头</strong>：获取、构思、创作等多种手段；</li>
+<li><strong>持续迭代和逐步推进</strong>：贯穿于软件整个生命周期。</li>
+</ul>
+<h5 id="_4">需求工程的方法</h5>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>核心问题</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>抽象</strong></td>
+<td>如何理解和抽象软件需求？</td>
+<td>结构化需求工程：数据、数据的处理；面向对象需求工程：对象、交互和行为</td>
+</tr>
+<tr>
+<td><strong>建模</strong></td>
+<td>如何刻画和描述软件需求？</td>
+<td>自然语言或结构化自然语言；图形化建模语言（数据流图、UML图）</td>
+</tr>
+<tr>
+<td><strong>分析</strong></td>
+<td>如何精化和分析软件需求？</td>
+<td>循序渐进获得需求细节，发现和解决问题，建立准确一致的模型</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>结构化需求工程（1970s-）</strong>：认为软件功能需求的本质是数据处理，抽象为“数据”和“对数据的处理”。</li>
+<li><strong>面向对象需求工程（1990s-）</strong>：认为软件功能需求的本质是对象所展示的行为，抽象为“对象、交互和行为”。</li>
+</ul>
+<p>抽象有助于揭示需求的本质，建模有助于表达和交流，分析有助于精化和发现问题。</p>
+<h4 id="9">9. 软件需求工程师</h4>
+<p>需求工程师负责：</p>
+<ul>
+<li>与用户和客户沟通；</li>
+<li>导出和构思软件需求；</li>
+<li>协商需求问题或解决冲突；</li>
+<li>建立软件需求模型；</li>
+<li>撰写软件需求文档。</li>
+</ul>
+<p>应具备：</p>
+<ul>
+<li><strong>多方面知识</strong>：软件工程、需求工程、业务领域知识；</li>
+<li><strong>组织、沟通和协调能力</strong>：与客户、用户开展讨论、交流和评审；</li>
+<li><strong>语言表达能力</strong>：清晰表达需求，准确刻画内涵，直观建立模型；</li>
+<li><strong>创新能力</strong>：提出有价值的软件需求。</li>
+</ul>
+<h4 id="10">10. 结构化需求建模与分析方法</h4>
+<p>结构化方法认为：软件的功能具体表现为对数据的处理。如果说清楚了软件有哪些数据以及要对这些数据做什么样的处理，也就说清楚了软件具有什么样的功能。</p>
+<h5 id="data-flow-diagram-dfd">数据流图（Data Flow Diagram, DFD）</h5>
+<p>数据流图用于绘制软件系统中的数据及其处理，包含四种基本元素：</p>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>说明</th>
+<th>图形符号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>转换（Process）</strong></td>
+<td>对数据进行的加工和处理，产生新的数据</td>
+<td>椭圆形/圆角矩形，内部附名称</td>
+</tr>
+<tr>
+<td><strong>数据流（Data Flow）</strong></td>
+<td>数据在不同转换、外部实体、数据存储之间的流动</td>
+<td>有向边，边上附数据名称</td>
+</tr>
+<tr>
+<td><strong>外部实体（External Entity）</strong></td>
+<td>位于软件系统边界之外的数据产生者或消费者（人或系统）</td>
+<td>矩形框，内部附实体名称</td>
+</tr>
+<tr>
+<td><strong>数据存储（Data Store）</strong></td>
+<td>数据的存放场所，如文件、数据库</td>
+<td>开口矩形/双横线，附存储名称</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>示例：Mini-12306 的数据流图</strong>
+顶级数据流图中，外部实体包括旅客、售票员、系统管理员；系统内部转换可细化为注册登录、查询车次、购票、退票、改签、系统设置等；数据存储包括用户信息、车次信息、车票信息、订单信息等。</p>
+</blockquote>
+<!-- 图：Mini-12306 分层数据流图示意——顶层DFD展示系统与外部实体的交互，下层DFD逐步精化各转换 -->
+
+<h4 id="11">11. 面向对象需求分析的基本思想</h4>
+<p>现实世界和计算机世界都是由多样化的对象构成的，每个对象都有其状态并可提供功能和服务，不同对象之间通过交互协作来实现功能和提供服务。</p>
+<p>面向对象软件工程提供<strong>对象、类、属性、操作、消息、继承、多态</strong>等概念来抽象表示现实世界的应用，分析其软件需求特征，建立软件需求模型。</p>
+<ul>
+<li>基于类、包、关联等概念分析应用系统的构成；</li>
+<li>借助类的方法等概念描述对象所具有的行为；</li>
+<li>利用对象间的消息传递等概念分析多个对象如何通过协作实现应用功能。</li>
+</ul>
+<p>面向对象需求分析方法学还提供可视化建模语言，帮助建立多视点的软件需求模型，如用例模型、交互模型、分析类模型等。</p>
+<h4 id="12">12. 面向对象的核心概念</h4>
+<h5 id="1object">（1）对象（Object）</h5>
+<p>对象是具体、有意义、存在着的实体，是个体或事物的抽象表示。对象可以是现实世界中的应用领域对象，也可以是计算机世界中的软件实体。</p>
+<p>对象由<strong>属性（Attribute）</strong>和<strong>操作（Operation）</strong>构成：</p>
+<ul>
+<li><strong>属性</strong>：对象的性质，其值定义了对象的状态；</li>
+<li><strong>操作/方法</strong>：对象的行为，表示对象提供的服务。</li>
+</ul>
+<h5 id="2class">（2）类（Class）</h5>
+<p>类是对一组具有相同特征对象的抽象，是分类、组织机制，将具有相同特征的对象组织为一类，封装了属性和操作。</p>
+<ul>
+<li>对象是类的实例，类是创建对象的模板；</li>
+<li>类是静态的抽象；对象是动态、可运行的实体。</li>
+</ul>
+<h5 id="3message">（3）消息（Message）</h5>
+<p>消息传递是实现对象间通讯和协作的基本手段。一个对象向另一个对象发送消息来请求其服务。</p>
+<ul>
+<li>消息描述：<code>received-obj.msg-name(para.)</code></li>
+<li><strong>同步消息</strong>：请求者需要等待响应者的处理结果；</li>
+<li><strong>异步消息</strong>：请求者发出消息后继续工作，无需等待。</li>
+</ul>
+<blockquote>
+<p>注意：消息传递发生在对象（而非类）之间。</p>
+</blockquote>
+<h5 id="4inheritance">（4）继承（Inheritance）</h5>
+<p>继承表示类与类之间的一般与特殊关系，模拟现实世界类之间的遗传关系。</p>
+<ul>
+<li>子类（特殊类）可共享父类（一般类）的属性和操作；</li>
+<li>子类也可以有自己的独特属性和操作；</li>
+<li>可借助继承形成系统的层次化类结构。</li>
+</ul>
+<p>继承分为：</p>
+<ul>
+<li><strong>单重继承</strong>：子类只有一个父类；</li>
+<li><strong>多重继承</strong>：子类拥有多个父类。</li>
+</ul>
+<h5 id="5polymorphism">（5）多态（Polymorphism）</h5>
+<p>操作的外部接口定义形式相同，但内部实现方式不同。同一个操作作用于不同对象上可有不同解释，并产生不同结果。</p>
+<p>多态的执行方式：从具体子类开始，沿继承结构向上查找，直至发现匹配实现。</p>
+<h5 id="6override">（6）覆盖（Override）</h5>
+<p>子类增加或重新定义所继承的属性或方法，用新定义的属性和方法来覆盖所继承的、来自父类中的属性或方法。</p>
+<h5 id="7overload">（7）重载（Overload）</h5>
+<p>一个类中有多个同名操作，但它们在操作数或操作数类型上有区别，系统根据实参引用不同方法。</p>
+<h5 id="8aggregationcomposition">（8）聚合（Aggregation）与组合（Composition）</h5>
+<p>二者均描述整体-部分关系，部分类对象是整体类对象的组成部分。</p>
+<table>
+<thead>
+<tr>
+<th>关系</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>聚合</strong></td>
+<td>部分类对象可以是多个整体类对象的组成部分，可为多个整体共享</td>
+<td>老师与大学（老师可兼职）</td>
+</tr>
+<tr>
+<td><strong>组合</strong></td>
+<td>部分类对象只能位于某个整体类对象中；整体消亡，部分也无法生存；整体需管理部分的生命周期</td>
+<td>校长与大学（校长不可兼职）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="13-uml">13. 面向对象建模语言与UML</h4>
+<p>面向对象建模语言是基于面向对象的概念和抽象，提供图形化图符来表示软件系统的一种语言。其目的在于建模（绘制和描述软件系统模型）和支持交流（便于开发人员之间的沟通）。</p>
+<p>建模语言由<strong>语法、语义、语用</strong>三部分组成。</p>
+<h5 id="umlunified-modeling-language">UML：Unified Modeling Language（统一建模语言）</h5>
+<ul>
+<li><strong>Unified（统一）</strong>：提取OMT、Booch、OOSE等方法中最好的建模技术，采用统一、标准化的表示方式；</li>
+<li><strong>Modeling（建模）</strong>：对现实系统和软件系统进行可视化建模；</li>
+<li><strong>Language（语言）</strong>：图形化语言，包含规则、约束和扩展机制，由OMG组织标准化（www.omg.org）。</li>
+</ul>
+<p>UML用途：可视化（visualize）、描述（specify）、构造（construct）、文档化（document）软件密集型系统的各种产品，支持不同人员之间的交流。</p>
+<h5 id="uml">UML的多视点建模</h5>
+<table>
+<thead>
+<tr>
+<th>视点</th>
+<th>说明</th>
+<th>UML图</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>结构视点（Structural View）</strong></td>
+<td>描述系统的构成</td>
+<td>包图、类图、对象图、构件图</td>
+</tr>
+<tr>
+<td><strong>行为视点（Behavioral View）</strong></td>
+<td>刻画系统的行为</td>
+<td>交互图（顺序图、通信图）、状态图、活动图</td>
+</tr>
+<tr>
+<td><strong>部署视点（Deployment View）</strong></td>
+<td>刻画目标软件系统的软件制品及其运行环境</td>
+<td>部署图</td>
+</tr>
+<tr>
+<td><strong>用例视点（Use Case View）</strong></td>
+<td>刻画系统的功能</td>
+<td>用例图</td>
+</tr>
+</tbody>
+</table>
+<p><strong>UML的视点及图汇总表：</strong></p>
+<table>
+<thead>
+<tr>
+<th>视点</th>
+<th>图（Diagram）</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>结构</td>
+<td>包图（Package Diagram）</td>
+<td>从包层面描述系统的静态结构</td>
+</tr>
+<tr>
+<td>结构</td>
+<td>类图（Class Diagram）</td>
+<td>从类层面描述系统的静态结构</td>
+</tr>
+<tr>
+<td>结构</td>
+<td>对象图（Object Diagram）</td>
+<td>从对象层面描述系统的静态结构</td>
+</tr>
+<tr>
+<td>结构</td>
+<td>构件图（Component Diagram）</td>
+<td>描述系统中构件及其依赖关系</td>
+</tr>
+<tr>
+<td>行为</td>
+<td>状态图（Statechart Diagram）</td>
+<td>描述状态的变迁</td>
+</tr>
+<tr>
+<td>行为</td>
+<td>活动图（Activity Diagram）</td>
+<td>描述系统活动的实施</td>
+</tr>
+<tr>
+<td>行为</td>
+<td>通信图（Communication Diagram）</td>
+<td>描述对象间的消息传递与协作</td>
+</tr>
+<tr>
+<td>行为</td>
+<td>顺序图（Sequence Diagram）</td>
+<td>描述对象间的消息传递与协作（强调时序）</td>
+</tr>
+<tr>
+<td>部署</td>
+<td>部署图（Deployment Diagram）</td>
+<td>描述系统中工件在物理运行环境中的部署情况</td>
+</tr>
+<tr>
+<td>用例</td>
+<td>用例图（Use Case Diagram）</td>
+<td>从外部用户角度描述系统功能</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>示例</strong>：用例图描述软件的功能性需求；顺序图描述功能的业务逻辑。</p>
+</blockquote>
+<h5 id="_5">面向对象需求分析步骤</h5>
+<ol>
+<li><strong>明确问题边界，获取软件需求，建立用例模型</strong>：理解系统边界，识别利益相关方，导出或构思需求，绘制用例图；</li>
+<li><strong>开展用例分析，精化软件需求，建立分析模型</strong>：分析用例，建立交互模型，导出分析类图；</li>
+<li><strong>汇总需求模型，撰写需求文档，评审软件需求</strong>：汇总不同视点、不同抽象层次的需求模型，撰写需求文档并评审。</li>
+</ol>
+<h5 id="_6">面向对象需求分析方法的优势</h5>
+<ul>
+<li><strong>自然建模</strong>：面向对象提供了更贴近现实世界的概念和抽象；</li>
+<li><strong>统一抽象</strong>：提供统一的概念和抽象，用户和开发人员使用同一概念模型理解问题，无需模型转换，通过不断精化模型来简化开发复杂度。</li>
+</ul>
+<h4 id="14-case">14. 需求工程的CASE工具</h4>
+<table>
+<thead>
+<tr>
+<th>工具类型</th>
+<th>代表工具</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>需求文档撰写工具</td>
+<td>Microsoft Office、WPS</td>
+</tr>
+<tr>
+<td>需求建模工具</td>
+<td>Microsoft Visio、Rational Rose、StarUML、CodeArts Modeling</td>
+</tr>
+<tr>
+<td>软件原型开发工具</td>
+<td>Mockplus、Axure RP Pro、UIDesigner</td>
+</tr>
+<tr>
+<td>需求分析和管理专用工具</td>
+<td>IBM Rational RequisitePro</td>
+</tr>
+<tr>
+<td>配置管理工具和平台</td>
+<td>Git、GitHub、GitLab、PVCS、Microsoft SourceSafe</td>
+</tr>
+</tbody>
+</table>
+<h4 id="15">15. 需求工程的输出制品</h4>
+<p>需求工程主要输出三类制品：</p>
+<ol>
+<li><strong>软件需求模型</strong>：抽象和直观地表示软件需求；</li>
+<li><strong>软件需求文档</strong>：完整和详尽地记录软件需求；</li>
+<li><strong>软件原型</strong>：直观地展示软件需求。</li>
+</ol>
+<h5 id="_7">软件需求文档的内容</h5>
+<ol>
+<li>系统和文档概述；</li>
+<li>软件功能性需求；</li>
+<li>软件质量方面的需求；</li>
+<li>软件开发的约束性需求；</li>
+<li>软件需求的优先级。</li>
+</ol>
+<h5 id="_8">软件需求文档模板</h5>
+<table>
+<thead>
+<tr>
+<th>章节</th>
+<th>主要内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 文档概述</td>
+<td>编写目的、读者对象、组织结构、术语定义、参考文献</td>
+</tr>
+<tr>
+<td>2. 软件系统的一般性描述</td>
+<td>系统概述、边界和范围、用户特征、假设与依赖</td>
+</tr>
+<tr>
+<td>3. 软件功能性需求</td>
+<td>功能概述、需求优先级、功能需求描述</td>
+</tr>
+<tr>
+<td>4. 软件质量要求</td>
+<td>系统质量要求、质量要求的优先级</td>
+</tr>
+<tr>
+<td>5. 软件开发约束性要求</td>
+<td>设计约束、运行环境、进度和交付、验收、用户界面、软硬件接口</td>
+</tr>
+<tr>
+<td>6. 附录</td>
+<td>补充材料</td>
+</tr>
+</tbody>
+</table>
+<h4 id="16">16. 软件需求缺陷</h4>
+<p>常见需求缺陷包括：</p>
+<ul>
+<li><strong>需求缺失</strong>：漏掉重要需求；</li>
+<li><strong>需求描述不正确</strong>：对需求理解存在偏差；</li>
+<li><strong>需求描述不准确</strong>：表述与用户要求不一致；</li>
+<li><strong>需求冲突、不一致</strong>；</li>
+<li><strong>需求不可行</strong>：技术、经济等方面不可行；</li>
+<li><strong>需求不详尽</strong>：未提供足够详细的信息。</li>
+</ul>
+<h4 id="17">17. 软件需求确认和验证</h4>
+<ul>
+<li><strong>软件需求确认</strong>：站在用户和客户角度，确保软件需求的正确性。常采用需求评审（Review）、原型确认等方式。基于原型的确认是一种常用且有效的方式。</li>
+<li><strong>软件需求验证</strong>：判断软件需求文档和模型是否准确刻画了用户和客户的要求，以及后续设计制品、程序代码是否正确实现了软件需求。</li>
+</ul>
+<h4 id="18">18. 软件需求变更管理</h4>
+<p>软件需求管理包括：</p>
+<ul>
+<li><strong>变更管理</strong>：因需求的易变性，明确哪些需求变化、反映在模型和文档的哪些部分、版本如何变化；</li>
+<li><strong>追溯管理</strong>：溯源追踪，掌握变更提出者、变更原因，判别变更合法性；评估变更影响域，分析对软件制品的影响；</li>
+<li><strong>配置管理</strong>：形成软件需求基线。</li>
+</ul>
+<hr />
+<h3 id="22">2.2 获取软件需求</h3>
+<blockquote>
+<p><strong>本章知识图谱</strong>
+<img alt="本章知识图谱" src="assets/8.1_knowledge_map_page11.png" /></p>
+</blockquote>
+<h4 id="1_1">1. 何为获取软件需求</h4>
+<p>软件需求不会无缘无故产生，任何需求都有其出处和动机。获取软件需求是指<strong>得到或产生软件需求</strong>，是需求分析的基础，也是软件开发的首要工作。</p>
+<h4 id="2_1">2. 软件需求从何而来</h4>
+<ul>
+<li><strong>软件开发的动机</strong>：解决特定行业和领域的问题，体现意义和价值。如 MiNote、12306、ElderCarer。</li>
+<li><strong>解决软件利益相关方的诉求</strong>：利益相关方是软件需求的提出者。</li>
+<li><strong>软件开发者自身</strong>：许多软件系统的需求来自软件工程师，而非最终用户（如开源软件、微信、12306）。他们充当用户或客户，构思和提出软件需求。开源软件的许多需求以Issues形式提出。</li>
+</ul>
+<!-- 图：软件需求来源示意图——用户和客户导出、软件开发者构思创作、已有系统分解、其他系统重用、互联网大众构思创作、大模型生成 -->
+
+<h4 id="3">3. 要获取的软件需求要素</h4>
+<p>要说清楚一项软件需求，需说清楚以下6个方面：</p>
+<table>
+<thead>
+<tr>
+<th>要素</th>
+<th>问题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Who</strong></td>
+<td>谁会关心该项软件需求，他们有何特点和诉求</td>
+</tr>
+<tr>
+<td><strong>What</strong></td>
+<td>软件需求的内涵是什么</td>
+</tr>
+<tr>
+<td><strong>Why</strong></td>
+<td>为什么需要该需求，想解决什么样的问题</td>
+</tr>
+<tr>
+<td><strong>Where</strong></td>
+<td>软件需求归属于哪些子系统</td>
+</tr>
+<tr>
+<td><strong>How</strong></td>
+<td>软件需求包含哪些行为，它们如何解决问题</td>
+</tr>
+<tr>
+<td><strong>When</strong></td>
+<td>什么时候需要该项软件需求</td>
+</tr>
+</tbody>
+</table>
+<h4 id="4_1">4. 获取软件需求面临的困难</h4>
+<table>
+<thead>
+<tr>
+<th>困难</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>需求想不清</strong></td>
+<td>需求并非简单实现业务流程，而是要改造流程形成基于软件的解决方案，利益相关方熟悉业务但难以形成软件需求</td>
+</tr>
+<tr>
+<td><strong>需求道不明</strong></td>
+<td>不清楚需求具体内涵，难以清晰、准确、详实地讲明白需求是什么</td>
+</tr>
+<tr>
+<td><strong>需求想不到</strong></td>
+<td>一些系统是全新的，现实世界没有可模仿和参照对象，构思需求更困难</td>
+</tr>
+</tbody>
+</table>
+<h4 id="5_1">5. 获取软件需求的方法</h4>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>访谈和会议（Interview）</strong></td>
+<td>召开相关会议，走访相关人员，从对象中获得需求</td>
+</tr>
+<tr>
+<td><strong>调查问卷（Questionnaire）</strong></td>
+<td>设计问卷，面向不同角色用户，了解业务流程和期望</td>
+</tr>
+<tr>
+<td><strong>现场观摩</strong></td>
+<td>观摩业务过程、步骤和输出，了解工作流程及细节</td>
+</tr>
+<tr>
+<td><strong>分析业务资料</strong></td>
+<td>收集和阅读业务材料，了解业务及其流程</td>
+</tr>
+<tr>
+<td><strong>软件原型</strong></td>
+<td>快速构造可运行原型，展示操作流程和交互，帮助用户确认和导出需求</td>
+</tr>
+<tr>
+<td><strong>群体化方法（Crowdsourcing）</strong></td>
+<td>让互联网上海量开放群体参与需求构思，集思广益</td>
+</tr>
+<tr>
+<td><strong>大脑风暴（Brainstorming）</strong></td>
+<td>组织相关人员非正式、开放地讨论，捕捉需求灵感</td>
+</tr>
+<tr>
+<td><strong>大模型生成</strong></td>
+<td>通过ChatGPT等大模型工具，根据提示生成需求描述、用户故事等</td>
+</tr>
+</tbody>
+</table>
+<h5 id="_9">软件原型的优势</h5>
+<ul>
+<li>直观、可展示、可操作；</li>
+<li>作为需求工程师与用户之间的交流媒介，帮助用户确认和导出需求。</li>
+</ul>
+<p>不足：</p>
+<ul>
+<li>主要展示操作界面和业务流程的梗概，无法描述需求的具体细节。</li>
+</ul>
+<h5 id="_10">成立需求分析的联合工作小组</h5>
+<p>小组成员包括：利益相关者（如用户）、软件需求分析人员、软件质量保证人员等。目的是共同工作、加强联系、促进交流、增进合作。</p>
+<h4 id="6_1">6. 获取软件需求的过程</h4>
+<pre><code>存在问题  →  明确问题及基于软件的解决方案  →  导出和构思软件需求  →  描述初步软件需求  →  评审初步软件需求
+            ↓                              ↓                      ↓                  ↓
+         软件问题和软件解决方案         软件功能性和非功能性需求    初步软件需求描述      确认后的初步需求
+</code></pre>
+<h4 id="7_1">7. 明确软件要解决的问题</h4>
+<p>每一个软件都试图解决特定领域中的问题，并提供基于软件的问题解决方案。软件需求必须服从和服务于软件欲解决的问题，才有意义和价值。</p>
+<ul>
+<li>清晰地界定软件欲解决的问题；</li>
+<li>开展调研分析，切忌拍脑袋凭空想问题；</li>
+<li>不断反复论证，寻找适合软件解决的问题；</li>
+<li>寻求有意义、有价值的问题。</li>
+</ul>
+<blockquote>
+<p><strong>示例</strong>：12306软件与铁路旅客服务领域相关，目的是改变落后的旅客服务和业务模式，提高旅客服务质量，降低旅客服务成本。</p>
+</blockquote>
+<h4 id="8">8. 明确基于软件的问题解决方案</h4>
+<p>软件可以：</p>
+<ul>
+<li>完成各种计算；</li>
+<li>作为粘合剂连接不同设备和系统；</li>
+<li>实现不同设备和系统之间的交互和协同，从而解决问题。</li>
+</ul>
+<p>应发挥软件优势，为问题解决提供新颖、有效的途径。</p>
+<h4 id="9_1">9. 明确软件的范围和边界</h4>
+<ul>
+<li><strong>软件的范围</strong>：说明软件需要完成哪些业务领域中的功能；</li>
+<li><strong>软件的边界</strong>：描述软件的界限，即哪些要素属于软件，哪些不属于软件；哪些需求由软件完成，哪些由其他设备和系统完成。</li>
+</ul>
+<!-- 图：软件范围与边界示意图——要开发的软件系统位于中心，部分需求由本系统实现，部分需求由其他系统或设备提供 -->
+
+<h4 id="10_1">10. 识别软件的利益相关方</h4>
+<p>软件需求来自利益相关方，因此首先要搞清楚系统有哪些利益相关方。利益相关方可以是特定人群、组织或系统，开发者也可以成为利益相关方。</p>
+<blockquote>
+<p><strong>示例：Mini-12306的利益相关方</strong>
+- 旅客（Passenger）：购票、查询车次、退票、改签；
+- 售票员（TicketSeller）：帮助旅客完成购票、退票、改签等服务；
+- 系统管理员（Administrator）：设置系统参数，如提前预售天数、售票员账号密码等。</p>
+</blockquote>
+<h4 id="11_1">11. 导出和构思软件的功能性需求</h4>
+<ul>
+<li><strong>导出</strong>：通过与利益相关方交互，听取他们的期望和要求。可采用面谈、分析业务资料、观察业务流程、问卷调查、软件原型等方法。</li>
+<li><strong>构思</strong>：需求工程师充当利益相关方角色，站在他们的视角，结合软件解决方案，提出可促进问题解决的需求。可采用大脑风暴、群体化方法、问卷调查、软件原型等方式。</li>
+</ul>
+<h5 id="_11">有创意软件的特点</h5>
+<p>创意来自：</p>
+<ol>
+<li>欲解决的新颖问题（Problems &amp; Needs）；</li>
+<li>解决问题的独特方式（Approach）；</li>
+<li>给用户带来的好处（Benefits）；</li>
+<li>强于对手（Competitors）。</li>
+</ol>
+<h5 id="_12">创意的潜在技术和应用领域</h5>
+<p>移动互联网、机器人、无人系统、物联网、可穿戴设备、大数据分析等。</p>
+<blockquote>
+<p><strong>示例：Instagram</strong>
+照片和视频共享、在线服务软件；成立于2010年，最多只有13个雇员（5个软件工程师），2012年被Facebook以10亿美元收购。</p>
+</blockquote>
+<h4 id="12_1">12. 导出和构思软件的非功能性需求</h4>
+<p>非功能性需求包括软件质量要求和软件开发的约束性要求。</p>
+<ul>
+<li><strong>质量要求</strong>：性能、可靠性、易用性、安全性、私密性等外部质量要求；可扩展性、可维护性、可互操作性、可移植性等内部要求。</li>
+<li><strong>约束性要求</strong>：开发进度、成本、技术选型等。</li>
+</ul>
+<p>非功能性需求越来越重要，有时直接决定软件是否可用、好用、高效、可靠、便于维护。</p>
+<blockquote>
+<p><strong>示例：Mini-12306的非功能需求</strong>
+- 性能：界面响应不超过1秒；
+- 可靠性：每周7天、每天24小时可用；正常运行时间比例99%以上；故障不丢失已提交数据；5分钟内恢复正常；
+- 易用性：界面简洁直观；
+- 安全性：抵御网络攻击；
+- 私密性：用户数据不被非授权人员访问；
+- 可移植性：App方便移植到其他移动操作系统；
+- 运行环境约束：Android 4.4、鸿蒙3.0、iOS 17以上；
+- 本地化与国际化：支持中英文界面。</p>
+</blockquote>
+<h4 id="13">13. 合法和非法的软件需求</h4>
+<p>并非所有利益相关方提出的期望和要求都应成为软件需求。如果要求与软件及其欲解决的问题无关、没有实际意义和价值、或在技术等方面不可行，则应剔除。需求工程师需要鉴别真正有意义和有价值的重要需求，剔除无意义和无价值的要求。</p>
+<h4 id="14">14. 描述初步软件需求</h4>
+<p>初步软件需求通常较粗略，只是一个初步的需求轮廓，不够具体和详尽，可能存在遗漏、不一致和冲突等问题，后续需要进一步精化和分析。</p>
+<p>描述初步需求的方法：</p>
+<ol>
+<li><strong>自然语言描述</strong>；</li>
+<li><strong>软件原型描述</strong>；</li>
+<li><strong>用例图描述</strong>。</li>
+</ol>
+<h5 id="_13">自然语言描述</h5>
+<p>自然语言是最常用的需求描述手段，可描述功能性需求、质量需求和开发约束需求，详细刻画需求内容，便于各方理解交流。但存在二义性、不直观的局限性。</p>
+<blockquote>
+<p><strong>示例</strong>：
+- 功能性需求：软件系统应提供查询车次功能，旅客输入出发地、目的地及日期，系统应查询出满足条件的所有车次。
+- 质量需求：系统中的用户数据不被非授权人员访问和获取。
+- 约束需求：客户端App软件须运行在Android 4.4及以上版本的操作系统。</p>
+</blockquote>
+<h4 id="15_1">15. 用例图描述</h4>
+<p>用例图用于描述软件系统的边界以及软件外部使用者所观察到的系统功能。“观察到”指外部使用者与系统存在交互，即信息输入和输出。</p>
+<h5 id="_14">用例图的构成</h5>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>说明</th>
+<th>图形符号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>执行者（Actor）</strong></td>
+<td>系统的外部使用者，可以是一类用户、其他系统或物理设备；是UML中的类，代表一类用户或外部实体，而非具体实例</td>
+<td>火柴人图形，下方附名称</td>
+</tr>
+<tr>
+<td><strong>用例（Use Case）</strong></td>
+<td>执行者为达成一项相对独立、完整的业务目标而要求系统完成的功能；表现为执行者与系统之间的业务交互动作序列</td>
+<td>椭圆形，内部附用例名称</td>
+</tr>
+<tr>
+<td><strong>边</strong></td>
+<td>执行者与用例间、用例之间、执行者之间的关系</td>
+<td>线条或带箭头线条</td>
+</tr>
+<tr>
+<td><strong>边界框</strong></td>
+<td>表示整个软件系统或子系统的边界；框内为系统内容，框外为外部执行者</td>
+<td>矩形框，顶部标注系统名称</td>
+</tr>
+</tbody>
+</table>
+<h5 id="_15">执行者与用例间的关系</h5>
+<ul>
+<li>执行者与用例之间存在交互；</li>
+<li>执行者触发用例执行，向用例提供信息或从用例获取信息；</li>
+<li><strong>主动执行者</strong>：触发用例执行的执行者；</li>
+<li><strong>被动执行者</strong>：仅从用例获取信息的执行者；</li>
+<li>执行者与用例间的边通常为无向边。</li>
+</ul>
+<h5 id="_16">用例间的关系</h5>
+<table>
+<thead>
+<tr>
+<th>关系</th>
+<th>说明</th>
+<th>应用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>包含（Include）</strong></td>
+<td>用例B是用例A的某项子功能；用于提取多个用例中的公共子功能，避免重复和冗余</td>
+<td>“购票”包含“支付”；“监视老人状况”包含“自主跟随老人”</td>
+</tr>
+<tr>
+<td><strong>扩展（Extend）</strong></td>
+<td>用例A与B相似，但A功能较B多，A的动作序列在B的动作序列某些执行点上插入附加动作序列而成；用于区隔正常业务和例外处理</td>
+<td>“Create Course Plan for Qian Class”扩展“Create Course Plan”</td>
+</tr>
+<tr>
+<td><strong>继承（Inherit）</strong></td>
+<td>用例A与B相似，但A的动作序列通过改写B的部分动作或扩展B的动作获得；体现功能改写</td>
+<td>特殊用例继承一般用例</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>区别</strong>：包含用于公共子功能抽取；扩展用于在基础用例上附加例外或增强功能；继承用于功能的改写和特化。</p>
+</blockquote>
+<h5 id="_17">用例的进一步详细描述</h5>
+<p>用例图不够详细，通常还需要对用例进行文字描述：</p>
+<ul>
+<li>用例名；</li>
+<li>用例标识；</li>
+<li>主要执行者；</li>
+<li>目标；</li>
+<li>范围；</li>
+<li>前置条件；</li>
+<li>交互动作。</li>
+</ul>
+<blockquote>
+<p><strong>示例：退票用例描述</strong>
+- 用例名：退票
+- 用例标识：UC-RefundTicket
+- 主要执行者：旅客、售票员
+- 目标：将购买的车票退票
+- 范围：Mini-12306
+- 前置条件：已经登录系统
+- 交互动作：
+  1. 提供待退票的车票；
+  2. 验证车票的合法性；
+  3. 将车票退票，设置车票为“未出售”状态；
+  4. 将车票费用退回到旅客的银行卡中。</p>
+</blockquote>
+<!-- 图：Mini-12306用例图示意——边界框内为用例（注册、登录、查询车次、购票、退票、改签、系统设置），外部执行者为旅客、售票员、系统管理员；购票与支付之间用《include》表示包含关系 -->
+
+<h4 id="16_1">16. 撰写“初步软件需求描述”文档</h4>
+<ol>
+<li>软件背景介绍；</li>
+<li>欲解决的问题；</li>
+<li>软件解决方案；</li>
+<li>软件的功能性需求描述；</li>
+<li>软件的非功能性需求描述；</li>
+<li>可行性及潜在风险。</li>
+</ol>
+<h4 id="17_1">17. 输出的软件制品</h4>
+<p>获取软件需求阶段的主要输出：</p>
+<ul>
+<li><strong>软件原型</strong>：以可运行软件形式展示业务工作流程、操作界面、用户输入输出等；</li>
+<li><strong>软件用例模型</strong>：以可视化图形符号刻画系统执行者、边界、用例及其关系，描述功能性需求；</li>
+<li><strong>软件需求文档</strong>：以自然语言描述初步软件需求，包括功能性和非功能性需求。</li>
+</ul>
+<h4 id="18_1">18. 评审初步软件需求</h4>
+<p>评审维度包括：</p>
+<ul>
+<li><strong>中肯性</strong>：软件问题是否反映实际问题，是否有意义和价值；</li>
+<li><strong>合理性</strong>：基于软件的解决方案是否科学和合理；</li>
+<li><strong>完整性</strong>：是否覆盖了利益相关方的期望和要求；</li>
+<li><strong>必要性</strong>：每一项需求是否有必要；</li>
+<li><strong>溯源性</strong>：每一项需求是否都有其来源；</li>
+<li><strong>准确性</strong>：描述是否清晰准确地反映需求内涵；</li>
+<li><strong>正确性</strong>：是否正确反映需求提出者的真实想法；</li>
+<li><strong>一致性</strong>：文档、用例模型、原型对需求的表述是否一致。</li>
+</ul>
+<h4 id="19">19. 软件需求可行性分析</h4>
+<table>
+<thead>
+<tr>
+<th>可行性类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>技术可行性</strong></td>
+<td>所需技术是否成熟，现有技术能否支撑实现，团队是否掌握关键技术</td>
+</tr>
+<tr>
+<td><strong>设备可行性</strong></td>
+<td>解决方案需要哪些设备或系统，团队是否已具备</td>
+</tr>
+<tr>
+<td><strong>进度可行性</strong></td>
+<td>针对团队人力资源及技术水平，能否按进度约束开发出满足需求的产品</td>
+</tr>
+<tr>
+<td><strong>成本可行性</strong></td>
+<td>基于项目成本约束，能否开发出满足需求的产品</td>
+</tr>
+<tr>
+<td><strong>商业可行性</strong></td>
+<td>需求是否有商业价值，能否获得用户青睐和市场认可，投入能否获得预期收益</td>
+</tr>
+<tr>
+<td><strong>社会可行性</strong></td>
+<td>需求是否违背社会道德、文化伦理、法律法规、行业标准等</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="23">2.3 分析软件需求</h3>
+<blockquote>
+<p><strong>本章知识图谱</strong>
+<img alt="本章知识图谱" src="assets/8.1_knowledge_map_page18.png" /></p>
+</blockquote>
+<h4 id="1_2">1. 为什么要分析软件需求</h4>
+<p>初步软件需求存在以下问题：</p>
+<ul>
+<li><strong>需求不详尽</strong>：未提供细节性内容，无法指导后续设计；</li>
+<li><strong>描述不清晰</strong>：不够清晰、直观；</li>
+<li><strong>关系不明朗</strong>：未深入分析不同需求项之间的关系；</li>
+<li><strong>存在潜在缺陷</strong>：潜在需求缺陷难以发现；</li>
+<li><strong>未区分优先级</strong>：未鉴别不同需求项的重要性差别和开发优先级。</li>
+</ul>
+<p>软件需求还是“粗胚”，需要“打磨”。</p>
+<blockquote>
+<p><strong>示例</strong>："用户首先登录到系统中，选择要退票的车票，系统将自动地完成退票工作，并提示用户退票的结果"——这段描述没有说清楚退票的具体步骤、业务规则、异常处理等，因此不够详尽。</p>
+</blockquote>
+<h4 id="2_2">2. 分析软件需求的任务</h4>
+<p>基于初步软件需求，进一步精化和分析软件需求，确定软件需求优先级，建立软件需求模型，发现和解决软件需求缺陷，形成高质量的软件需求模型和软件需求规格说明书。</p>
+<p>参与人员包括：利益相关方（用户、客户等）、需求工程师、项目管理者、测试和设计工程师。</p>
+<!-- 图：需求分析过程示意图——初步软件需求输入，经过分析活动，输出软件需求模型和软件需求规格说明书 -->
+
+<h4 id="3_1">3. 结构化需求分析方法</h4>
+<h5 id="_18">基本思想</h5>
+<ul>
+<li>功能体现为对数据的加工和处理；</li>
+<li>绘制数据流图来描述软件的功能；</li>
+<li>通过逐步分解来细化软件的功能。</li>
+</ul>
+<h5 id="_19">面向数据流的需求分析过程</h5>
+<ol>
+<li><strong>建立顶级数据流图（0级DFD）</strong>：描述软件系统与其外部环境间的关系。将待开发系统抽象为一个转换，只有一个转换，对应待开发软件系统。</li>
+<li><strong>精化数据流图中的转换</strong>：采用自顶向下、逐步求精策略。若某个转换粒度大，则对其进行精化，产生下一级数据流图，形成层次化数据流图。</li>
+<li><strong>建立数据字典</strong>：描述数据流、外部实体、数据存储、不再被精化的转换的详细信息。</li>
+</ol>
+<blockquote>
+<p><strong>父图与子图的平衡</strong>：针对父图中被精化的转换，它的每一个输入和输出数据流要与精化后产生的数据流图中的输入或输出数据流保持一致。</p>
+</blockquote>
+<h5 id="_20">数据字典示例</h5>
+<pre><code>旅客注册信息 = 旅客姓名 + 身份证 + 银行卡 + 手机号
+旅客姓名 = 长度为5的汉字字符串
+身份证 = 18位的身份证号码
+银行卡 = 开户行 + 银行卡号
+手机号 = 11位的数字串
+</code></pre>
+<h5 id="_21">绘制数据流图的注意事项</h5>
+<ul>
+<li>数据流、外部实体、数据存储要用名词或名词短语描述；</li>
+<li>转换要用动词或动名词描述；</li>
+<li>确保父图和子图的平衡；</li>
+<li>精化适可而止。</li>
+</ul>
+<h4 id="4_2">4. 面向对象需求分析方法</h4>
+<h5 id="_22">软件需求的不同视角表示</h5>
+<table>
+<thead>
+<tr>
+<th>视角</th>
+<th>关注的问题</th>
+<th>UML图</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>用例视角</strong></td>
+<td>具有哪些功能、功能间有何关系、功能与利益相关方有何关系</td>
+<td>用例图</td>
+</tr>
+<tr>
+<td><strong>行为视角</strong></td>
+<td>用例如何通过业务领域中一组对象及它们间的交互来达成</td>
+<td>交互图、状态图</td>
+</tr>
+<tr>
+<td><strong>结构视角</strong></td>
+<td>业务领域有哪些重要概念以及它们之间具有什么关系</td>
+<td>类图</td>
+</tr>
+</tbody>
+</table>
+<p><strong>支持需求建模和分析的UML图：</strong></p>
+<table>
+<thead>
+<tr>
+<th>需求模型</th>
+<th>视角</th>
+<th>软件需求的内涵</th>
+<th>需求阶段</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用例图</td>
+<td>用例</td>
+<td>软件的功能及相互间的关系</td>
+<td>获取软件需求</td>
+</tr>
+<tr>
+<td>交互图</td>
+<td>行为</td>
+<td>功能完成所涉及的对象及相互间的交互和协作</td>
+<td>分析软件需求</td>
+</tr>
+<tr>
+<td>状态图</td>
+<td>行为</td>
+<td>对象的状态变化</td>
+<td>分析软件需求</td>
+</tr>
+<tr>
+<td>类图</td>
+<td>结构</td>
+<td>业务领域概念及相互关系</td>
+<td>分析软件需求</td>
+</tr>
+</tbody>
+</table>
+<h5 id="uml_1">UML交互图</h5>
+<p>UML交互图刻画对象间的消息传递，分析如何通过交互协作完成功能。包括两类：</p>
+<ul>
+<li><strong>顺序图（Sequence Diagram）</strong>：强调消息传递的时间序；</li>
+<li><strong>通信图（Communication Diagram）</strong>：突出对象间的合作关系。</li>
+</ul>
+<p>二者表达能力相同，可相互转换。</p>
+<h6 id="_23">顺序图</h6>
+<p>顺序图描述对象间的消息交互序列：</p>
+<ul>
+<li><strong>纵向</strong>：时间轴，对象及其生命线（虚线）和活跃期（长条矩形）；</li>
+<li><strong>横向</strong>：对象间的消息传递。</li>
+</ul>
+<p><strong>对象表示</strong>：<code>[对象名] : [类名]</code>，如 <code>"Tom:Student"</code> 或 <code>"Student"</code>。</p>
+<p><strong>消息传递表示</strong>：<code>[*][监护条件] [返回值:=]消息名[(参数表)]</code>。其中 <code>*</code> 为迭代标记，表示同一消息对同一类的多个对象发送。</p>
+<p><strong>消息类型：</strong></p>
+<table>
+<thead>
+<tr>
+<th>消息类型</th>
+<th>说明</th>
+<th>图符特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>同步消息</strong></td>
+<td>发送者等待接收者处理完后再继续</td>
+<td>实心三角箭头或实心箭头</td>
+</tr>
+<tr>
+<td><strong>异步消息</strong></td>
+<td>发送者发出消息后不等待，继续自己的处理</td>
+<td>开口箭头</td>
+</tr>
+<tr>
+<td><strong>自消息</strong></td>
+<td>一个对象发送给自身的消息</td>
+<td>消息指向自身生命线</td>
+</tr>
+<tr>
+<td><strong>返回消息</strong></td>
+<td>某条消息处理完成，结果沿返回消息传回</td>
+<td>虚线箭头</td>
+</tr>
+<tr>
+<td><strong>创建消息</strong></td>
+<td>目标对象的创建</td>
+<td>消息指向新创建对象</td>
+</tr>
+<tr>
+<td><strong>销毁消息</strong></td>
+<td>目标对象的删除</td>
+<td>生命线终止处画“×”</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>特别注意图符的画法和要求，尤其是箭头图形（线条和箭头形状）。</p>
+</blockquote>
+<h6 id="_24">通信图</h6>
+<p>通信图：</p>
+<ul>
+<li>节点表示对象；</li>
+<li>对象间连接称为连接器；</li>
+<li>连接器上可标示一到多条消息；</li>
+<li>消息传递方向用靠近消息小箭头表示；</li>
+<li>消息序号采用多层标号（如1、1.1、1.1.1）。</li>
+</ul>
+<h6 id="_25">顺序图和通信图的选取原则</h6>
+<ul>
+<li>语义上等价，无需针对同一目标同时创建两个图；</li>
+<li>强调时间序时采用顺序图；强调对象间交互协作关系时采用通信图；</li>
+<li>刻画场景或用例的动作序列时采用顺序图；刻画软件内部某项功能的实现构想时采用通信图；</li>
+<li>业务分析和需求建模阶段优先考虑顺序图；设计和实现阶段优先考虑通信图。</li>
+</ul>
+<h5 id="class-diagram">类图（Class Diagram）</h5>
+<p>类图描述系统的类构成，刻画系统的静态组成结构。</p>
+<p><strong>图的构成：</strong></p>
+<ul>
+<li>结点：表示系统中的类（或接口）及其属性和操作；</li>
+<li>边：类之间的关系。</li>
+</ul>
+<p><strong>类的UML表示</strong>：一个类用三层矩形表示：</p>
+<pre><code>┌─────────────────┐
+│    Order        │  ← 类名
+├─────────────────┤
+│ -id: integer    │  ← 属性
+│ -quantity: integer = 0 │
+├─────────────────┤
+│ +Order(id: integer)   │  ← 操作/方法
+│ +getQuantity(): integer│
+│ +setQuantity(id: integer)│
+│ +addOrder(id: integer)   │
+│ +cancelOrder(id: integer)│
+└─────────────────┘
+</code></pre>
+<p><strong>属性的表示</strong>：</p>
+<pre><code>[可见性] 名称 [: 类型] [多重性] [= 初值] [{约束特性}]
+</code></pre>
+<ul>
+<li><strong>可见性</strong>：<code>+</code> 公开，所有对象均可访问；<code>#</code> 保护，所在类及子类对象可访问；<code>-</code> 私有，仅所在类对象可访问。</li>
+<li><strong>多重性</strong>：属性取值数量，如 <code>1</code>、<code>0..1</code>、<code>0..*</code>、<code>1..*</code>、<code>*</code>。</li>
+<li><strong>约束特性</strong>：</li>
+<li><code>{readOnly}</code>：只读；</li>
+<li><code>{ordered}</code>：属性取值有序；</li>
+<li><code>{bag}</code>：允许重复元素；</li>
+<li><code>{static}</code>：静态属性。</li>
+</ul>
+<p><strong>方法的表示</strong>：</p>
+<pre><code>[可见性] 名称[(参数表)] [: 返回类型] [{约束特性}]
+</code></pre>
+<ul>
+<li><code>{isQuery = true}</code>：查询操作（不修改状态）；</li>
+<li><code>{isPolymorphic = true}</code>：允许多态；</li>
+<li><code>{concurrency = sequential/guarded/concurrent}</code>：并发性；</li>
+<li>异常：操作可能引发的异常。</li>
+</ul>
+<p><strong>接口（Interface）</strong>：一种不包含操作实现部分的特殊类。</p>
+<ul>
+<li><strong>供给接口</strong>：对外提供的接口；</li>
+<li><strong>需求接口</strong>：需要使用的接口。</li>
+</ul>
+<h5 id="_26">类间的关系</h5>
+<table>
+<thead>
+<tr>
+<th>关系</th>
+<th>说明</th>
+<th>图符</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>关联（Association）</strong></td>
+<td>类间的逻辑联系；可标注多重性、角色名、约束特性</td>
+<td>实线，可带箭头</td>
+</tr>
+<tr>
+<td><strong>聚合（Aggregation）</strong></td>
+<td>整体-部分关系，部分可为多个整体共享</td>
+<td>空心菱形指向整体</td>
+</tr>
+<tr>
+<td><strong>组合（Composition）</strong></td>
+<td>整体-部分关系，部分只能属于一个整体，整体消亡部分也消亡</td>
+<td>实心菱形指向整体</td>
+</tr>
+<tr>
+<td><strong>依赖（Dependency）</strong></td>
+<td>一个类变化会导致另一类变化</td>
+<td>带箭头的虚线</td>
+</tr>
+<tr>
+<td><strong>实现（Realization）</strong></td>
+<td>一个类实现另一个类中定义的接口</td>
+<td>带空心三角的虚线</td>
+</tr>
+<tr>
+<td><strong>继承（Generalization）</strong></td>
+<td>一般与特殊关系，子类继承父类</td>
+<td>带空心三角的实线，指向父类</td>
+</tr>
+</tbody>
+</table>
+<p><strong>依赖的形式</strong>：使用、追踪、精化、实现、派生。</p>
+<p><strong>绘制类图的注意事项</strong>：</p>
+<ul>
+<li>用单数名词描述类名，少用缩写；</li>
+<li>垂直方向表示继承关系；水平方向表示关联、聚合、组合、依赖、实现关系；</li>
+<li>关联名应位于关联边居中位置；多重性、角色名、约束特性应靠近关联端。</li>
+</ul>
+<h5 id="object-diagram">对象图（Object Diagram）</h5>
+<p>对象图是类图在系统运行过程中某个时刻点上或某一时间段内的实例化样本：</p>
+<ul>
+<li>结点表示对象，边表示对象间的链接；</li>
+<li>类图中的一个类在对象图中可表现为多个活跃的对象实例；</li>
+<li>对象图的链接边是类图中关联边的实例化；</li>
+<li>类图中的继承、依赖等关系在对象图中不直接表现；</li>
+<li>是一种静态瞬时快照，归于静态视图范畴。</li>
+</ul>
+<p>通常而言，对象图不常用，仅在需要分析特定观察点的对象情况时使用（如系统创建之时、某些对象消亡之前）。</p>
+<h5 id="statechart-diagram">状态图（Statechart Diagram）</h5>
+<p>状态图描述实体（对象、系统）在事件刺激下的反应式动态行为及其导致的状态变化，刻画实体的可能状态、每个状态下可响应事件、响应动作、状态迁移。</p>
+<p><strong>图的构成：</strong></p>
+<ul>
+<li>节点：状态；</li>
+<li>边：迁移，即状态间因事件刺激而触发的状态变化。</li>
+</ul>
+<p><strong>基本概念：</strong></p>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>状态</strong></td>
+<td>对象属性取值构成的一个约束条件；相同状态下对象对事件的响应行为完全一样</td>
+</tr>
+<tr>
+<td><strong>事件</strong></td>
+<td>某时刻发生、需要关注的瞬时刺激；包括消息型事件（同步）、信号型事件（异步）、时间型事件、条件型事件</td>
+</tr>
+<tr>
+<td><strong>动作（Action）</strong></td>
+<td>计算过程，位于迁移边上，简单，执行时间短</td>
+</tr>
+<tr>
+<td><strong>活动（Activity）</strong></td>
+<td>计算过程，位于状态中，复杂，执行时间长</td>
+</tr>
+</tbody>
+</table>
+<p><strong>复合状态</strong>：</p>
+<ul>
+<li><strong>AND复合</strong>：对象处于状态s当且仅当同时处于子状态s₁,…,sₙ；</li>
+<li><strong>XOR复合</strong>：对象处于状态s当且仅当处于子状态s₁,…,sₙ中的某个子状态。</li>
+</ul>
+<p><strong>状态的表示</strong>：由状态名及可选的入口活动、出口活动、do活动、内部迁移构成。</p>
+<ul>
+<li>入口活动：进入状态时执行；</li>
+<li>出口活动：离开状态时执行；</li>
+<li>do活动：进入状态并执行完入口活动后执行；</li>
+<li>内部迁移：不引起状态变化的迁移。</li>
+</ul>
+<p><strong>迁移的表示</strong>：迁移标注为 <code>[事件] [监护条件] [/ 动作]</code>。</p>
+<ul>
+<li>事件：触发状态变迁的事件；</li>
+<li>监护条件：约束迁移真正发生的条件表达式；</li>
+<li>动作：迁移期间执行的动作；</li>
+<li>自迁移：源状态与目标状态相同的特殊外部迁移。</li>
+</ul>
+<p><strong>状态图绘制原则</strong>：</p>
+<ul>
+<li>状态节点按行上下对齐，按列左右对齐；</li>
+<li>迁移边绘制成水平线段、垂直线段或二者组合的折线，避免斜线；</li>
+<li>初态位于左上角，终态尽量靠近右下角；</li>
+<li>迁移边上的文本标注应靠近源状态。</li>
+</ul>
+<blockquote>
+<p><strong>示例</strong>：“车票（Ticket）”对象的状态图。车票可能处于“未售出”、“已售出”、“失效”等状态；在“购票”事件下从“未售出”迁移到“已售出”；在“退票”事件下从“已售出”迁移到“未售出”；超过有效期可迁移到“失效”状态。</p>
+</blockquote>
+<!-- 图：车票对象状态图示意——状态节点包括未售出、已售出、失效；迁移边标注事件（购票、退票、过期）及可能的监护条件和动作 -->
+
+<h4 id="5_2">5. 分析和确定软件需求优先级</h4>
+<h5 id="_27">分析软件需求重要性</h5>
+<ul>
+<li><strong>核心软件需求</strong>：在解决问题方面起到举足轻重的作用，提供系统特有的功能和服务，体现系统特色和优势；</li>
+<li><strong>外围软件需求</strong>：提供次要、辅助性的功能和服务。</li>
+</ul>
+<blockquote>
+<p><strong>示例：Mini-12306的需求重要性</strong>
+- 核心：注册、登录、查询车次、购票、支付、退票、改签；
+- 外围：系统设置。</p>
+</blockquote>
+<h5 id="_28">分析软件需求优先级</h5>
+<p>用户对实现需求的优先级要求不同。优先级考虑因素：</p>
+<ul>
+<li>结合项目开发的具体约束；</li>
+<li>考虑不同需求的重要性；</li>
+<li>按照用户的实际需要来确定优先级。</li>
+</ul>
+<blockquote>
+<p><strong>示例：Mini-12306的需求优先级</strong>
+- 最高优先级：注册、登录、查询车次、购票、支付；
+- 次之：退票、改签；
+- 最低：系统设置。</p>
+</blockquote>
+<h5 id="_29">确定用例分析和实现的次序</h5>
+<p>确保有序地开展需求分析、设计和实现工作，每次迭代有明确的需求集，迭代结束后可向用户交付急需功能。</p>
+<p>考虑因素：</p>
+<ul>
+<li>软件开发的迭代次数、每次迭代持续时间、可投入的人力资源；</li>
+<li>相关需求项的开发工作量和技术难度。</li>
+</ul>
+<p><strong>Mini-12306需求开发安排示例：</strong></p>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>用例名称</th>
+<th>用例标识</th>
+<th>重要性</th>
+<th>优先级</th>
+<th>开发迭代次序</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Register</td>
+<td>UC-Register</td>
+<td>核心</td>
+<td>高</td>
+<td>第一次迭代</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Login</td>
+<td>UC-Login</td>
+<td>核心</td>
+<td>高</td>
+<td>第一次迭代</td>
+</tr>
+<tr>
+<td>3</td>
+<td>QueryTrain</td>
+<td>UC-QueryTrain</td>
+<td>核心</td>
+<td>高</td>
+<td>第一次迭代</td>
+</tr>
+<tr>
+<td>4</td>
+<td>BuyTicket</td>
+<td>UC-BuyTicket</td>
+<td>核心</td>
+<td>高</td>
+<td>第一次迭代</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Pay</td>
+<td>UC-Pay</td>
+<td>核心</td>
+<td>高</td>
+<td>第一次迭代</td>
+</tr>
+<tr>
+<td>6</td>
+<td>RefundTicket</td>
+<td>UC-RefundTicket</td>
+<td>外围</td>
+<td>中</td>
+<td>第二次迭代</td>
+</tr>
+<tr>
+<td>7</td>
+<td>ChangeTicket</td>
+<td>UC-ChangeTicket</td>
+<td>外围</td>
+<td>中</td>
+<td>第二次迭代</td>
+</tr>
+<tr>
+<td>8</td>
+<td>SetSystem</td>
+<td>UC-SetSystem</td>
+<td>外围</td>
+<td>低</td>
+<td>第三次迭代</td>
+</tr>
+</tbody>
+</table>
+<h4 id="6_2">6. 分析和建立软件需求模型的具体步骤</h4>
+<pre><code>分析和建立用例的交互模型
+  ├── 分析和确定用例所涉及的对象及其类
+  ├── 分析和确定对象之间的消息传递
+  └── 绘制用例的交互图
+
+分析和建立分析类模型
+  ├── 确定分析类
+  ├── 确定分析类职责
+  ├── 确定分析类属性
+  ├── 确定分析类之间的关系
+  └── 绘制分析类图
+
+分析和建立状态模型
+  └── 绘制状态图
+</code></pre>
+<h5 id="_30">分析类：边界类、控制类、实体类</h5>
+<table>
+<thead>
+<tr>
+<th>分析类</th>
+<th>说明</th>
+<th>在顺序图中的位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>边界类（Boundary Class）</strong></td>
+<td>负责目标系统与外部执行者之间的交互；处理输入输出、外部接口</td>
+<td>最左侧（紧邻执行者）或最右侧（外部接口）</td>
+</tr>
+<tr>
+<td><strong>控制类（Control Class）</strong></td>
+<td>完成用例任务的主要协调者；分解任务，分派给其他对象，协调信息交互</td>
+<td>边界类右侧</td>
+</tr>
+<tr>
+<td><strong>实体类（Entity Class）</strong></td>
+<td>负责保存持久意义的信息项，进行查询、修改、保存等处理，提供业务服务</td>
+<td>控制类右侧</td>
+</tr>
+</tbody>
+</table>
+<p><strong>边界类对象作用</strong>：</p>
+<ul>
+<li>交互控制：处理外部执行者的输入数据，或向外部执行者输出数据；</li>
+<li>外部接口：若外部执行者是其他系统或设备，边界类对象负责与外部系统/设备交互。</li>
+</ul>
+<p><strong>控制类对象作用</strong>：</p>
+<ul>
+<li>负责处理边界类对象发来的任务请求；</li>
+<li>对任务进行适当分解，与系统中其他对象协同；</li>
+<li>控制它们共同完成用例规定的任务或行为。</li>
+</ul>
+<blockquote>
+<p>一般而言，控制类不负责处理具体任务细节，而是分解任务并通过消息传递分派给其他对象类完成。</p>
+</blockquote>
+<p><strong>实体类对象作用</strong>：</p>
+<ul>
+<li>保存目标软件系统中具有持久意义的信息项；</li>
+<li>对信息进行查询、修改、保存等处理；</li>
+<li>向其他类提供信息访问服务。</li>
+</ul>
+<h5 id="_31">分析和确定对象之间的消息传递</h5>
+<p><strong>确定消息的名称</strong>：</p>
+<ul>
+<li>消息名称直接反映对象间交互的意图，体现接收方对象所需承担的职责和任务；</li>
+<li>一般用动名词表示；</li>
+<li>尽可能使用应用领域中通俗易懂的术语。</li>
+</ul>
+<p><strong>确定消息传递的信息</strong>：</p>
+<ul>
+<li>对象间交互除消息名称和意图外，常需要提供必要的交互信息；</li>
+<li>信息通常以消息参数形式出现；</li>
+<li>消息参数一般用名词或名词短语表示。</li>
+</ul>
+<h5 id="_32">绘制用例的交互图</h5>
+<p><strong>绘制顺序图的策略</strong>：</p>
+<ul>
+<li>外部执行者位于图的最左侧；</li>
+<li>紧邻其右是用户界面或外部接口的边界类对象；</li>
+<li>再往右是控制类对象；</li>
+<li>控制类右侧放置实体类对象；</li>
+<li>最右侧是作为外部接口的边界类对象；</li>
+<li>消息传递采用自上而下的布局方式，反映时序先后。</li>
+</ul>
+<p><strong>一个用例至少构造一个交互图</strong>。简单用例一张图足够；复杂用例需要多张交互图，每张刻画特定场景下的交互动作序列。</p>
+<p><strong>用例交互图的工作流程</strong>：</p>
+<ol>
+<li>外部执行者与边界类对象交互以启动用例执行；</li>
+<li>边界类对象接收外部执行者提供的信息，将信息从外部形式转换为内部形式，发送给控制类对象；</li>
+<li>控制类对象根据业务逻辑处理流程，产生和分解任务，与相关实体类对象交互；</li>
+<li>实体类对象实施相关行为后，向控制类对象反馈处理结果；</li>
+<li>控制类对象处理接收到的信息，将处理结果通知边界类对象；</li>
+<li>边界类对象将处理结果从内部形式转换为外部形式，通过界面展示给外部执行者。</li>
+</ol>
+<blockquote>
+<p><strong>示例：Mini-12306中“QueryTrain（查询车次）”用例的顺序图</strong>
+外部执行者“旅客”向“查询界面”边界类发送查询请求；“查询界面”将请求转发给“查询控制”类；“查询控制”类向“车次信息”实体类请求数据；“车次信息”返回结果；“查询控制”处理后通知“查询界面”；“查询界面”将结果显示给旅客。</p>
+</blockquote>
+<!-- 图：查询车次用例顺序图示意——从左到右依次为旅客（Actor）、查询界面（Boundary）、查询控制（Control）、车次信息（Entity）；消息按时间顺序自上而下传递 -->
+
+<h5 id="_33">分析和建立分析类模型</h5>
+<p>从各用例的交互模型中汇总得到软件需求的分析类模型。</p>
+<p><strong>步骤</strong>：</p>
+<ol>
+<li><strong>确定分析类</strong>：</li>
+<li>用例模型中的外部执行者应作为分析类图中的类；</li>
+<li>各用例顺序图中出现的对象所对应的类属于分析类。</li>
+<li><strong>确定分析类的职责</strong>：</li>
+<li>每个分析类都有其职责，需提供相关服务；</li>
+<li>对象接收的消息与其承担的职责一一对应；</li>
+<li>可用类的方法名表示职责，并用简短自然语言详细刻画。</li>
+<li><strong>确定分析类的属性</strong>：</li>
+<li>取决于类需要持久保存哪些信息；</li>
+<li>顺序图中对象发送和接收的消息参数往往意味着相应类可能需要保存的属性。</li>
+<li><strong>确定分析类之间的关系</strong>：</li>
+<li>包括继承、关联、聚合、组合、依赖等；</li>
+<li>若顺序图中存在从类A对象到类B对象的消息传递，则A和B间可能存在关联、依赖、聚合或组合关系；</li>
+<li>若多个类存在一般和特殊关系，可标识继承关系。</li>
+<li><strong>绘制分析类图</strong>：</li>
+<li>直观描述系统中的分析类、每个类的属性和职责、不同类之间的关系；</li>
+<li>若系统规模较大，可分子系统绘制分析类图。</li>
+</ol>
+<blockquote>
+<p><strong>示例：Mini-12306分析类图</strong>
+分析类可能包括：旅客（Passenger）、售票员（TicketSeller）、系统管理员（Administrator）、车票（Ticket）、订单（Order）、车次（Train）、支付（Payment）、用户信息库（UserLibrary）、车次信息库（TrainLibrary）等。类之间存在关联（如旅客与订单）、聚合（如订单与车票）等关系。</p>
+</blockquote>
+<!-- 图：Mini-12306分析类图示意——展示旅客、售票员、系统管理员、车票、订单、车次、支付等分析类及其关联、聚合、继承关系 -->
+
+<h5 id="_34">分析和建立软件需求的状态模型</h5>
+<p>用UML状态图描述对象的状态模型，刻画对象拥有哪些状态、状态如何受事件影响而变化。</p>
+<p><strong>注意两点</strong>：</p>
+<ul>
+<li>状态模型是针对对象而言的，而非针对分析类；</li>
+<li>无需为所有类对象建立状态模型，只需针对具有复杂状态的对象建立。</li>
+</ul>
+<h4 id="7-case">7. 支持需求分析的CASE工具</h4>
+<ul>
+<li><strong>CodeArts Modeling</strong>：华为研制，支持UML建模；</li>
+<li><strong>Microsoft Visio</strong>：绘图工具，可绘制UML图；</li>
+<li><strong>IBM Rational Rose</strong>：面向对象统一建模语言的可视化建模工具；</li>
+<li><strong>StarUML</strong>：开放源码的UML建模工具。</li>
+</ul>
+<h4 id="8_1">8. 软件需求文档模板（分析阶段）</h4>
+<table>
+<thead>
+<tr>
+<th>章节</th>
+<th>主要内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 引言</td>
+<td>编写目标、读者对象、文档概述、术语定义、参考文献</td>
+</tr>
+<tr>
+<td>2. 软件系统概述</td>
+<td>软件产品概述、用户特征、设计和实现约束、假设与依赖</td>
+</tr>
+<tr>
+<td>3. 功能性需求描述</td>
+<td>软件功能概述、需求的用例模型、需求的分析模型</td>
+</tr>
+<tr>
+<td>4. 非功能性需求</td>
+<td>质量需求、约束需求</td>
+</tr>
+<tr>
+<td>5. 界面需求</td>
+<td>用户界面要求</td>
+</tr>
+<tr>
+<td>6. 接口定义</td>
+<td>软硬件接口、外部系统接口</td>
+</tr>
+<tr>
+<td>7. 进度要求</td>
+<td>各阶段交付时间</td>
+</tr>
+<tr>
+<td>8. 交付要求</td>
+<td>交付形式和验收标准</td>
+</tr>
+<tr>
+<td>9. 验收要求</td>
+<td>验收依据和流程</td>
+</tr>
+</tbody>
+</table>
+<p>软件需求模型是文档中的重要组成部分。</p>
+<h4 id="9_2">9. 撰写软件需求文档的注意事项</h4>
+<ul>
+<li><strong>遵循规范</strong>：按照规范撰写软件需求文档；</li>
+<li><strong>图文并茂</strong>：将软件需求模型与自然语言描述结合；</li>
+<li><strong>完整表述</strong>：给出功能性和非功能性需求的完整描述；</li>
+<li><strong>共同参与</strong>：需求工程师与用户、客户等共同参与撰写；</li>
+<li><strong>语言简练</strong>：便于阅读和理解；</li>
+<li><strong>前后一致</strong>：对同一需求的表述前后一致，不产生矛盾。</li>
+</ul>
+<h4 id="10_2">10. 分析软件需求的输出</h4>
+<ol>
+<li><strong>软件原型</strong>：以可运行软件形式直观展示业务工作流程、操作界面、输入输出等；</li>
+<li><strong>软件需求模型</strong>：以可视化图形方式从多个视角描述功能性需求，包括用例模型、交互模型、分析类模型、状态模型等；</li>
+<li><strong>软件需求文档</strong>：图文并茂，结合需求模型和自然语言描述，详尽刻画功能性和非功能性需求、优先级列表等。</li>
+</ol>
+<h4 id="11_2">11. 软件需求评审的步骤</h4>
+<ol>
+<li>阅读和汇报软件需求制品；</li>
+<li>收集和整理问题；</li>
+<li>讨论和达成一致；</li>
+<li>纳入配置。</li>
+</ol>
+<h5 id="_35">评审软件需求的内容</h5>
+<p><strong>内容维度</strong>：</p>
+<ul>
+<li><strong>内容完整性</strong>：是否包含用户和客户的所有需求；</li>
+<li><strong>内容正确性</strong>：是否客观、正确地反映用户和客户的实际期望；</li>
+<li><strong>内容准确性</strong>：是否准确地反映用户和客户的期望和要求；</li>
+<li><strong>内容一致性</strong>：所描述的需求是否存在不一致；</li>
+<li><strong>内容多余性</strong>：所描述的需求是否都是用户所期望的；</li>
+<li><strong>内容可追踪性</strong>：每一项需求是否可追踪。</li>
+</ul>
+<p><strong>形式维度</strong>：</p>
+<ul>
+<li><strong>文档规范性</strong>：是否遵循文档规范；</li>
+<li><strong>图符规范性</strong>：UML图符使用是否正确；</li>
+<li><strong>表述可读性</strong>：文字表述是否简洁、可读性好；</li>
+<li><strong>图表一致性</strong>：图表引用是否正确。</li>
+</ul>
+<h4 id="12_2">12. 如何解决软件需求问题</h4>
+<table>
+<thead>
+<tr>
+<th>问题类型</th>
+<th>解决方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>遗漏的软件需求</strong></td>
+<td>再次征求用户、客户、领域专家意见，补充遗漏需求</td>
+</tr>
+<tr>
+<td><strong>无源头的软件需求</strong></td>
+<td>剔除或暂时不考虑，或置于低优先级</td>
+</tr>
+<tr>
+<td><strong>不一致、相冲突的软件需求</strong></td>
+<td>寻找更高级别的用户或客户，由他们最终确定</td>
+</tr>
+<tr>
+<td><strong>不正确和不准确的软件需求</strong></td>
+<td>与用户、客户、领域专家深入沟通，正确理解需求内涵</td>
+</tr>
+<tr>
+<td><strong>不规范的软件需求文档</strong></td>
+<td>对照规范标准和模板重新撰写</td>
+</tr>
+<tr>
+<td><strong>不规范和不正确的软件需求模型</strong></td>
+<td>学习UML图符和模型用法，绘制正确规范的模型</td>
+</tr>
+<tr>
+<td><strong>费解的软件需求文档</strong></td>
+<td>消除冗余表述，提高简洁性，梳理和组织文档格式</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_36">二、相关真题与解析</h2>
+<h3 id="12019">题目1（来源：2019年软件工程考试卷）</h3>
+<p><strong>原题：</strong> UML 2.0 中顺序图和协作图（通信图）的定义及区别。</p>
+<p><strong>解析/答案：</strong></p>
+<p><strong>定义：</strong></p>
+<ul>
+<li><strong>顺序图（Sequence Diagram）</strong>：UML交互图的一种，强调对象间消息传递的时间顺序。图中纵向为时间轴，对象沿顶部横向排列，每个对象下方有一条生命线（虚线），消息按时间先后顺序从上到下以有向边表示。</li>
+<li><strong>协作图/通信图（Communication Diagram）</strong>：UML交互图的一种，强调对象间的组织结构和合作关系。图中节点表示对象，对象之间的连接称为连接器，连接器上可标注一到多条带序号的消息，序号体现消息执行的先后次序。</li>
+</ul>
+<p><strong>区别：</strong></p>
+<table>
+<thead>
+<tr>
+<th>对比维度</th>
+<th>顺序图</th>
+<th>通信图</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>核心关注点</strong></td>
+<td>消息传递的时间顺序</td>
+<td>对象间的合作关系和结构</td>
+</tr>
+<tr>
+<td><strong>时间表示</strong></td>
+<td>通过纵轴明确体现时间先后</td>
+<td>通过消息多层序号体现执行顺序</td>
+</tr>
+<tr>
+<td><strong>对象布局</strong></td>
+<td>对象沿顶部横向排列</td>
+<td>对象以网络状/拓扑结构排列</td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>刻画用例或场景的动作序列；业务分析和需求建模阶段优先考虑</td>
+<td>刻画软件内部某项功能的实现构想；设计和实现阶段优先考虑</td>
+</tr>
+<tr>
+<td><strong>等价性</strong></td>
+<td>二者语义等价，可相互转换</td>
+<td>二者语义等价，可相互转换</td>
+</tr>
+</tbody>
+</table>
+<p><strong>联系：</strong></p>
+<p>二者同属于UML交互图，表达能力相同，均可描述对象间如何通过消息传递协作完成用例功能。在需求分析阶段，通常优先考虑顺序图，因为它更直观地展示交互时序，便于与用户沟通。</p>
+<hr />
+<h3 id="22020">题目2（来源：2020年软件工程期末）</h3>
+<p><strong>原题：</strong> 发帖子系统。输入帖子内容：访客在表单输入文字，系统对其检查，检查无误后，将内容存入文件。显示帖子内容：读出文件，将内容进行处理，以一定格式显示在屏幕上。画出该子系统的数据流图，并将其转化为软件结构图。</p>
+<p><strong>解析/答案：</strong></p>
+<h5 id="1-dfd">1. 数据流图（DFD）</h5>
+<p><strong>顶级数据流图（0级DFD）</strong>：</p>
+<!-- 图：发帖子系统顶级DFD——外部实体“访客”向“发帖子系统”输入“帖子文字”；系统输出“显示内容”给“访客”；系统与“帖子文件”数据存储交互 -->
+
+<ul>
+<li>外部实体：<strong>访客</strong></li>
+<li>转换（系统）：<strong>发帖子系统</strong></li>
+<li>数据流：</li>
+<li>访客 → 发帖子系统：帖子文字</li>
+<li>发帖子系统 → 访客：显示内容</li>
+<li>数据存储：<strong>帖子文件</strong></li>
+<li>数据流：</li>
+<li>发帖子系统 ↔ 帖子文件：帖子记录</li>
+</ul>
+<p><strong>1级数据流图</strong>：</p>
+<p>将“发帖子系统”精化为两个主要转换：</p>
+<ul>
+<li><strong>输入帖子内容</strong>：接收访客输入的帖子文字，进行合法性检查；</li>
+<li><strong>显示帖子内容</strong>：从帖子文件读取记录，进行处理，按格式显示。</li>
+</ul>
+<!-- 图：发帖子系统1级DFD——外部实体“访客”分别与两个转换交互；转换“输入帖子内容”接收“帖子文字”，输出“合法帖子记录”到数据存储“帖子文件”；转换“显示帖子内容”从“帖子文件”读取“帖子记录”，输出“显示内容”给访客 -->
+
+<ul>
+<li>外部实体：<strong>访客</strong></li>
+<li>转换：</li>
+<li><strong>输入帖子内容</strong></li>
+<li><strong>显示帖子内容</strong></li>
+<li>数据存储：<strong>帖子文件</strong></li>
+<li>数据流：</li>
+<li>访客 → 输入帖子内容：帖子文字</li>
+<li>输入帖子内容 → 帖子文件：合法帖子记录</li>
+<li>帖子文件 → 显示帖子内容：帖子记录</li>
+<li>显示帖子内容 → 访客：显示内容</li>
+</ul>
+<h5 id="2_3">2. 转化为软件结构图</h5>
+<p>根据变换型数据流图映射为软件结构图的方法：</p>
+<ul>
+<li><strong>传入路径</strong>：从外部输入“帖子文字”到“输入帖子内容”转换；</li>
+<li><strong>变换中心</strong>：合法性检查、内容处理；</li>
+<li><strong>传出路径</strong>：从“显示帖子内容”转换到外部输出“显示内容”。</li>
+</ul>
+<p>软件结构图可设计为顶层模块“发帖子系统”，下层分为：</p>
+<pre><code>发帖子系统
+├── 输入帖子内容
+│   ├── 获取帖子文字
+│   └── 检查帖子内容
+├── 显示帖子内容
+│   ├── 读取帖子文件
+│   ├── 处理帖子内容
+│   └── 格式化显示
+└── 文件管理
+    ├── 写入帖子文件
+    └── 读取帖子文件
+</code></pre>
+<!-- 图：发帖子系统软件结构图——顶层为“发帖子系统”，其下分为“输入帖子内容”“显示帖子内容”“文件管理”三个模块；各模块再细分若干子模块 -->
+
+<hr />
+<h3 id="32022-a">题目3（来源：2022年上软件工程试题-A卷）</h3>
+<p><strong>原题：</strong> 某医院拟委托软件公司开发一套预约挂号管理系统，以便为患者提供更好的就医体验，为医院提供更加科学的预约管理。系统的主要功能包括：注册登录，信息浏览，账号管理，预约挂号，查询与取消预约，号源管理，报告查询，预约管理，报表管理和信用管理等。</p>
+<p>预约人员（患者）登录系统后发起预约挂号请求，进入预约界面。进行预约挂号时使用数据库访问类获取医生的相关信息，在数据库中调用医生列表，并调取医生出诊时段表，将医生出诊时段反馈到预约界面，并显示给预约人员；预约人员选择医生及就诊时间后确认预约，系统返回预约结果，并向用户显示是否预约成功。</p>
+<p><strong>1. 采用面向对象方法对预约挂号管理系统进行需求分析，构建用例图。（4分）</strong></p>
+<p><strong>2. 采用面向对象方法对预约挂号过程进行分析设计，构建顺序图。（4分）</strong></p>
+<p><strong>3. 简要说明协作图在描述对象之间的动态交互关系时和顺序图存在哪些区别。（2分）</strong></p>
+<p><strong>解析/答案：</strong></p>
+<h4 id="1_3">1. 用例图</h4>
+<p><strong>识别执行者（Actor）</strong>：</p>
+<ul>
+<li><strong>患者</strong>：注册登录、信息浏览、账号管理、预约挂号、查询与取消预约、报告查询；</li>
+<li><strong>医生/医院工作人员</strong>：号源管理、预约管理、报告上传/管理；</li>
+<li><strong>系统管理员</strong>：账号管理、报表管理、信用管理、系统配置。</li>
+</ul>
+<p><strong>识别用例（Use Case）</strong>：</p>
+<ul>
+<li>注册登录</li>
+<li>信息浏览</li>
+<li>账号管理</li>
+<li>预约挂号</li>
+<li>查询与取消预约</li>
+<li>号源管理</li>
+<li>报告查询</li>
+<li>预约管理</li>
+<li>报表管理</li>
+<li>信用管理</li>
+</ul>
+<p><strong>用例间关系</strong>：</p>
+<ul>
+<li>“预约挂号”包含“查询医生信息”、“查询出诊时段”、“确认预约”等子功能，可用 <code>《include》</code> 关系；</li>
+<li>“查询与取消预约”可扩展“预约挂号”用例，或在查询基础上进行取消操作，可用 <code>《extend》</code> 关系。</li>
+</ul>
+<!-- 图：预约挂号管理系统用例图——边界框标注“预约挂号管理系统”；框外左侧为患者，右侧为医生/医院工作人员，上方为系统管理员；框内用例包括注册登录、信息浏览、账号管理、预约挂号、查询与取消预约、号源管理、报告查询、预约管理、报表管理、信用管理；预约挂号与查询医生信息、确认预约之间用《include》连接 -->
+
+<h4 id="2_4">2. 顺序图</h4>
+<p><strong>预约挂号过程涉及的对象</strong>：</p>
+<ul>
+<li><strong>患者</strong>（Actor）</li>
+<li><strong>预约界面</strong>（边界类，Boundary）</li>
+<li><strong>预约控制</strong>（控制类，Control）</li>
+<li><strong>数据库访问类</strong>（边界类/实体类，负责与数据库交互）</li>
+<li><strong>医生信息</strong>（实体类，Entity）</li>
+<li><strong>出诊时段表</strong>（实体类，Entity）</li>
+<li><strong>预约记录</strong>（实体类，Entity）</li>
+</ul>
+<p><strong>消息交互序列（从上到下）</strong>：</p>
+<ol>
+<li>患者 → 预约界面：登录/发起预约挂号请求</li>
+<li>预约界面 → 预约控制：提交预约请求</li>
+<li>预约控制 → 数据库访问类：获取医生列表</li>
+<li>数据库访问类 → 医生信息：查询医生信息</li>
+<li>医生信息 → 数据库访问类：返回医生列表</li>
+<li>数据库访问类 → 预约控制：返回医生列表</li>
+<li>预约控制 → 预约界面：显示医生列表</li>
+<li>预约界面 → 患者：展示医生列表</li>
+<li>患者 → 预约界面：选择医生</li>
+<li>预约界面 → 预约控制：提交选择医生</li>
+<li>预约控制 → 数据库访问类：调取医生出诊时段表</li>
+<li>数据库访问类 → 出诊时段表：查询出诊时段</li>
+<li>出诊时段表 → 数据库访问类：返回出诊时段</li>
+<li>数据库访问类 → 预约控制：返回出诊时段</li>
+<li>预约控制 → 预约界面：显示出诊时段</li>
+<li>预约界面 → 患者：展示出诊时段</li>
+<li>患者 → 预约界面：选择就诊时间并确认预约</li>
+<li>预约界面 → 预约控制：提交确认预约</li>
+<li>预约控制 → 数据库访问类：创建预约记录</li>
+<li>数据库访问类 → 预约记录：保存预约信息</li>
+<li>预约记录 → 数据库访问类：返回保存结果</li>
+<li>数据库访问类 → 预约控制：返回预约结果</li>
+<li>预约控制 → 预约界面：返回预约结果</li>
+<li>预约界面 → 患者：显示是否预约成功</li>
+</ol>
+<!-- 图：预约挂号顺序图——从左到右依次为：患者（Actor）、预约界面（Boundary）、预约控制（Control）、数据库访问类（Boundary/Entity）、医生信息（Entity）、出诊时段表（Entity）、预约记录（Entity）；纵向为时间轴，消息按上述序号自上而下传递；对象下方为生命线，消息发送期间有活跃期矩形 -->
+
+<h4 id="3_2">3. 协作图与顺序图的区别</h4>
+<table>
+<thead>
+<tr>
+<th>对比维度</th>
+<th>顺序图</th>
+<th>协作图</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>关注重点</strong></td>
+<td>消息传递的时间顺序</td>
+<td>对象间的合作关系和链接结构</td>
+</tr>
+<tr>
+<td><strong>布局方式</strong></td>
+<td>对象横向排列，时间纵向推进</td>
+<td>对象以拓扑结构排列，通过连接器连接</td>
+</tr>
+<tr>
+<td><strong>消息表示</strong></td>
+<td>用带箭头的有向边直接表示，按时间上下排列</td>
+<td>在连接器上标注带序号的消息</td>
+</tr>
+<tr>
+<td><strong>适用阶段</strong></td>
+<td>需求分析和业务建模阶段更常用</td>
+<td>设计和实现阶段更常用</td>
+</tr>
+<tr>
+<td><strong>等价性</strong></td>
+<td>二者可相互转换，表达能力相同</td>
+<td>二者可相互转换，表达能力相同</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="42022-ab">题目4（来源：2022年上软件工程试题-A卷/B卷）</h3>
+<p><strong>原题：</strong> 现准备为某银行开发一个信用卡管理系统CCMS，该系统的基本功能为：</p>
+<p>（1）信用卡申请：非信用卡客户填写信用卡申请表，说明所要申请的信用卡类型及申请者的基本信息，并提交给CCMS。如果信用卡申请被银行接受，CCMS将记录该客户的基本信息，并发送确认函给该客户，告知客户信用卡的有效期及信贷限额；否则该客户将会收到一封拒绝函。非信用卡客户收到确认函后，便成为信用卡客户。</p>
+<p>（2）信用卡激活：信用卡客户向CCMS提交激活请求，用信用卡号和密码激活该信用卡。激活操作结束后，CCMS将激活通知发送给客户，告知客户其信用卡是否被成功激活。</p>
+<p>（3）信用卡客户信息管理：信用卡客户的个人信息可以在CCMS中进行在线管理，每位信用卡客户可以在线查询和修改个人信息。</p>
+<p>（4）交易信息查询：信用卡客户使用信用卡进行的每一笔交易都会记录在CCMS中。信用卡客户可以通过CCMS查询并核实其交易信息（包括信用卡交易记录及交易额）。</p>
+<p><strong>1. 采用结构化分析方法，分层（不少于2层）构建该系统的数据流图。（6分）</strong></p>
+<p><strong>2. 将构建的系统数据流图转换成软件结构模型。（4分）</strong></p>
+<p><strong>解析/答案：</strong></p>
+<h4 id="1_4">1. 分层数据流图</h4>
+<p><strong>顶级数据流图（0级DFD）</strong>：</p>
+<ul>
+<li>外部实体：</li>
+<li><strong>非信用卡客户</strong></li>
+<li><strong>信用卡客户</strong></li>
+<li><strong>银行审核人员/系统</strong></li>
+<li>转换：<strong>信用卡管理系统（CCMS）</strong></li>
+<li>数据流：</li>
+<li>非信用卡客户 → CCMS：信用卡申请表</li>
+<li>CCMS → 非信用卡客户：确认函 / 拒绝函</li>
+<li>信用卡客户 → CCMS：激活请求、个人信息查询/修改请求、交易查询请求</li>
+<li>CCMS → 信用卡客户：激活通知、个人信息、交易信息</li>
+<li>CCMS ↔ 银行审核人员/系统：审核结果</li>
+</ul>
+<!-- 图：CCMS顶级DFD——中央为转换“信用卡管理系统（CCMS）”；左侧外部实体为“非信用卡客户”和“信用卡客户”，右侧为“银行审核人员”；数据流包括申请表、确认函、拒绝函、激活请求、激活通知、个人信息、交易信息等 -->
+
+<p><strong>1级数据流图</strong>：</p>
+<p>将CCMS精化为以下转换：</p>
+<ul>
+<li><strong>信用卡申请处理</strong></li>
+<li><strong>信用卡激活处理</strong></li>
+<li><strong>客户信息管理</strong></li>
+<li><strong>交易信息查询</strong></li>
+</ul>
+<p>数据存储：</p>
+<ul>
+<li><strong>客户信息库</strong></li>
+<li><strong>信用卡账户库</strong></li>
+<li><strong>交易记录库</strong></li>
+</ul>
+<p>数据流：</p>
+<ul>
+<li>非信用卡客户 → 信用卡申请处理：信用卡申请表</li>
+<li>信用卡申请处理 → 银行审核人员：待审核申请</li>
+<li>银行审核人员 → 信用卡申请处理：审核结果</li>
+<li>信用卡申请处理 → 非信用卡客户：确认函 / 拒绝函</li>
+<li>信用卡申请处理 → 客户信息库：客户基本信息（申请被接受时）</li>
+<li>信用卡申请处理 → 信用卡账户库：信用卡账户信息（申请被接受时）</li>
+<li>信用卡客户 → 信用卡激活处理：激活请求（信用卡号、密码）</li>
+<li>信用卡激活处理 → 信用卡账户库：更新激活状态</li>
+<li>信用卡激活处理 → 信用卡客户：激活通知</li>
+<li>信用卡客户 → 客户信息管理：查询/修改个人信息请求</li>
+<li>客户信息管理 ↔ 客户信息库：个人信息</li>
+<li>客户信息管理 → 信用卡客户：个人信息 / 修改结果</li>
+<li>信用卡客户 → 交易信息查询：交易查询请求</li>
+<li>交易信息查询 ↔ 交易记录库：交易记录</li>
+<li>交易信息查询 → 信用卡客户：交易信息</li>
+</ul>
+<!-- 图：CCMS 1级DFD——中央为四个转换：信用卡申请处理、信用卡激活处理、客户信息管理、交易信息查询；外部实体位于边界框外；三个数据存储位于边界框内或边界上；数据流连接各元素 -->
+
+<p><strong>2级数据流图（以“信用卡申请处理”为例）</strong>：</p>
+<p>可将“信用卡申请处理”进一步精化为：</p>
+<ul>
+<li><strong>接收申请表</strong></li>
+<li><strong>审核申请</strong></li>
+<li><strong>生成确认函/拒绝函</strong></li>
+<li><strong>记录客户信息</strong></li>
+</ul>
+<p>数据流：</p>
+<ul>
+<li>非信用卡客户 → 接收申请表：信用卡申请表</li>
+<li>接收申请表 → 审核申请：申请表信息</li>
+<li>审核申请 → 银行审核人员：待审核申请</li>
+<li>银行审核人员 → 审核申请：审核结果</li>
+<li>审核申请 → 生成确认函/拒绝函：审核结果 + 申请信息</li>
+<li>生成确认函/拒绝函 → 非信用卡客户：确认函 / 拒绝函</li>
+<li>生成确认函/拒绝函 → 记录客户信息：客户基本信息 + 信用卡信息</li>
+<li>记录客户信息 → 客户信息库：客户基本信息</li>
+<li>记录客户信息 → 信用卡账户库：信用卡账户信息</li>
+</ul>
+<!-- 图：CCMS 2级DFD之信用卡申请处理——展示接收申请表、审核申请、生成确认函/拒绝函、记录客户信息四个转换；外部实体为非信用卡客户和银行审核人员；数据存储为客户信息库和信用卡账户库 -->
+
+<h4 id="2_5">2. 转换为软件结构模型</h4>
+<p>根据事务型数据流图映射为软件结构图的方法：</p>
+<ul>
+<li><strong>事务中心</strong>：CCMS系统根据用户请求类型（申请、激活、信息管理、交易查询）选择不同处理路径。</li>
+</ul>
+<p>软件结构图：</p>
+<pre><code>信用卡管理系统（CCMS）
+├── 事务调度模块
+│   └── 根据请求类型分发到相应处理模块
+├── 信用卡申请处理模块
+│   ├── 接收申请表
+│   ├── 审核申请
+│   ├── 生成确认函/拒绝函
+│   └── 记录客户信息
+├── 信用卡激活处理模块
+│   ├── 验证信用卡号和密码
+│   ├── 更新激活状态
+│   └── 发送激活通知
+├── 客户信息管理模块
+│   ├── 查询个人信息
+│   ├── 修改个人信息
+│   └── 更新客户信息库
+└── 交易信息查询模块
+    ├── 接收交易查询请求
+    ├── 检索交易记录
+    └── 返回交易信息
+</code></pre>
+<!-- 图：CCMS软件结构图——顶层为“信用卡管理系统（CCMS）”，下层为事务调度模块和四个功能处理模块；每个功能模块再细分为若干子模块 -->
+
+<hr />
+<h3 id="52022-ab">题目5（来源：2022年上软件工程试题-A卷/B卷）</h3>
+<p><strong>原题：</strong> 软件系统建模是软件开发过程中的重要环节，通过构建软件系统模型可以帮助系统开发人员理解系统、抽取业务过程和管理系统的复杂性，也可以方便各类人员之间的交流。软件系统建模是在系统需求分析和系统实现之间架起的一座桥梁，系统开发人员按照软件系统模型开发出符合设计目标的软件系统，并基于该模型进行软件的维护和改进。</p>
+<p><strong>2. 说明软件系统开发中常用的建模方法有哪几类？阐述每种方法的特点及其适用范围。（5分）</strong></p>
+<p><strong>解析/答案：</strong></p>
+<p>软件系统开发中常用的建模方法主要有以下几类：</p>
+<h4 id="1_5">1. 结构化建模方法</h4>
+<p><strong>特点</strong>：</p>
+<ul>
+<li>以数据流为核心，认为软件功能体现为对数据的加工和处理；</li>
+<li>采用自顶向下、逐步求精的方式分解系统功能；</li>
+<li>主要建模工具为数据流图（DFD）、数据字典、结构化英语、判定表、判定树等；</li>
+<li>强调功能分解，适合数据密集型、流程清晰的系统。</li>
+</ul>
+<p><strong>适用范围</strong>：</p>
+<ul>
+<li>数据处理系统、事务处理系统；</li>
+<li>业务流程相对稳定、功能可清晰分解的系统；</li>
+<li>如银行柜台系统、财务管理系统、库存管理系统等。</li>
+</ul>
+<h4 id="2_6">2. 面向对象建模方法</h4>
+<p><strong>特点</strong>：</p>
+<ul>
+<li>以对象为核心，认为系统由对象及其交互构成；</li>
+<li>采用类、对象、继承、多态、消息等概念抽象现实世界；</li>
+<li>采用统一建模语言UML，可从结构、行为、用例、部署等多个视点建模；</li>
+<li>强调复用、封装、多态，模型可平滑过渡到设计和实现。</li>
+</ul>
+<p><strong>适用范围</strong>：</p>
+<ul>
+<li>复杂、大规模、需求易变的软件系统；</li>
+<li>需要高度复用和可维护性的系统；</li>
+<li>如银行信用卡管理系统、医院预约挂号系统、电商平台等。</li>
+</ul>
+<h4 id="3_3">3. 形式化建模方法</h4>
+<p><strong>特点</strong>：</p>
+<ul>
+<li>基于严格的数学符号和逻辑规则描述系统；</li>
+<li>具有精确的语义，可进行严格的验证和分析；</li>
+<li>学习成本高，建模和验证工具复杂；</li>
+<li>可消除自然语言的二义性。</li>
+</ul>
+<p><strong>适用范围</strong>：</p>
+<ul>
+<li>对安全性、可靠性要求极高的系统；</li>
+<li>如航空控制系统、轨道交通信号系统、核电站控制系统等；</li>
+<li>常用于关键算法的验证。</li>
+</ul>
+<h4 id="4_3">4. 基于原型的建模方法</h4>
+<p><strong>特点</strong>：</p>
+<ul>
+<li>快速构建可运行或可视化的系统原型；</li>
+<li>通过用户与原型的交互来确认和导出需求；</li>
+<li>直观、易于理解，便于用户参与；</li>
+<li>原型可能不够精确，主要关注界面和流程。</li>
+</ul>
+<p><strong>适用范围</strong>：</p>
+<ul>
+<li>需求不明确的创新项目；</li>
+<li>用户难以准确表达需求的场景；</li>
+<li>如新型互联网应用、移动App、交互密集型系统等。</li>
+</ul>
+<h4 id="5_3">5. 基于场景的建模方法</h4>
+<p><strong>特点</strong>：</p>
+<ul>
+<li>通过用户故事、用例、场景等描述系统在不同情况下的行为；</li>
+<li>以用户为中心，关注系统如何帮助用户达成目标；</li>
+<li>易于与用户沟通，便于确认需求。</li>
+</ul>
+<p><strong>适用范围</strong>：</p>
+<ul>
+<li>需求获取和确认阶段；</li>
+<li>面向用户的交互式系统；</li>
+<li>常与面向对象方法结合使用（如UML用例图、用户故事）。</li>
+</ul>
+<p><strong>总结比较表：</strong></p>
+<table>
+<thead>
+<tr>
+<th>建模方法</th>
+<th>核心抽象</th>
+<th>主要工具</th>
+<th>优点</th>
+<th>适用范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>结构化方法</td>
+<td>数据、处理过程</td>
+<td>数据流图、数据字典</td>
+<td>直观、流程清晰</td>
+<td>数据密集型系统</td>
+</tr>
+<tr>
+<td>面向对象方法</td>
+<td>对象、类、交互</td>
+<td>UML图</td>
+<td>贴近现实、可复用、易维护</td>
+<td>复杂大规模系统</td>
+</tr>
+<tr>
+<td>形式化方法</td>
+<td>数学符号、逻辑</td>
+<td>Z语言、Petri网、VDM</td>
+<td>精确、可验证</td>
+<td>高安全可靠性系统</td>
+</tr>
+<tr>
+<td>原型方法</td>
+<td>可运行原型</td>
+<td>原型工具、Mockup</td>
+<td>直观、用户参与</td>
+<td>需求不明确的创新项目</td>
+</tr>
+<tr>
+<td>场景方法</td>
+<td>用例、用户故事</td>
+<td>用例图、用户故事卡</td>
+<td>以用户为中心</td>
+<td>需求获取与确认</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="62022-a">题目6（来源：2022年上软件工程试题-A卷）</h3>
+<p><strong>原题：</strong> 报表处理系统要求用户输入处理报表的日期，日期限制在2017年7月至2022年6月，即系统只能对该时间段内的报表进行处理，如日期不在此范围内，则显示“输入信息有误”等出错提示。系统日期规定由年、月的6位数字字符组成，前四位代表年，后两位代表月。</p>
+<p><strong>1. 采用等价划分法，设计报表日期检查的有效等价类和无效等价类；采用边界值分析法选择测试用例。（7分）</strong></p>
+<p><strong>2. 简要说明黑盒测试应用于软件测试的哪些阶段，黑盒测试和白盒测试有什么区别？（3分）</strong></p>
+<p><strong>解析/答案：</strong></p>
+<h4 id="1_6">1. 等价类划分与边界值分析</h4>
+<p><strong>输入条件分析</strong>：</p>
+<ul>
+<li>日期格式：6位数字字符，前4位为年，后2位为月；</li>
+<li>有效年份范围：2017 ≤ 年 ≤ 2022；</li>
+<li>有效月份范围：01 ≤ 月 ≤ 12；</li>
+<li>整体有效时间段：2017年7月至2022年6月。</li>
+</ul>
+<p><strong>有效等价类</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>等价类描述</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>V1</td>
+<td>2017年7月至2017年12月</td>
+<td>201707, 201712</td>
+</tr>
+<tr>
+<td>V2</td>
+<td>2018年1月至2018年12月</td>
+<td>201801, 201812</td>
+</tr>
+<tr>
+<td>V3</td>
+<td>2019年1月至2019年12月</td>
+<td>201901, 201912</td>
+</tr>
+<tr>
+<td>V4</td>
+<td>2020年1月至2020年12月</td>
+<td>202001, 202012</td>
+</tr>
+<tr>
+<td>V5</td>
+<td>2021年1月至2021年12月</td>
+<td>202101, 202112</td>
+</tr>
+<tr>
+<td>V6</td>
+<td>2022年1月至2022年6月</td>
+<td>202201, 202206</td>
+</tr>
+</tbody>
+</table>
+<p><strong>无效等价类</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>等价类描述</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>I1</td>
+<td>年份小于2017</td>
+<td>201606, 201612</td>
+</tr>
+<tr>
+<td>I2</td>
+<td>年份大于2022</td>
+<td>202307, 202312</td>
+</tr>
+<tr>
+<td>I3</td>
+<td>年份等于2017但月份小于7</td>
+<td>201701, 201706</td>
+</tr>
+<tr>
+<td>I4</td>
+<td>年份等于2022但月份大于6</td>
+<td>202207, 202212</td>
+</tr>
+<tr>
+<td>I5</td>
+<td>月份小于1（即00）</td>
+<td>201800, 202000</td>
+</tr>
+<tr>
+<td>I6</td>
+<td>月份大于12（即13-99）</td>
+<td>201813, 202215</td>
+</tr>
+<tr>
+<td>I7</td>
+<td>非6位数字字符（长度不对）</td>
+<td>20170, 20170707, 2017ab</td>
+</tr>
+<tr>
+<td>I8</td>
+<td>空输入</td>
+<td>""</td>
+</tr>
+</tbody>
+</table>
+<p><strong>边界值分析测试用例</strong>：</p>
+<p>边界值应重点测试有效范围的边界点及其邻点。</p>
+<p><strong>年份边界</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>测试用例</th>
+<th>输入</th>
+<th>预期结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T1</td>
+<td>201707</td>
+<td>有效（区间下界）</td>
+</tr>
+<tr>
+<td>T2</td>
+<td>201706</td>
+<td>无效（年份边界下界邻点）</td>
+</tr>
+<tr>
+<td>T3</td>
+<td>202206</td>
+<td>有效（区间上界）</td>
+</tr>
+<tr>
+<td>T4</td>
+<td>202207</td>
+<td>无效（年份边界上界邻点）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>月份边界</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>测试用例</th>
+<th>输入</th>
+<th>预期结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T5</td>
+<td>201801</td>
+<td>有效（月份下界）</td>
+</tr>
+<tr>
+<td>T6</td>
+<td>201800</td>
+<td>无效（月份下界邻点）</td>
+</tr>
+<tr>
+<td>T7</td>
+<td>201812</td>
+<td>有效（月份上界）</td>
+</tr>
+<tr>
+<td>T8</td>
+<td>201813</td>
+<td>无效（月份上界邻点）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>格式边界</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>测试用例</th>
+<th>输入</th>
+<th>预期结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T9</td>
+<td>201707</td>
+<td>有效（6位）</td>
+</tr>
+<tr>
+<td>T10</td>
+<td>20170</td>
+<td>无效（5位）</td>
+</tr>
+<tr>
+<td>T11</td>
+<td>2017070</td>
+<td>无效（7位）</td>
+</tr>
+<tr>
+<td>T12</td>
+<td>2017a7</td>
+<td>无效（含非数字字符）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2_7">2. 黑盒测试的应用阶段及与白盒测试的区别</h4>
+<p><strong>黑盒测试的应用阶段</strong>：</p>
+<p>黑盒测试主要应用于：</p>
+<ul>
+<li><strong>集成测试</strong>：测试模块之间的接口是否正确；</li>
+<li><strong>确认测试（系统测试）</strong>：验证软件是否满足需求规格说明书中定义的功能和性能；</li>
+<li><strong>验收测试</strong>：用户根据需求验收软件。</li>
+</ul>
+<blockquote>
+<p>注意：单元测试主要采用白盒测试，但也可结合黑盒测试进行接口测试。</p>
+</blockquote>
+<p><strong>黑盒测试与白盒测试的区别</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>对比维度</th>
+<th>黑盒测试</th>
+<th>白盒测试</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>测试依据</strong></td>
+<td>软件的功能和性能规格说明</td>
+<td>程序内部结构和代码逻辑</td>
+</tr>
+<tr>
+<td><strong>是否了解内部实现</strong></td>
+<td>不需要了解程序内部</td>
+<td>必须了解程序内部结构</td>
+</tr>
+<tr>
+<td><strong>测试对象</strong></td>
+<td>软件的外部功能和接口</td>
+<td>程序的内部执行路径和逻辑</td>
+</tr>
+<tr>
+<td><strong>常用方法</strong></td>
+<td>等价类划分、边界值分析、决策表、因果图、错误推测</td>
+<td>语句覆盖、分支覆盖、路径覆盖、基本路径测试</td>
+</tr>
+<tr>
+<td><strong>主要目的</strong></td>
+<td>验证功能是否符合需求</td>
+<td>发现代码中的逻辑错误和路径缺陷</td>
+</tr>
+<tr>
+<td><strong>适用阶段</strong></td>
+<td>集成测试、确认测试、验收测试</td>
+<td>单元测试、集成测试</td>
+</tr>
+<tr>
+<td><strong>优点</strong></td>
+<td>从用户角度出发，不依赖代码</td>
+<td>可深入发现代码级缺陷</td>
+</tr>
+<tr>
+<td><strong>缺点</strong></td>
+<td>可能遗漏内部逻辑错误</td>
+<td>成本高，无法保证需求覆盖</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_37">三、本章小结</h2>
+<ol>
+<li><strong>软件需求</strong>：来自软件利益相关方，表现为多种形式，具有隐式性、隐晦性、多源性、易变性、领域相关性和价值不均性等特点。</li>
+<li><strong>需求工程</strong>：基于工程化的手段支持需求的获取、分析、建模和文档化；一般过程包括获取、分析、文档化、确认和验证，以及贯穿始终的需求管理。</li>
+<li><strong>需求分析方法</strong>：</li>
+<li>结构化方法：以数据流图为核心，自顶向下、逐步求精；</li>
+<li>面向对象方法：以对象、类、消息、交互为核心，使用UML多视点建模。</li>
+<li><strong>UML图</strong>：用例图、类图、对象图、顺序图、通信图、状态图、活动图、构件图、部署图、包图等，各有不同的应用场景和建模重点。</li>
+<li><strong>需求输出</strong>：软件需求模型、软件需求文档、软件原型；需经过严格的评审，确保其完整性、正确性、准确性、一致性、可追溯性和可行性。</li>
+<li><strong>需求变更管理</strong>：包括变更管理、追溯管理和配置管理，以应对需求的易变性。</li>
+</ol>
+<hr />
+<blockquote>
+<p><strong>参考教材</strong>
+- 《软件需求（第三版）》，Karl E. Wiegers 著，清华大学出版社，2016。
+- 《需求工程基础——需求工程专业认证考试学习指南基础级/IREB标准（第二版）》，Klaus Pohl, Chris Rupp 著，清华大学出版社，2019。
+- 《软件需求与可视化模型》，Joy Beatty, Anthony Chen 著，清华大学出版社，2017。</p>
+</blockquote>
+<div class="footer">
+    <p><a href="index.html">← 返回索引</a></p>
+    <p>来源：软件工程课件（2026版）+ 2019/2020/2022上 期末试卷</p>
+</div>
+</div>
+</body>
+</html>
