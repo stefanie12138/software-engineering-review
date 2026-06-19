@@ -525,87 +525,43 @@ $$</p>
 <p>$$
 V(G) = E - N + 2
 $$</p>
-<p>其中 $$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$0 为流图边数，$$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$1 为流图节点数。</p>
-<p>对 Func 示例，流图 $$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$2，即有 4 条基本路径：</p>
+<p>其中 $E$ 为流图边数，$N$ 为流图节点数。</p>
+<p>对 Func 示例，流图 $V(G)=11-9+2=4$，即有 4 条基本路径：</p>
 <ol>
-<li>$$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$3（不进入 while 循环）</li>
-<li>$$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$4（进入 while，$$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$5 分支）</li>
-<li>$$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$6（进入 while，$$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$7 且 $$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$8 分支）</li>
-<li>$$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$9（进入 while，$$
-\text{单元测试} \rightarrow \text{集成测试} \rightarrow \text{确认测试} \rightarrow \text{其他测试（性能、安全、强度等）}
-$$0 且 $$
-\text{单元测试} \rightarrow \text{集成测试} \rightarrow \text{确认测试} \rightarrow \text{其他测试（性能、安全、强度等）}
-$$1 分支）</li>
+<li>$1 \rightarrow 11$（不进入 while 循环）</li>
+<li>$1 \rightarrow 2,3 \rightarrow 6 \rightarrow 7 \rightarrow 9 \rightarrow 10 \rightarrow 1 \rightarrow 11$（进入 while，$nSum>1$ 分支）</li>
+<li>$1 \rightarrow 2,3 \rightarrow 4,5 \rightarrow 10 \rightarrow 1 \rightarrow 11$（进入 while，$nSum \le 1$ 且 $nSum \ge -1$ 分支）</li>
+<li>$1 \rightarrow 2,3 \rightarrow 6 \rightarrow 8 \rightarrow 9 \rightarrow 10 \rightarrow 1 \rightarrow 11$（进入 while，$nSum \le 1$ 且 $nSum < -1$ 分支）</li>
 </ol>
 <p><strong>步骤 4：根据基本路径设计测试用例</strong></p>
 <table>
 <thead>
 <tr>
 <th>基本路径</th>
-<th>输入 $$
-\text{单元测试} \rightarrow \text{集成测试} \rightarrow \text{确认测试} \rightarrow \text{其他测试（性能、安全、强度等）}
-$$2</th>
+<th>输入 $(nPosX, nPosY)$</th>
 <th>预期执行路径</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>1-11</td>
-<td>$$
-\text{单元测试} \rightarrow \text{集成测试} \rightarrow \text{确认测试} \rightarrow \text{其他测试（性能、安全、强度等）}
-$$3</td>
+<td>$(-1, 任意值)$</td>
 <td>不进入循环</td>
 </tr>
 <tr>
 <td>1-2,3-4,5-10-1-11</td>
-<td>$$
-\text{单元测试} \rightarrow \text{集成测试} \rightarrow \text{确认测试} \rightarrow \text{其他测试（性能、安全、强度等）}
-$$4</td>
-<td>$$
-\text{单元测试} \rightarrow \text{集成测试} \rightarrow \text{确认测试} \rightarrow \text{其他测试（性能、安全、强度等）}
-$$5，走 then 分支</td>
+<td>$(1, 1)$</td>
+<td>$nSum=2>1$，走 then 分支</td>
 </tr>
 <tr>
 <td>1-2,3-6-7-9-10-1-11</td>
-<td>$$
-\text{单元测试} \rightarrow \text{集成测试} \rightarrow \text{确认测试} \rightarrow \text{其他测试（性能、安全、强度等）}
-$$6</td>
-<td>$$
-\text{单元测试} \rightarrow \text{集成测试} \rightarrow \text{确认测试} \rightarrow \text{其他测试（性能、安全、强度等）}
-$$7，走 else 中 $$
-\text{单元测试} \rightarrow \text{集成测试} \rightarrow \text{确认测试} \rightarrow \text{其他测试（性能、安全、强度等）}
-$$8 分支</td>
+<td>$(1, -1)$</td>
+<td>$nSum=0$，走 else 中 $nSum \ge -1$ 分支</td>
 </tr>
 <tr>
 <td>1-2,3-6-8-9-10-1-11</td>
-<td>$$
-\text{单元测试} \rightarrow \text{集成测试} \rightarrow \text{确认测试} \rightarrow \text{其他测试（性能、安全、强度等）}
-$$9</td>
-<td>$$
-V(G) = E - N + 2
-$$0，走 else 中 $$
-V(G) = E - N + 2
-$$1 分支</td>
+<td>$(1, -3)$</td>
+<td>$nSum=-2<-1$，走 else 中 $nSum<-1$ 分支</td>
 </tr>
 </tbody>
 </table>
@@ -674,9 +630,7 @@ $$1 分支</td>
 </thead>
 <tbody>
 <tr>
-<td>一个范围 $$
-V(G) = E - N + 2
-$$2</td>
+<td>一个范围 $(a,b)$</td>
 <td>有效类（范围内）、大于最大值、小于最小值</td>
 </tr>
 <tr>
@@ -693,74 +647,24 @@ $$2</td>
 </tr>
 </tbody>
 </table>
-<p><strong>示例</strong>：$$
-V(G) = E - N + 2
-$$3，当 $$
-V(G) = E - N + 2
-$$4 且 $$
-V(G) = E - N + 2
-$$5 时，$$
-V(G) = E - N + 2
-$$6；否则 $$
-V(G) = E - N + 2
-$$7。</p>
-<p>关于 $$
-V(G) = E - N + 2
-$$8 的等价类：$$
-V(G) = E - N + 2
-$$9、$$
-M = P + K \cdot e^{(c-d)}
-$$0、$$
-M = P + K \cdot e^{(c-d)}
-$$1。
-关于 $$
-M = P + K \cdot e^{(c-d)}
-$$2 的等价类：$$
-M = P + K \cdot e^{(c-d)}
-$$3、$$
-M = P + K \cdot e^{(c-d)}
-$$4、$$
-M = P + K \cdot e^{(c-d)}
-$$5。</p>
+<p><strong>示例</strong>：$z = \text{func}(x, y)$，当 $0 < x < 1024$ 且 $y=0$ 时，$z=-1$；否则 $z = x \cdot \lg(y)$。</p>
+<p>关于 $x$ 的等价类：$(0,1024)$、$(-\infty,0]$、$[1024,+\infty)$。
+关于 $y$ 的等价类：$\{0\}$、$(-\infty,0)$、$(0,+\infty)$。</p>
 <p>可设计 9 个测试用例覆盖这些等价类组合。</p>
 <h6 id="342">3.4.2 边界值分析法</h6>
 <p><strong>思想</strong>：软件更容易在输入边界上出现错误，因此重点选取边界及其邻近值作为测试用例。</p>
 <p><strong>原则</strong>：</p>
 <ul>
-<li>输入条件是范围 $$
-M = P + K \cdot e^{(c-d)}
-$$6：选取 $$
-M = P + K \cdot e^{(c-d)}
-$$7、$$
-M = P + K \cdot e^{(c-d)}
-$$8 以及紧挨 $$
-M = P + K \cdot e^{(c-d)}
-$$9 左右、$$
-V(G) = E - N + 2
-$$0 左右的值。</li>
+<li>输入条件是范围 $(a,b)$：选取 $a$、$b$ 以及紧挨 $a$ 左右、$b$ 左右的值。</li>
 <li>输入条件是一组数：选取最大、最小、次大、次小者。</li>
 <li>程序内部数据结构有界：设计用例检查该数据结构的边界。</li>
 </ul>
-<p>对上例 $$
-V(G) = E - N + 2
-$$1，边界值用例可包括：</p>
+<p>对上例 $z=\text{func}(x,y)$，边界值用例可包括：</p>
 <ul>
-<li>关于 $$
-V(G) = E - N + 2
-$$2：$$
-V(G) = E - N + 2
-$$3 和 $$
-V(G) = E - N + 2
-$$4。</li>
-<li>关于 $$
-V(G) = E - N + 2
-$$5：$$
-V(G) = E - N + 2
-$$6。</li>
+<li>关于 $x$：$-1, 0, 1$ 和 $1023, 1024, 1025$。</li>
+<li>关于 $y$：$-1, 0, 1$。</li>
 </ul>
-<p>组合后可形成 18 个测试用例（$$
-V(G) = E - N + 2
-$$7）。</p>
+<p>组合后可形成 18 个测试用例（$6 \times 3$）。</p>
 <h5 id="35-case">3.5 基于 CASE 与大模型的软件测试</h5>
 <ul>
 <li><strong>基于 CASE 的软件测试</strong>：利用测试数据产生器、运行测试程序、产生测试报告等工具支持测试。</li>
@@ -1001,21 +905,11 @@ M = P + K \cdot e^{(c-d)}
 $$</p>
 <p>其中：</p>
 <ul>
-<li>$$
-V(G) = E - N + 2
-$$8：生产性工作量。</li>
-<li>$$
-V(G) = E - N + 2
-$$9：经验常数。</li>
-<li>$$
-V(G) = 8 - 7 + 2 = 3
-$$0：复杂度（设计好坏和文档完整程度）。</li>
-<li>$$
-V(G) = 8 - 7 + 2 = 3
-$$1：对欲维护软件的熟悉程度。</li>
-<li>$$
-V(G) = 8 - 7 + 2 = 3
-$$2：自然常数。</li>
+<li>$P$：生产性工作量。</li>
+<li>$K$：经验常数。</li>
+<li>$c$：复杂度（设计好坏和文档完整程度）。</li>
+<li>$d$：对欲维护软件的熟悉程度。</li>
+<li>$e$：自然常数。</li>
 </ul>
 <p>软件维护工作量包括：</p>
 <ul>
@@ -1201,33 +1095,19 @@ $$2：自然常数。</li>
 <h4 id="1_2">（1）程序流程图</h4>
 <p>算法描述如下：</p>
 <ol>
-<li>开始，输入三个整数 $$
-V(G) = 8 - 7 + 2 = 3
-$$3、$$
-V(G) = 8 - 7 + 2 = 3
-$$4、$$
-V(G) = 8 - 7 + 2 = 3
-$$5。</li>
-<li>判断 $$
-V(G) = 8 - 7 + 2 = 3
-$$6 是否成立：<ul>
-<li>若成立，继续判断 $$
-V(G) = 8 - 7 + 2 = 3
-$$7；</li>
+<li>开始，输入三个整数 $a$、$b$、$c$。</li>
+<li>判断 $a+b>c$ 是否成立：<ul>
+<li>若成立，继续判断 $a+c>b$；</li>
 <li>若不成立，输出“不能构成三角形”。</li>
 </ul>
 </li>
-<li>判断 $$
-V(G) = 8 - 7 + 2 = 3
-$$8 是否成立：<ul>
-<li>若成立，继续判断 $$
-V(G) = 8 - 7 + 2 = 3
-$$9；</li>
+<li>判断 $a+c>b$ 是否成立：<ul>
+<li>若成立，继续判断 $b+c>a$；</li>
 <li>若不成立，输出“不能构成三角形”。</li>
 </ul>
 </li>
-<li>判断 $A = B + C$0 是否成立：<ul>
-<li>若成立，输出 $A = B + C$1、$A = B + C$2、$A = B + C$3 的值；</li>
+<li>判断 $b+c>a$ 是否成立：<ul>
+<li>若成立，输出 $a$、$b$、$c$ 的值；</li>
 <li>若不成立，输出“不能构成三角形”。</li>
 </ul>
 </li>
@@ -1237,32 +1117,32 @@ $$9；</li>
 
 <p>程序流程图可抽象为如下控制流节点：</p>
 <ul>
-<li>节点 1：开始 / 输入 $A = B + C$4</li>
-<li>节点 2：判定 $A = B + C$5</li>
-<li>节点 3：判定 $A = B + C$6</li>
-<li>节点 4：判定 $A = B + C$7</li>
-<li>节点 5：输出 $A = B + C$8</li>
+<li>节点 1：开始 / 输入 $a,b,c$</li>
+<li>节点 2：判定 $a+b>c$</li>
+<li>节点 3：判定 $a+c>b$</li>
+<li>节点 4：判定 $b+c>a$</li>
+<li>节点 5：输出 $a,b,c$</li>
 <li>节点 6：输出“不能构成三角形”</li>
 <li>节点 7：结束</li>
 </ul>
 <p>控制流边：</p>
 <ul>
-<li>$A = B + C$9</li>
-<li>$B=1, C=2$0（真），$B=1, C=2$1（假）</li>
-<li>$B=1, C=2$2（真），$B=1, C=2$3（假）</li>
-<li>$B=1, C=2$4（真），$B=1, C=2$5（假）</li>
-<li>$B=1, C=2$6</li>
-<li>$B=1, C=2$7</li>
+<li>$1 \rightarrow 2$</li>
+<li>$2 \rightarrow 3$（真），$2 \rightarrow 6$（假）</li>
+<li>$3 \rightarrow 4$（真），$3 \rightarrow 6$（假）</li>
+<li>$4 \rightarrow 5$（真），$4 \rightarrow 6$（假）</li>
+<li>$5 \rightarrow 7$</li>
+<li>$6 \rightarrow 7$</li>
 </ul>
 <h4 id="2_2">（2）环形复杂度</h4>
 <p>根据 McCabe 环形复杂度公式：</p>
 <p>$$
 V(G) = E - N + 2
 $$</p>
-<p>其中 $B=1, C=2$8 为控制流图边数，$B=1, C=2$9 为节点数。对上述控制流图：</p>
+<p>其中 $E$ 为控制流图边数，$N$ 为节点数。对上述控制流图：</p>
 <ul>
-<li>$A=3$0</li>
-<li>$A=3$1</li>
+<li>$E = 8$</li>
+<li>$N = 7$</li>
 </ul>
 <p>因此：</p>
 <p>$$
@@ -1272,19 +1152,17 @@ $$</p>
 <h4 id="3_2">（3）路径覆盖测试用例</h4>
 <p>根据上述控制流图，可识别出 4 条独立执行路径：</p>
 <ul>
-<li><strong>路径 1</strong>：$A=3$2（三条不等式均成立，构成三角形）</li>
-<li><strong>路径 2</strong>：$A=3$3（$A=3$4，不构成三角形）</li>
-<li><strong>路径 3</strong>：$A=3$5（$A=3$6 但 $A=3$7，不构成三角形）</li>
-<li><strong>路径 4</strong>：$A=3$8（前两条成立但 $A=3$9，不构成三角形）</li>
+<li><strong>路径 1</strong>：$1 \rightarrow 2 \rightarrow 3 \rightarrow 4 \rightarrow 5 \rightarrow 7$（三条不等式均成立，构成三角形）</li>
+<li><strong>路径 2</strong>：$1 \rightarrow 2 \rightarrow 6 \rightarrow 7$（$a+b \le c$，不构成三角形）</li>
+<li><strong>路径 3</strong>：$1 \rightarrow 2 \rightarrow 3 \rightarrow 6 \rightarrow 7$（$a+b>c$ 但 $a+c \le b$，不构成三角形）</li>
+<li><strong>路径 4</strong>：$1 \rightarrow 2 \rightarrow 3 \rightarrow 4 \rightarrow 6 \rightarrow 7$（前两条成立但 $b+c \le a$，不构成三角形）</li>
 </ul>
 <p>对应测试用例设计如下：</p>
 <table>
 <thead>
 <tr>
 <th>用例编号</th>
-<th>输入 $$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$00</th>
+<th>输入 $(a,b,c)$</th>
 <th>预期输出</th>
 <th>覆盖路径</th>
 </tr>
@@ -1292,33 +1170,25 @@ $$00</th>
 <tbody>
 <tr>
 <td>TC-1</td>
-<td>$$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$01</td>
+<td>$(3,4,5)$</td>
 <td>3, 4, 5</td>
 <td>路径 1</td>
 </tr>
 <tr>
 <td>TC-2</td>
-<td>$$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$02</td>
+<td>$(1,2,4)$</td>
 <td>不能构成三角形</td>
 <td>路径 2</td>
 </tr>
 <tr>
 <td>TC-3</td>
-<td>$$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$03</td>
+<td>$(2,4,1)$</td>
 <td>不能构成三角形</td>
 <td>路径 3</td>
 </tr>
 <tr>
 <td>TC-4</td>
-<td>$$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$04</td>
+<td>$(4,1,2)$</td>
 <td>不能构成三角形</td>
 <td>路径 4</td>
 </tr>
@@ -1326,28 +1196,10 @@ $$04</td>
 </table>
 <p>说明：</p>
 <ul>
-<li>TC-1：$$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$05、$$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$06、$$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$07，满足三角形不等式。</li>
-<li>TC-2：$$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$08，不满足第一条判定。</li>
-<li>TC-3：$$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$09 成立，但 $$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$10，不满足第二条判定。</li>
-<li>TC-4：$$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$11、$$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$12 均成立，但 $$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$13，不满足第三条判定。</li>
+<li>TC-1：$3+4>5$、$3+5>4$、$4+5>3$，满足三角形不等式。</li>
+<li>TC-2：$1+2=3 \le 4$，不满足第一条判定。</li>
+<li>TC-3：$2+4>1$ 成立，但 $2+1=3 \le 4$，不满足第二条判定。</li>
+<li>TC-4：$4+1>2$、$4+2>1$ 均成立，但 $1+2=3 \le 4$，不满足第三条判定。</li>
 </ul>
 <p>通过上述用例即可覆盖所有独立路径。</p>
 <hr />
@@ -1362,9 +1214,7 @@ $$13，不满足第三条判定。</li>
 <p><strong>输入条件</strong>：6 位数字字符，格式为 <code>YYYMM</code>，其中 <code>YYYY</code> 为年份，<code>MM</code> 为月份；有效日期范围为 2017 年 7 月（<code>201707</code>）至 2022 年 6 月（<code>202206</code>），含端点。</p>
 <p><strong>有效等价类</strong>：</p>
 <ul>
-<li>E1：日期格式正确（6 位数字字符），且 $$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$14。</li>
+<li>E1：日期格式正确（6 位数字字符），且 $201707 \le \text{日期} \le 202206$。</li>
 </ul>
 <p><strong>无效等价类</strong>：</p>
 <ul>
@@ -1372,18 +1222,10 @@ $$14。</li>
 <li>E3：输入包含非数字字符（如字母、符号、空格）。</li>
 <li>E4：年份小于 2017。</li>
 <li>E5：年份大于 2022。</li>
-<li>E6：年份为 2017，但月份小于 07（即 $$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$15）。</li>
-<li>E7：年份为 2022，但月份大于 06（即 $$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$16）。</li>
-<li>E8：月份小于 01（即 $$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$17）。</li>
-<li>E9：月份大于 12（即 $$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$18）。</li>
+<li>E6：年份为 2017，但月份小于 07（即 $01 \le MM \le 06$）。</li>
+<li>E7：年份为 2022，但月份大于 06（即 $07 \le MM \le 12$）。</li>
+<li>E8：月份小于 01（即 $MM = 00$）。</li>
+<li>E9：月份大于 12（即 $MM = 13, 14, \dots$）。</li>
 </ul>
 <blockquote>
 <p>注：等价类划分方式不唯一，只要覆盖“格式错误、年份越界、月份越界、范围边界”即可。</p>
@@ -1554,15 +1396,11 @@ $$18）。</li>
 <tbody>
 <tr>
 <td>测试用例</td>
-<td>$$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$19</td>
+<td>$(\text{输入数据},\text{前置条件},\text{测试步骤},\text{预期输出})$</td>
 </tr>
 <tr>
 <td>Cyclomatic 复杂度</td>
-<td>$$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$20</td>
+<td>$V(G) = E - N + 2$</td>
 </tr>
 <tr>
 <td>基本路径</td>
@@ -1570,9 +1408,7 @@ $$20</td>
 </tr>
 <tr>
 <td>维护工作量</td>
-<td>$$
-(\text{输入数据},\ \text{前置条件},\ \text{测试步骤},\ \text{预期输出})
-$$21</td>
+<td>$M = P + K \cdot e^{(c-d)}$</td>
 </tr>
 <tr>
 <td>维护类型</td>
