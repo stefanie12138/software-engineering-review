@@ -211,46 +211,52 @@ img { max-width: 100%; height: auto; display: block; margin: 1rem auto; }
               软件设计管理（变更、追溯、基线）
 </code></pre>
 <ol>
-<li><strong>软件体系结构设计</strong></li>
+<li>
+<p><strong>软件体系结构设计</strong></p>
+<ul>
 <li>从全局、宏观视角设计系统；</li>
 <li>确定构成要素（函数、方法、类、程序包）及其关系（依赖、交互）；</li>
 <li>职责分派、接口定义、交互协作行为；</li>
 <li>每个模块被视为“黑盒子”，关注可扩展、可维护、可重用、可移植、可互操作等。</li>
-</ol>
+</ul>
 <blockquote>
 <!-- 图：分层软件体系结构示意（界面层/业务层/服务层） -->
 </blockquote>
-<ol>
-<li><strong>用户界面设计</strong></li>
+</li>
+<li>
+<p><strong>用户界面设计</strong></p>
+<ul>
 <li>设计系统对外展示以及与用户交互的界面；</li>
 <li>明确输出（系统告知用户的信息）与输入（需要用户提供的信息）；</li>
-<li>
-<p>关注直观、友好、易于操作和理解。</p>
+<li>关注直观、友好、易于操作和理解。</li>
+</ul>
 </li>
 <li>
 <p><strong>软件详细设计</strong></p>
-</li>
+<ul>
 <li>对体系结构设计和用户界面设计进行细化、精化；</li>
 <li>获得面向实现的高质量设计模型；</li>
-<li>
-<p>包括构件/类设计、接口设计、算法设计、数据设计等。</p>
+<li>包括构件/类设计、接口设计、算法设计、数据设计等。</li>
+</ul>
 </li>
 <li>
 <p><strong>撰写设计文档</strong></p>
-</li>
-<li>
-<p>按照软件设计规格说明书的规范记录设计信息。</p>
+<ul>
+<li>按照软件设计规格说明书的规范记录设计信息。</li>
+</ul>
 </li>
 <li>
 <p><strong>软件设计评审</strong></p>
-</li>
-<li>
-<p>验证设计是否实现需求、分析设计质量、发现缺陷并协商解决。</p>
+<ul>
+<li>验证设计是否实现需求、分析设计质量、发现缺陷并协商解决。</li>
+</ul>
 </li>
 <li>
 <p><strong>软件设计管理</strong></p>
-</li>
+<ul>
 <li>变更管理、追溯管理、基线管理。</li>
+</ul>
+</li>
 </ol>
 <h4 id="5">5. 三类软件设计元素</h4>
 <table>
@@ -292,62 +298,66 @@ img { max-width: 100%; height: auto; display: block; margin: 1rem auto; }
 </ul>
 <p><strong>软件设计的基本原则</strong>：</p>
 <ol>
-<li><strong>抽象与逐步求精</strong>  </li>
+<li>
+<p><strong>抽象与逐步求精</strong>  </p>
+<ul>
 <li>抽象是忽略与当前目标无关部分、聚焦相关方面的策略；  </li>
 <li>软件设计是从高层抽象（体系结构）到低层抽象（详细设计）逐步过渡的“逐步求精”过程。</li>
-</ol>
+</ul>
 <blockquote>
 <!-- 图：体系结构→模块→算法的设计抽象层次变化 -->
 </blockquote>
-<ol>
-<li><strong>模块化、高内聚度、低耦合度</strong></li>
+</li>
+<li>
+<p><strong>模块化、高内聚度、低耦合度</strong></p>
+<ul>
 <li>将系统分解为一组相对独立的模块，每个模块实现单一功能；</li>
-<li><strong>内聚度（Cohesion）</strong>：模块内部各成分之间彼此结合的紧密程度，越高越好；<ul>
+<li><strong>内聚度（Cohesion）</strong>：模块内部各成分之间彼此结合的紧密程度，越高越好；</li>
 <li>偶然性内聚 → 逻辑性内聚 → 时间性内聚 → 过程性内聚 → 通讯性内聚 → 顺序性内聚 → <strong>功能性内聚</strong>（最高）。</li>
-</ul>
-</li>
-<li><strong>耦合度（Coupling）</strong>：模块之间的相关程度，越低越好；<ul>
+<li><strong>耦合度（Coupling）</strong>：模块之间的相关程度，越低越好；</li>
 <li>非直接耦合 → 数据耦合 → 控制耦合 → 特征耦合 → 外部耦合 → 公共耦合 → <strong>内容耦合</strong>（最强、应避免）。</li>
-</ul>
-</li>
 <li>好的设计追求“模块内部强内聚、模块之间低耦合”。</li>
-</ol>
+</ul>
 <blockquote>
 <!-- 图：模块分解与开发成本关系曲线 -->
 </blockquote>
-<ol>
-<li><strong>信息隐藏</strong></li>
+</li>
+<li>
+<p><strong>信息隐藏</strong></p>
+<ul>
 <li>模块应把内部信息对不需要知道的模块隐藏，只交换必要信息；</li>
 <li>优点：增强模块独立性、支持并行开发、减少错误传播、便于测试维护、便于增加新功能；</li>
-<li>
-<p>面向对象中通过 <code>public/private/protected</code> 实现。</p>
+<li>面向对象中通过 <code>public/private/protected</code> 实现。</li>
+</ul>
 </li>
 <li>
 <p><strong>关注点分离</strong></p>
-</li>
+<ul>
 <li>关注点是对概念、任务和目标某个侧面的聚焦（如结构、行为）；</li>
 <li>将不同性质的关注点分离开，在适当时间分别处理，再整合；</li>
-<li>
-<p>避免“胡子眉毛一把抓”。</p>
+<li>避免“胡子眉毛一把抓”。</li>
+</ul>
 </li>
 <li>
 <p><strong>软件重用</strong></p>
-</li>
+<ul>
 <li>尽量重用已有软件资产，并使自己开发的系统易于重用；</li>
 <li>可重用资产：代码片段、函数、类、构件、开源软件、设计模式、开发知识等；</li>
-<li>
-<p>技术手段：封装、接口、继承、多态等。</p>
+<li>技术手段：封装、接口、继承、多态等。</li>
+</ul>
 </li>
 <li>
 <p><strong>迭代设计</strong></p>
-</li>
-<li>
-<p>设计不是一次完成，需要反复精化、持续优化。</p>
+<ul>
+<li>设计不是一次完成，需要反复精化、持续优化。</li>
+</ul>
 </li>
 <li>
 <p><strong>可追踪性</strong></p>
-</li>
+<ul>
 <li>设计应能追溯到分析模型，需求能在设计中找到对应实现。</li>
+</ul>
+</li>
 </ol>
 <p>其他常用原则还包括：经常关注架构、数据设计与功能设计并重、必须设计接口、用户界面符合最终用户要求、设计表述易于理解等。</p>
 <h4 id="7">7. 软件设计方法</h4>
@@ -609,34 +619,38 @@ img { max-width: 100%; height: auto; display: block; margin: 1rem auto; }
 </ul>
 <p><strong>过程</strong>：</p>
 <ol>
-<li><strong>设计用例实现方案</strong></li>
+<li>
+<p><strong>设计用例实现方案</strong></p>
+<ul>
 <li>基础：分析阶段用例交互图、体系结构/界面设计元素、各设计元素职责；</li>
 <li>方法：将分析类转化为设计类，引入体系结构/界面设计元素，形成用例实现的交互模型；</li>
-<li>
-<p>结果：用例实现的顺序图，引入构件、子系统、类等，精化接口、方法、交互。</p>
+<li>结果：用例实现的顺序图，引入构件、子系统、类等，精化接口、方法、交互。</li>
+</ul>
 </li>
 <li>
 <p><strong>构造设计类图</strong></p>
-</li>
+<ul>
 <li>从分析类图、体系结构图、用例实现顺序图中寻找初始设计类；</li>
 <li>确定设计类的职责、类间关系、属性；</li>
 <li>遵循模块化、职责单一原则调整和优化。</li>
-</ol>
+</ul>
 <p>分析类到设计类的精化常见情形：</p>
 <ul>
 <li>一个分析类职责由某个设计类单项操作完整实现；</li>
 <li>一个分析类职责由某个设计类的多项操作实现；</li>
-<li>
-<p>一个分析类职责由多个设计元素协同完成。</p>
+<li>一个分析类职责由多个设计元素协同完成。</li>
+</ul>
 </li>
 <li>
 <p><strong>优化和评审用例设计方案</strong></p>
-</li>
+<ul>
 <li>尽可能重用已有资产；</li>
 <li>合并职责相同或相似的设计元素；</li>
 <li>借助继承或代理机制重组设计元素；</li>
 <li>确保各用例实现方案和谐共存、无逻辑冲突。</li>
 </ul>
+</li>
+</ol>
 <p><strong>输出</strong>：用例设计的顺序图、用例设计类图。</p>
 <blockquote>
 <!-- 图：需求阶段“用户登录”顺序图与详细设计阶段设计方案对比 -->
@@ -656,48 +670,52 @@ img { max-width: 100%; height: auto; display: block; margin: 1rem auto; }
 <p><strong>类设计原则</strong>：准确化、细节化、一致性，并遵循模块化、高内聚、低耦合、信息隐藏等设计基本原则。</p>
 <p><strong>类设计过程</strong>：</p>
 <ol>
-<li><strong>确定类的可见范围</strong></li>
+<li>
+<p><strong>确定类的可见范围</strong></p>
+<ul>
 <li><code>public</code>：系统中所有包可见；</li>
 <li><code>protected</code>：所在包及子类可见；</li>
 <li><code>private</code>：仅所在包可见。</li>
-<li>
-<p>原则：尽量缩小可见范围，将类“隐藏”于包内。</p>
+<li>原则：尽量缩小可见范围，将类“隐藏”于包内。</li>
+</ul>
 </li>
 <li>
 <p><strong>精化类间关系</strong></p>
-</li>
+<ul>
 <li>语义强度从高到低：继承 &gt; 组合 &gt; 聚合 &gt; 普通关联 &gt; 依赖；</li>
 <li>遵循“自然抽象”原则和“强内聚、松耦合”原则，尽量采用语义连接强度较小的关系；</li>
-<li>
-<p>明确多重性：1:1、1:n、0:n、n:m 等。</p>
+<li>明确多重性：1:1、1:n、0:n、n:m 等。</li>
+</ul>
 </li>
 <li>
 <p><strong>精化类属性和方法</strong></p>
-</li>
-</ol>
 <p><strong>属性设计</strong>：
-   - 用业务领域名词命名；
-   - 可见范围尽量小，遵循信息隐藏；
-   - 结合类关系选择引用/集合类型：
-     - 1:1 关联/聚合（非组合）→ 指针或引用；
-     - 1:n 关联/聚合（非组合）→ 元素为指针/引用的集合；
-     - 1:1 组合 → 类型为 B 的属性；
-     - 1:n 组合 → 元素类型为 B 的集合。</p>
+- 用业务领域名词命名；
+- 可见范围尽量小，遵循信息隐藏；
+- 结合类关系选择引用/集合类型：
+  - 1:1 关联/聚合（非组合）→ 指针或引用；
+  - 1:n 关联/聚合（非组合）→ 元素为指针/引用的集合；
+  - 1:1 组合 → 类型为 B 的属性；
+  - 1:n 组合 → 元素类型为 B 的集合。</p>
 <p><strong>方法设计</strong>：细化方法名称、参数表、返回类型、作用范围、功能描述、实现算法、前置条件（pre-condition）、后置断言（post-condition）等。</p>
 <p><strong>特殊方法</strong>：对象创建（初始化）、对象删除（释放资源）、对象比较、对象复制。</p>
-<ol>
-<li><strong>构造状态图和活动图</strong></li>
-<li>状态图：适用于对象生命周期中有复杂状态变迁；</li>
+</li>
 <li>
-<p>活动图：适用于某职责需要执行一系列方法、与多个对象交互。</p>
+<p><strong>构造状态图和活动图</strong></p>
+<ul>
+<li>状态图：适用于对象生命周期中有复杂状态变迁；</li>
+<li>活动图：适用于某职责需要执行一系列方法、与多个对象交互。</li>
+</ul>
 </li>
 <li>
 <p><strong>评审和优化类设计</strong></p>
-</li>
+<ul>
 <li>按强内聚、松耦合拆分/合并类和方法；</li>
 <li>判断是否足以支持编码；</li>
 <li>判断类间关系是否自然；</li>
 <li>判断可见范围、属性/方法作用范围是否合适。</li>
+</ul>
+</li>
 </ol>
 <p><strong>类设计输出</strong>：</p>
 <ul>
@@ -898,12 +916,12 @@ img { max-width: 100%; height: auto; display: block; margin: 1rem auto; }
 <p><strong>解析/答案：</strong></p>
 <p>课程中重点讲授了结构化软件设计方法和面向对象软件设计方法。结合软件工程知识体系，常见的三种设计方法可概括为：</p>
 <ol>
-<li><strong>结构化软件设计方法</strong></li>
+<li>
+<p><strong>结构化软件设计方法</strong></p>
+<ul>
 <li><strong>基本思想</strong>：以数据流图为主要输入，将系统分解为若干功能模块，形成层次化的模块结构；</li>
 <li><strong>主要技术</strong>：面向数据流的变换型映射、事务型映射；</li>
-<li>
-<p><strong>特点</strong>：</p>
-<ul>
+<li><strong>特点</strong>：</li>
 <li>以功能模块为核心，强调自顶向下、逐步求精；</li>
 <li>输出为层次化的软件体系结构图；</li>
 <li>技术成熟，适合过程性强、需求相对稳定的系统；</li>
@@ -912,12 +930,10 @@ img { max-width: 100%; height: auto; display: block; margin: 1rem auto; }
 </li>
 <li>
 <p><strong>面向对象软件设计方法</strong></p>
-</li>
+<ul>
 <li><strong>基本思想</strong>：以面向对象需求模型（用例图、交互图、分析类图）为基础，对分析模型进行精化，得到子系统、构件、设计类等；</li>
 <li><strong>主要技术</strong>：UML 建模（包图、类图、顺序图、状态图、活动图等）、设计模式、接口/继承/多态等机制；</li>
-<li>
-<p><strong>特点</strong>：</p>
-<ul>
+<li><strong>特点</strong>：</li>
 <li>抽象层次高，贴近现实世界；</li>
 <li>系统化支持体系结构、界面、数据、构件、子系统、用例、类设计等；</li>
 <li>易于扩展和变更，支持重用；</li>
@@ -926,9 +942,9 @@ img { max-width: 100%; height: auto; display: block; margin: 1rem auto; }
 </li>
 <li>
 <p><strong>基于构件/重用的软件设计方法</strong>（课程作为补充思想）</p>
-</li>
+<ul>
 <li><strong>基本思想</strong>：尽可能重用已有的软件资产（构件、开源软件、框架等），通过接口组装成新系统；</li>
-<li><strong>特点</strong>：<ul>
+<li><strong>特点</strong>：</li>
 <li>以构件为组装单元，强调可独立部署和运行；</li>
 <li>显著提高开发效率和软件质量；</li>
 <li>需要良好的接口定义和构件管理机制。</li>
@@ -1173,44 +1189,48 @@ $$9</td>
 <p><strong>解析/答案：</strong></p>
 <p>面向对象设计中常被提及的六大原则是 SOLID 原则加上迪米特法则（Law of Demeter）：</p>
 <ol>
-<li><strong>单一职责原则（Single Responsibility Principle, SRP）</strong></li>
-<li>一个类只应有一个引起它变化的原因；</li>
 <li>
-<p>即一个类只负责一项职责，避免职责过多导致耦合复杂。</p>
+<p><strong>单一职责原则（Single Responsibility Principle, SRP）</strong></p>
+<ul>
+<li>一个类只应有一个引起它变化的原因；</li>
+<li>即一个类只负责一项职责，避免职责过多导致耦合复杂。</li>
+</ul>
 </li>
 <li>
 <p><strong>开闭原则（Open/Closed Principle, OCP）</strong></p>
-</li>
+<ul>
 <li>软件实体应对扩展开放，对修改关闭；</li>
-<li>
-<p>通过抽象、接口、继承等方式实现功能的扩展，而不修改已有代码。</p>
+<li>通过抽象、接口、继承等方式实现功能的扩展，而不修改已有代码。</li>
+</ul>
 </li>
 <li>
 <p><strong>里氏替换原则（Liskov Substitution Principle, LSP）</strong></p>
-</li>
+<ul>
 <li>子类应当能够替换父类并出现在父类能出现的任何地方；</li>
-<li>
-<p>子类不应改变父类已有的行为约定。</p>
+<li>子类不应改变父类已有的行为约定。</li>
+</ul>
 </li>
 <li>
 <p><strong>依赖倒置原则（Dependency Inversion Principle, DIP）</strong></p>
-</li>
+<ul>
 <li>高层模块不应依赖低层模块，二者都应依赖抽象；</li>
-<li>
-<p>抽象不应依赖细节，细节应依赖抽象。</p>
+<li>抽象不应依赖细节，细节应依赖抽象。</li>
+</ul>
 </li>
 <li>
 <p><strong>接口隔离原则（Interface Segregation Principle, ISP）</strong></p>
-</li>
+<ul>
 <li>客户端不应被迫依赖它们不用的接口；</li>
-<li>
-<p>应将庞大接口拆分为多个小而专的接口。</p>
+<li>应将庞大接口拆分为多个小而专的接口。</li>
+</ul>
 </li>
 <li>
 <p><strong>迪米特法则 / 最少知识原则（Law of Demeter, LoD）</strong></p>
-</li>
+<ul>
 <li>一个对象应尽可能少地了解其他对象；</li>
 <li>只与直接朋友通信，降低类之间的耦合。</li>
+</ul>
+</li>
 </ol>
 <p>这些原则与课程中讲授的“模块化、高内聚、低耦合、信息隐藏、关注点分离、软件重用”等软件设计基本原则相辅相成。</p>
 <hr />
