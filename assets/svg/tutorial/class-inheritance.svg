@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="360" viewBox="0 0 600 360">
+  <rect width="600" height="360" fill="#f8f9fa"/>
+  <text x="300" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#1565c0">类图继承（泛化）关系示例</text>
+
+  <defs>
+    <marker id="genArr" markerWidth="14" markerHeight="14" refX="13" refY="7" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L14,7 L0,14 Z" fill="#fff" stroke="#555" stroke-width="1.5"/>
+    </marker>
+  </defs>
+
+  <!-- Person parent class -->
+  <rect x="230" y="60" width="140" height="110" fill="#fff" stroke="#1565c0" stroke-width="2"/>
+  <rect x="230" y="60" width="140" height="30" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+  <text x="300" y="80" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Person</text>
+  <text x="240" y="102" font-size="12" fill="#333">- userId: String</text>
+  <text x="240" y="120" font-size="12" fill="#333">- name: String</text>
+  <line x1="235" y1="128" x2="365" y2="128" stroke="#ddd" stroke-width="1"/>
+  <text x="240" y="143" font-size="12" fill="#333">+ login()</text>
+
+  <!-- Student subclass -->
+  <rect x="80" y="220" width="140" height="110" fill="#fff" stroke="#2e7d32" stroke-width="2"/>
+  <rect x="80" y="220" width="140" height="30" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="150" y="240" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Student</text>
+  <text x="90" y="262" font-size="12" fill="#333">- studentId: String</text>
+  <text x="90" y="280" font-size="12" fill="#333">- major: String</text>
+  <line x1="85" y1="288" x2="215" y2="288" stroke="#ddd" stroke-width="1"/>
+  <text x="90" y="303" font-size="12" fill="#333">+ selectCourse()</text>
+
+  <!-- Teacher subclass -->
+  <rect x="380" y="220" width="140" height="110" fill="#fff" stroke="#2e7d32" stroke-width="2"/>
+  <rect x="380" y="220" width="140" height="30" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="450" y="240" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Teacher</text>
+  <text x="390" y="262" font-size="12" fill="#333">- teacherId: String</text>
+  <text x="390" y="280" font-size="12" fill="#333">- department: String</text>
+  <line x1="385" y1="288" x2="515" y2="288" stroke="#ddd" stroke-width="1"/>
+  <text x="390" y="303" font-size="12" fill="#333">+ teach()</text>
+
+  <!-- Generalization arrows: subclass -> superclass -->
+  <line x1="150" y1="220" x2="270" y2="170" stroke="#555" stroke-width="1.5" marker-end="url(#genArr)"/>
+  <line x1="450" y1="220" x2="330" y2="170" stroke="#555" stroke-width="1.5" marker-end="url(#genArr)"/>
+
+  <text x="300" y="195" text-anchor="middle" font-size="12" fill="#666">泛化（空心三角箭头指向父类）</text>
+</svg>

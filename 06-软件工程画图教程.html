@@ -206,10 +206,10 @@ img { max-width: 100%; height: auto; display: block; margin: 1rem auto; }
 </ol>
 <h3 id="23">2.3 示例：图书馆管理系统</h3>
 <blockquote>
-<p>图书馆管理系统中，读者可以查询图书、借阅图书、归还图书；管理员可以录入新书、管理读者信息、处理逾期罚款。借阅图书时需要先检查库存（include），如果库存不足则推荐预约（extend）。</p>
+<p>图书馆管理系统中，读者可以查询图书、借阅图书、归还图书；管理员可以管理图书信息、管理读者信息、管理借阅记录。借阅图书时需要先检查库存（<code>include</code>），如果库存不足则推荐预约（<code>extend</code>）。</p>
 </blockquote>
 <p><img alt="图书馆管理用例图" src="assets/svg/tutorial/use-case-library.svg" /></p>
-<p><strong>图示说明</strong>：矩形框内为用例，左侧“读者”与“查询图书”“借阅图书”“归还图书”关联，右侧“管理员”与三个管理用例关联；“借阅图书”通过 <code>include</code> 指向“检查库存”，通过 <code>extend</code> 指向“推荐预约”。</p>
+<p><strong>图示说明</strong>：矩形框内为用例，左侧“读者”与“查询图书”“借阅图书”“归还图书”关联，右侧“管理员”与“管理图书信息”“管理读者信息”“管理借阅记录”三个管理用例关联；“借阅图书”通过 <code>&lt;&lt;include&gt;&gt;</code> 指向“检查库存”，“推荐预约”通过 <code>&lt;&lt;extend&gt;&gt;</code> 指向“借阅图书”。</p>
 <p><strong>常见错误</strong>：</p>
 <ul>
 <li>把系统内部功能（如“验证密码”）直接画成独立用例，应通过 <code>include</code> 引入。</li>
@@ -320,6 +320,17 @@ img { max-width: 100%; height: auto; display: block; margin: 1rem auto; }
 <li>把属性当作类，如“姓名”“学号”应放在“学生”类内部。</li>
 <li>关系方向或菱形类型混淆：组合比聚合更强，整体销毁部分也销毁。</li>
 <li>多重性遗漏，导致无法判断是一对多还是多对多。</li>
+</ul>
+<h3 id="44">4.4 示例：继承（泛化）关系</h3>
+<blockquote>
+<p>用户系统中有通用父类 <code>Person</code>，包含 <code>userId</code> 和 <code>name</code> 属性以及 <code>login()</code> 方法；<code>Student</code> 和 <code>Teacher</code> 作为子类继承 <code>Person</code>，并分别扩展自己的属性和方法。</p>
+</blockquote>
+<p><img alt="类图继承关系示例" src="assets/svg/tutorial/class-inheritance.svg" /></p>
+<p><strong>图示说明</strong>：<code>Student</code> 和 <code>Teacher</code> 通过泛化关系继承 <code>Person</code>；泛化用<strong>实线空心三角箭头</strong>表示，箭头由子类指向父类，即 <code>Student → Person</code>、<code>Teacher → Person</code>。</p>
+<p><strong>常见错误</strong>：</p>
+<ul>
+<li>继承箭头方向画反：空心三角应指向父类（被继承者），而不是子类。</li>
+<li>把继承画成关联或依赖：继承表达的是“是一个”（is-a）关系，不是简单的使用关系。</li>
 </ul>
 <h2 id="sequence-diagram">五、顺序图（Sequence Diagram）</h2>
 <h3 id="51">5.1 图符与规则</h3>
@@ -669,6 +680,7 @@ $$</p>
 <li><strong>include</strong>：预约挂号 <code>include</code> 验证患者身份信息。</li>
 <li><strong>画图要点</strong>：患者位于系统边界左侧，关联注册登录、查询医生排班、预约挂号、取消预约；医生位于右侧，关联查看预约列表；定时任务关联发送就诊提醒。</li>
 </ul>
+<p><img alt="医院预约挂号系统用例图" src="assets/svg/tutorial/use-case-hospital.svg" /></p>
 <h3 id="2">2. 数据流图：快递包裹查询系统</h3>
 <p><strong>题目</strong>：快递包裹查询系统：用户输入快递单号，系统从快递数据库查询物流信息，返回给用户。快递员可以扫描包裹更新物流状态。</p>
 <p><strong>参考答案</strong>：</p>
@@ -681,6 +693,7 @@ $$</p>
 <li>快递员 → 扫描信息 → 2 更新物流状态 → D1 快递数据库</li>
 <li><strong>0 层图</strong>：用户、快递员与“快递包裹查询系统”之间交换数据；1 层图将系统分解为查询物流和更新物流状态两个加工。</li>
 </ul>
+<p><img alt="快递包裹查询系统 0 层 DFD" src="assets/svg/tutorial/dfd-express.svg" /></p>
 <h3 id="3">3. 类图：博客系统</h3>
 <p><strong>题目</strong>：博客系统：用户可以发布文章、评论文章。文章有标题、内容、发布时间。评论有内容和评论时间。用户可以关注其他用户。</p>
 <p><strong>参考答案</strong>：</p>
@@ -698,6 +711,7 @@ $$</p>
 <li>User 与 User：自关联，表示关注关系（多对多）。</li>
 <li><strong>画图要点</strong>：为 User 类增加自关联线表示关注关系，线上标注多重性 <code>*</code> 对 <code>*</code>。</li>
 </ul>
+<p><img alt="博客系统类图" src="assets/svg/tutorial/class-blog.svg" /></p>
 <div class="footer">
     <p><a href="index.html">← 返回索引</a></p>
     <p>来源：软件工程课件（2026版）+ 2019/2020/2022上 期末试卷</p>
