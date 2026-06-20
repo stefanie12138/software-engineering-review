@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自建项目案例分析</title>
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+        delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+        ]
+    });"></script>
+
+    
+<style>
+:root {
+    --bg: #fafafa;
+    --fg: #222;
+    --accent: #1565c0;
+    --card-bg: #fff;
+    --border: #e0e0e0;
+}
+* { box-sizing: border-box; }
+body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", "Noto Sans CJK SC", sans-serif;
+    line-height: 1.8;
+    color: var(--fg);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    background: var(--card-bg);
+    box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    min-height: 100vh;
+}
+h1, h2, h3, h4 {
+    color: var(--accent);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+h1 { font-size: 2rem; border-bottom: 3px solid var(--accent); padding-bottom: 0.5rem; }
+h2 { font-size: 1.6rem; border-bottom: 2px solid #e0e0e0; padding-bottom: 0.3rem; }
+h3 { font-size: 1.3rem; }
+h4 { font-size: 1.1rem; color: #333; }
+p { margin: 0.8rem 0; }
+ul, ol { margin: 0.8rem 0; padding-left: 1.8rem; }
+li { margin: 0.3rem 0; }
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1rem 0;
+    font-size: 0.95rem;
+}
+th, td {
+    border: 1px solid var(--border);
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+}
+th { background: #f5f5f5; font-weight: 600; }
+tr:nth-child(even) { background: #fafafa; }
+code {
+    background: #f4f4f4;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 0.9em;
+}
+pre {
+    background: #263238;
+    color: #aed581;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    line-height: 1.5;
+}
+pre code { background: transparent; color: inherit; padding: 0; }
+blockquote {
+    border-left: 4px solid var(--accent);
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    background: #f0f7ff;
+    color: #333;
+}
+img { max-width: 100%; height: auto; display: block; margin: 1rem auto; }
+.index-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: var(--fg);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+.card h2 { margin-top: 0; color: var(--accent); border: none; padding: 0; }
+.card p { color: #555; margin: 0.5rem 0 0; }
+.footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    color: #777;
+    font-size: 0.9rem;
+}
+</style>
+
+</head>
+<body>
+<div class="container">
+<h1 id="health-manager">自建项目案例分析：Health Manager 智能用药提醒系统</h1>
+<blockquote>
+<p>本案例基于团队真实项目 <strong>HealthManager 智能用药提醒与健康管理系统</strong>（项目路径：<code>/mnt/e/tools/visialstudio/project/project5</code>）整理，面向软件工程课程考核/答辩，提供可复用的答题模板与延伸问答。</p>
+</blockquote>
+<hr />
+<h2 id="_1">一、项目概述</h2>
+<h3 id="11">1.1 项目背景与目标用户</h3>
+<p>随着我国老龄化程度加深，慢性病患者（如高血压、糖尿病、心血管疾病患者）的用药依从性成为影响疗效的关键因素。传统纸质药盒或单一闹钟提醒存在以下痛点：</p>
+<ul>
+<li>药名、剂量、服用时间容易记错；</li>
+<li>手动设置闹钟步骤繁琐，老年用户操作门槛高；</li>
+<li>普通闹钟在 Android 严格的后台省电策略下容易被延迟或漏报；</li>
+<li>家属无法远程掌握老人是否按时服药。</li>
+</ul>
+<p><strong>Health Manager</strong> 正是针对上述场景设计的 Android 原生应用，目标用户为：</p>
+<ol>
+<li><strong>中老年慢性病患者</strong>（核心用户）；</li>
+<li><strong>患者家属或照护者</strong>（协助管理用药计划）；</li>
+<li><strong>社区医生/药师</strong>（未来可扩展为远程随访场景）。</li>
+</ol>
+<h3 id="12">1.2 核心功能</h3>
+<table>
+<thead>
+<tr>
+<th>功能模块</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>拍照智能识别药品</strong></td>
+<td>用户对准药盒拍照，系统通过百度 OCR + 智谱 AI 自动提取药名、剂量、频次、配伍禁忌等信息。</td>
+</tr>
+<tr>
+<td><strong>用药提醒计划管理</strong></td>
+<td>支持 AI 自动生成、手动添加、编辑、删除用药闹钟，可设置每日/自定义周期。</td>
+</tr>
+<tr>
+<td><strong>高精度强提醒</strong></td>
+<td>基于 <code>AlarmManager.setExactAndAllowWhileIdle</code> + 前台服务 + TTS 语音播报，穿透 Doze 模式，锁屏也能全屏弹窗。</td>
+</tr>
+<tr>
+<td><strong>设备重启恢复</strong></td>
+<td><code>BootReceiver</code> 监听开机广播，自动重新注册所有未到期闹钟，防止关机/清理后失效。</td>
+</tr>
+<tr>
+<td><strong>用药历史记录</strong></td>
+<td>打卡式历史足迹，支持按时间倒序查看，容量上限控制。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="13">1.3 技术栈</h3>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>技术/组件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>移动端</td>
+<td>Android Kotlin（minSdk 31，targetSdk 36）</td>
+</tr>
+<tr>
+<td>相机</td>
+<td>CameraX 1.3.0</td>
+</tr>
+<tr>
+<td>网络</td>
+<td>OkHttp（HTTPS）</td>
+</tr>
+<tr>
+<td>OCR</td>
+<td>百度 OCR API（<code>accurate_basic</code>）</td>
+</tr>
+<tr>
+<td>大模型</td>
+<td>智谱 AI GLM-4-Flash</td>
+</tr>
+<tr>
+<td>定时调度</td>
+<td><code>AlarmManager</code> + <code>PendingIntent</code> + <code>BroadcastReceiver</code></td>
+</tr>
+<tr>
+<td>后台保活</td>
+<td><code>Foreground Service</code> + <code>WakeLock</code> + <code>START_STICKY</code></td>
+</tr>
+<tr>
+<td>语音播报</td>
+<td><code>TextToSpeech</code>（TTS），缺失时降级为系统铃声</td>
+</tr>
+<tr>
+<td>本地存储</td>
+<td><code>SharedPreferences</code> + JSON</td>
+</tr>
+<tr>
+<td>构建工具</td>
+<td>Gradle 9.x / Android Studio</td>
+</tr>
+</tbody>
+</table>
+<h3 id="14">1.4 团队分工与主要职责</h3>
+<table>
+<thead>
+<tr>
+<th>成员</th>
+<th>角色</th>
+<th>主要职责</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>朱鹏远</strong></td>
+<td>组长 / 架构师</td>
+<td>整体技术架构、模块接口设计、<code>AlarmScheduler</code> 调度中心、<code>BootReceiver</code> 灾备恢复、项目文档统筹。</td>
+</tr>
+<tr>
+<td><strong>吴轩赫</strong></td>
+<td>视觉端 / AI 集成</td>
+<td>CameraX 拍照实现、<code>MedicineRecognitionEngine</code> 双驱 AI 引擎（OCR + 智谱 AI）、<code>ResultHandler</code> 回调、Prompt 工程。</td>
+</tr>
+<tr>
+<td><strong>张恺祺</strong></td>
+<td>后端进程保活</td>
+<td><code>AlarmService</code> 前台服务、<code>AlarmReceiver</code> 广播接收、<code>WakeLock</code> 管理、后台抗杀与 ROM 适配。</td>
+</tr>
+<tr>
+<td><strong>周嘉晨</strong></td>
+<td>数据持久化</td>
+<td><code>AlarmStorageManager</code>、<code>HistoryStorageManager</code>、JSON 序列化/反序列化、数据容灾与容量控制。</td>
+</tr>
+<tr>
+<td><strong>杨佳禾</strong></td>
+<td>UI 交互与测试</td>
+<td>全部 Activity/Adapter UI 实现、权限引导、测试计划制定、黑盒/集成/回归测试执行。</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_2">二、例题解析：软件系统建模</h2>
+<h3 id="21">2.1 项目介绍与个人承担工作</h3>
+<p>在答辩或试卷中，常出现「请介绍你参与的项目，并说明你承担的工作」这类题目。下面给出 5 种角色的答题模板，可直接根据身份替换使用。</p>
+<h4 id="a">模板 A：组长 / 架构师（朱鹏远）</h4>
+<blockquote>
+<p>我担任 HealthManager 项目的组长和架构师。项目是为中老年慢性病患者打造的 Android 智能用药提醒 APP。我的核心工作是制定三层分层架构（表现层 / 业务逻辑层 / 数据持久层），设计模块间接口，封装 <code>AlarmScheduler</code> 统一调度系统闹钟，并实现 <code>BootReceiver</code> 完成设备重启后的闹钟自动恢复。在协作中，我采用「接口先行、实体驱动」的方式：先定义 <code>MedicineAlarm</code> 数据类和 <code>scheduleAlarm(alarm)</code> 方法签名，再让 UI 组、AI 组、持久化组并行开发，从而把 5 人代码像拼图一样拼装起来，降低了集成风险。</p>
+</blockquote>
+<h4 id="b-ai">模板 B：视觉端 / AI 集成（吴轩赫）</h4>
+<blockquote>
+<p>我负责视觉输入和 AI 识别模块。用户点击「拍照识别」后，<code>CameraCaptureActivity</code> 调用 CameraX 获取药盒图像；我编写的 <code>MedicineRecognitionEngine</code> 在子线程中将图片压缩、Base64 编码，先请求百度 OCR 提取包装文字，再把文字连同用户已有药品列表一起投递给智谱 GLM-4-Flash，利用 Prompt 让大模型清洗出结构化的 <code>{medicine, dosage, time}</code> JSON。为避免网络阻塞主线程导致 ANR，整条链路放在子线程，并通过 <code>ResultHandler</code> 回调把结果安全传回主线程刷新 <code>EditAlarmActivity</code> 表单。</p>
+</blockquote>
+<h4 id="c">模板 C：后端进程保活（张恺祺）</h4>
+<blockquote>
+<p>我负责保证提醒在息屏、杀后台、甚至重启后仍能触发。技术上采用三层防护：调度层使用 <code>AlarmManager.setExactAndAllowWhileIdle</code> 穿透 Doze 休眠；执行层在 <code>AlarmReceiver.onReceive()</code> 中获取 <code>WakeLock</code> 并通过 <code>startForegroundService()</code> 拉起 <code>AlarmService</code>，挂上高优先级通知实现前台保活；灾备层通过 <code>BootReceiver</code> 监听 <code>BOOT_COMPLETED</code>，从本地存储读取闹钟并重新注册。服务返回 <code>START_STICKY</code>，异常终止后系统会尝试自动重启。</p>
+</blockquote>
+<h4 id="d">模板 D：数据持久化（周嘉晨）</h4>
+<blockquote>
+<p>我负责本地数据的存储与读取。核心实体是 <code>MedicineAlarm</code>，我用 <code>AlarmStorageManager</code> 单例将闹钟列表序列化为 JSON 数组，通过 <code>SharedPreferences</code> 以 <code>MODE_PRIVATE</code> 写入内部闪存；历史记录由 <code>HistoryStorageManager</code> 维护，采用 <code>MAX_HISTORY_SIZE = 50</code> 的 FIFO 溢出淘汰策略，防止数据无限膨胀。读取时加入 try-catch 容错：若 JSON 损坏则返回空列表并在下次保存时自动重建，避免应用闪退。</p>
+</blockquote>
+<h4 id="eui">模板 E：UI 交互与测试（杨佳禾）</h4>
+<blockquote>
+<p>我负责全部前端界面和测试工作。表现层包括 <code>MainActivity</code>、<code>CameraCaptureActivity</code>、<code>EditAlarmActivity</code>、<code>AlarmListActivity</code>、<code>HistoryActivity</code> 及对应的 <code>RecyclerView.Adapter</code>。我采用 Material Design 组件和大字号、高对比度配色，降低老年用户操作门槛。同时我制定了《测试计划》和《测试分析报告》，组织 5 人交叉执行 14 项测试用例，覆盖功能、接口、弱网、边界、后台保活、重启恢复等场景，最终缺陷修复后再进行回归测试。</p>
+</blockquote>
+<hr />
+<h3 id="22">2.2 软件系统开发中常用的建模方法分类</h3>
+<p>软件系统建模的本质是用抽象化、可视化的手段描述系统「做什么」和「怎么做」。常见方法可分为四大类：</p>
+<h4 id="1">1. 结构化建模</h4>
+<p>以<strong>数据</strong>和<strong>过程</strong>为核心，适用于需求明确、数据关系清晰的系统。</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>特点</th>
+<th>适用范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>数据流图（DFD）</strong></td>
+<td>描述数据从输入到输出的变换过程，强调功能分解和数据流动。</td>
+<td>需求分析、系统边界划分、模块接口设计。</td>
+</tr>
+<tr>
+<td><strong>数据字典</strong></td>
+<td>对 DFD 中所有数据流、数据存储、数据项进行精确定义。</td>
+<td>与 DFD 配套使用，消除二义性。</td>
+</tr>
+<tr>
+<td><strong>E-R 图</strong></td>
+<td>描述实体、属性及实体间关系，是数据库设计的核心模型。</td>
+<td>关系型数据库概念设计。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2">2. 面向对象建模</h4>
+<p>以<strong>对象</strong>和<strong>交互</strong>为核心，UML 是其标准表示法，适用于复杂、演化的系统。</p>
+<table>
+<thead>
+<tr>
+<th>图</th>
+<th>特点</th>
+<th>适用范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>用例图</strong></td>
+<td>从用户视角描述系统功能及 Actor 与 Use Case 的关系。</td>
+<td>需求获取、功能范围确认。</td>
+</tr>
+<tr>
+<td><strong>类图</strong></td>
+<td>描述类的属性、方法及类之间的继承、关联、聚合、依赖关系。</td>
+<td>静态结构设计。</td>
+</tr>
+<tr>
+<td><strong>顺序图</strong></td>
+<td>按时间轴展示对象间消息传递顺序。</td>
+<td>动态行为设计、接口协议确认。</td>
+</tr>
+<tr>
+<td><strong>状态图</strong></td>
+<td>描述对象在生命周期内的状态转换及触发事件。</td>
+<td>具有明显状态变化的实体，如闹钟、订单。</td>
+</tr>
+<tr>
+<td><strong>活动图</strong></td>
+<td>描述业务流程或算法的工作流，强调控制流和并行。</td>
+<td>业务流程建模。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="3">3. 形式化建模</h4>
+<p>使用严格的数学符号（如谓词逻辑、Z 语言、Petri 网、B 方法）描述系统行为和约束。</p>
+<ul>
+<li><strong>特点</strong>：无二义性、可证明、高精度。</li>
+<li><strong>适用范围</strong>：航空航天、金融交易、医疗设备等对安全性要求极高的关键系统。</li>
+<li><strong>局限</strong>：学习成本高，与业务人员沟通困难，中小型应用较少使用。</li>
+</ul>
+<p>例如，对闹钟触发的精确性可给出形式化规约：
+$$\forall a \in \text{Alarms}, \; |T_{actual}(a) - T_{scheduled}(a)| \le 100\,\text{ms}$$</p>
+<h4 id="4">4. 基于场景建模</h4>
+<p>通过具体使用场景描述系统行为，强调「谁在什么情况下想做什么」。</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>特点</th>
+<th>适用范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>用例（Use Case）</strong></td>
+<td>结构化描述用户与系统的交互步骤，含前置/后置条件、主/备选流。</td>
+<td>需求文档、验收测试依据。</td>
+</tr>
+<tr>
+<td><strong>用户故事（User Story）</strong></td>
+<td>轻量级描述：「作为…，我希望…，以便…」。</td>
+<td>敏捷开发、快速迭代。</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="23">2.3 本项目采用的建模方法及实施效果</h3>
+<p>本项目综合使用了<strong>面向对象建模</strong>为主、<strong>结构化建模</strong>为辅的方法，具体包括：用例图、数据流图、顺序图、类图、状态图。</p>
+<h4 id="231-actor-use-case">2.3.1 用例图：识别 Actor 与 Use Case</h4>
+<p><img alt="用例图" src="assets/project/用例图.jpg" /></p>
+<p><strong>说明</strong>：</p>
+<ul>
+<li><strong>Actor</strong>：</li>
+<li><strong>患者/用户</strong>：核心 Actor，进行拍照识别、管理闹钟、查看历史、确认服药。</li>
+<li><strong>Android 系统</strong>：触发时间信号、开机广播。</li>
+<li><strong>百度 OCR / 智谱 AI</strong>：外部服务 Actor，提供识别能力。</li>
+<li><strong>Use Case</strong>：拍照识别药品、手动添加闹钟、编辑/删除闹钟、接收提醒、确认服药、查看历史、重启恢复。</li>
+<li><strong>效果</strong>：用例图帮助团队快速对齐功能边界，明确哪些是系统必须自己实现的（闹钟调度）、哪些是外部依赖（OCR/AI），也直接转化为测试用例的验收标准。</li>
+</ul>
+<h4 id="232">2.3.2 数据流图：说明系统数据流转</h4>
+<p><img alt="数据流图" src="assets/project/数据流图.jpg" /></p>
+<p><strong>说明</strong>：</p>
+<ul>
+<li>顶层数据流：输入为「药品包装图像」和「用户手动信息」，输出为「用药提醒通知」「TTS 语音」「历史记录」。</li>
+<li>主要加工：图像压缩 → OCR 提取 → AI 结构化 → 人工确认 → JSON 持久化 → AlarmManager 注册 → 系统触发 → 前台服务播报 → 历史落盘。</li>
+<li><strong>效果</strong>：DFD 让团队看清了数据在模块之间的传递路径，避免了 UI 层直接操作底层存储的越层调用，确保了三层架构的纪律性。</li>
+</ul>
+<h4 id="233-ai">2.3.3 顺序图：拍照识别 → AI 解析 → 保存提醒</h4>
+<p><img alt="顺序图" src="assets/project/顺序图.jpg" /></p>
+<p><strong>说明</strong>：</p>
+<ol>
+<li>用户在 <code>CameraCaptureActivity</code> 拍照，生成 JPEG 图片路径；</li>
+<li>调用 <code>MedicineRecognitionEngine.recognize()</code>，引擎在子线程中依次请求百度 OCR、智谱 AI；</li>
+<li>AI 返回 JSON 后，引擎通过 <code>RecognitionCallback</code> 通知 <code>ResultHandler</code>；</li>
+<li><code>ResultHandler</code> 在主线程更新 <code>EditAlarmActivity</code> 表单；</li>
+<li>用户确认后，数据写入 <code>AlarmStorageManager</code> 并调用 <code>AlarmScheduler.scheduleAlarm()</code> 注册系统闹钟。</li>
+</ol>
+<p><strong>效果</strong>：顺序图明确了跨线程回调机制和模块间消息顺序，为后续排查「网络请求白屏」「回调不到 UI」等问题提供了时序依据。</p>
+<h4 id="234">2.3.4 类图：说明三层架构的实体与关系</h4>
+<p><img alt="类图" src="assets/project/类图.jpg" /></p>
+<p><strong>说明</strong>：</p>
+<ul>
+<li><strong>Entity 包</strong>：<code>MedicineAlarm</code> 核心数据类，携带 <code>id</code>、<code>medicineName</code>、<code>dosage</code>、<code>time</code> 等属性。</li>
+<li><strong>UI_View 包</strong>：所有 Activity 与 Adapter，负责渲染和事件响应。</li>
+<li><strong>Controller_Service 包</strong>：AI 引擎、调度器、广播接收器、前台服务，是业务逻辑中枢。</li>
+<li><strong>Data_Storage 包</strong>：两个单例 Manager 负责 JSON 持久化。</li>
+<li>关系：Manager 与实体为<strong>聚合</strong>；Activity 与引擎为<strong>依赖</strong>；Service/BroadcastReceiver 继承 Android 框架类。</li>
+</ul>
+<p><strong>效果</strong>：类图使 5 人团队对模块边界和依赖关系达成一致，避免了循环依赖和职责混乱。</p>
+<h4 id="235">2.3.5 状态图：闹钟从创建到触发到确认的状态转换</h4>
+<p><img alt="状态图" src="assets/project/状态图.png" /></p>
+<p><img alt="状态图2" src="assets/project/状态图2.png" /></p>
+<p><strong>说明</strong>：</p>
+<ul>
+<li>闹钟实体经历「未创建 → 已保存（待触发）→ 已注册到系统 → 触发中（前台服务运行）→ 已确认服药 / 已忽略」等状态。</li>
+<li>触发事件包括：用户保存、系统时间到达、用户点击「我已服药」、用户点击忽略、设备重启后重新注册。</li>
+<li><strong>效果</strong>：状态图帮助设计出完整的异常分支（如触发时 APP 被杀死怎么办？重启后如何恢复？），直接指导了 <code>BootReceiver</code>、<code>START_STICKY</code>、TTS 降级等代码实现。</li>
+</ul>
+<hr />
+<h2 id="_3">三、可能延伸提问及高分回答</h2>
+<h3 id="31">3.1 需求工程类</h3>
+<h4 id="q1">Q1：本项目有哪些功能需求和非功能需求？</h4>
+<p><strong>高分回答</strong>：</p>
+<p>功能需求可对应概要设计中的 F1~F10：</p>
+<ul>
+<li>F1 应用启动与权限管理；</li>
+<li>F2 拍照识别药品；</li>
+<li>F3 AI 药理分析；</li>
+<li>F4 识别结果自动创建闹钟；</li>
+<li>F5 手动添加/编辑闹钟；</li>
+<li>F6 闹钟列表管理；</li>
+<li>F7 闹钟定时触发；</li>
+<li>F8 TTS 语音播报提醒；</li>
+<li>F9 历史记录查看；</li>
+<li>F10 设备重启闹钟恢复。</li>
+</ul>
+<p>非功能需求包括：</p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>具体需求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>性能</strong></td>
+<td>OCR ≤ 10s，AI ≤ 20s，闹钟触发偏差 ≤ 100ms，历史加载 ≤ 500ms。</td>
+</tr>
+<tr>
+<td><strong>可靠性</strong></td>
+<td>不允许漏报，支持 Doze 模式、后台被杀、重启后恢复。</td>
+</tr>
+<tr>
+<td><strong>可用性</strong></td>
+<td>大字体、高对比度、少步骤，适合老年用户；AI 结果必须人工确认。</td>
+</tr>
+<tr>
+<td><strong>安全性</strong></td>
+<td>用药数据本地私有存储；AI 仅作辅助，最终决策权在用户。</td>
+</tr>
+<tr>
+<td><strong>兼容性</strong></td>
+<td>Android 12+，适配原生 Android 与国产 ROM 的权限差异。</td>
+</tr>
+<tr>
+<td><strong>可维护性</strong></td>
+<td>三层架构、模块接口清晰、日志体系完善。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="q2">Q2：利益相关方有哪些？</h4>
+<p><strong>高分回答</strong>：</p>
+<ul>
+<li><strong>直接用户</strong>：中老年慢性病患者、家属/照护者；</li>
+<li><strong>间接受益者</strong>：社区医生、药师（可通过后续扩展实现远程随访）；</li>
+<li><strong>开发团队</strong>：5 名成员及其指导教师；</li>
+<li><strong>平台方</strong>：Google（Android 系统权限策略）、手机厂商（ROM 后台管理策略）；</li>
+<li><strong>第三方服务方</strong>：百度智能云、智谱 AI；</li>
+<li><strong>评审/考核方</strong>：课程组、答辩评委。</li>
+</ul>
+<h4 id="q3">Q3：如何获取和验证需求？</h4>
+<p><strong>高分回答</strong>：</p>
+<ul>
+<li><strong>获取方法</strong>：</li>
+<li>用户访谈：询问老年患者及其家属的用药痛点；</li>
+<li>竞品分析：调研市场上用药提醒 APP 的功能与不足；</li>
+<li>原型演示：用 Figma/手绘原型让潜在用户走查；</li>
+<li>场景分析：编写用例和用户故事，覆盖拍照、提醒、确认、历史等场景。</li>
+<li><strong>验证方法</strong>：</li>
+<li>需求评审会：团队内部和指导老师共同审查需求说明书；</li>
+<li>原型确认：让目标用户操作原型并收集反馈；</li>
+<li>验收测试：每个用例对应测试用例，如 TEST-001~TEST-016；</li>
+<li>迭代反馈：每轮迭代结束后根据测试结果修正需求。</li>
+</ul>
+<h4 id="q4">Q4：用例图怎么画？</h4>
+<p><strong>高分回答</strong>：</p>
+<p>画用例图遵循四步：</p>
+<ol>
+<li><strong>识别 Actor</strong>：谁使用系统？谁与系统交互但不直接使用？本项目中患者是主 Actor，Android 系统、OCR/AI 服务是辅助 Actor。</li>
+<li><strong>识别 Use Case</strong>：系统为 Actor 提供什么有价值的功能？如「拍照识别药品」「接收用药提醒」。</li>
+<li><strong>建立关联</strong>：用实线连接 Actor 与 Use Case，表示参与关系。</li>
+<li><strong>添加关系</strong>：<ul>
+<li><code>&lt;&lt;include&gt;&gt;</code>：某个用例必然包含另一个用例，如「拍照识别」必然包含「请求 OCR」。</li>
+<li><code>&lt;&lt;extend&gt;&gt;</code>：在特定条件下扩展，如「提醒触发」在 TTS 不可用时 <code>extend</code> 为「播放默认铃声」。</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h3 id="32">3.2 软件设计类</h3>
+<h4 id="q1_1">Q1：采用了什么软件体系结构？</h4>
+<p><strong>高分回答</strong>：</p>
+<p>本项目采用<strong>三层分层架构（3-Tier Architecture）</strong>：</p>
+<ol>
+<li><strong>表现层（UI Layer）</strong>：Activity + Adapter，负责界面渲染和用户事件；</li>
+<li><strong>业务逻辑层（Logic Layer）</strong>：AI 引擎、调度器、广播接收器、前台服务，负责核心业务规则与系统协调；</li>
+<li><strong>数据持久层（Data Layer）</strong>：<code>MedicineAlarm</code> 实体 + <code>AlarmStorageManager</code> / <code>HistoryStorageManager</code>，负责数据存储。</li>
+</ol>
+<p>上层依赖下层，下层不感知上层，通过 <code>MedicineAlarm</code> 实体和统一接口（如 <code>scheduleAlarm()</code>）交互，符合高内聚低耦合原则。</p>
+<h4 id="q2_1">Q2：模块如何划分？高内聚低耦合体现在哪里？</h4>
+<p><strong>高分回答</strong>：</p>
+<p>模块划分对应概要设计中的 M-UI-01~M-UI-07、M-LGC-01~M-LGC-06、M-DAT-01~M-DAT-03。</p>
+<p><strong>高内聚</strong>：</p>
+<ul>
+<li><code>AlarmScheduler</code> 只做一件事：封装 <code>AlarmManager</code> 注册/取消/更新闹钟；</li>
+<li><code>AlarmStorageManager</code> 只负责闹钟 JSON 的读写；</li>
+<li><code>MedicineRecognitionEngine</code> 只负责 OCR + AI 的图像识别链路。</li>
+</ul>
+<p><strong>低耦合</strong>：</p>
+<ul>
+<li>UI 层不直接调用 Android <code>AlarmManager</code>，而是通过 <code>AlarmScheduler.scheduleAlarm(alarm)</code> 黑盒调用；</li>
+<li>AI 引擎通过 <code>ResultHandler</code> 回调与 UI 通信，引擎内部更换 OCR 厂商不影响 UI；</li>
+<li>数据实体 <code>MedicineAlarm</code> 作为通用介质，在 UI、逻辑、持久层之间传递，避免各层直接依赖彼此的具体实现。</li>
+</ul>
+<h4 id="q3-sharedpreferences-sqliteroom">Q3：为什么选择 SharedPreferences 而不是 SQLite/Room？</h4>
+<p><strong>高分回答</strong>：</p>
+<p>这是基于<strong>业务特性、数据规模和开发阶段</strong>的综合权衡：</p>
+<ol>
+<li><strong>数据量极小</strong>：闹钟通常 &lt; 20 个，历史记录 ≤ 50 条，JSON 全量读写开销可忽略；</li>
+<li><strong>访问模式简单</strong>：基本是整存整取，没有复杂的多表关联、筛选、聚合查询；</li>
+<li><strong>开发效率高</strong>：SharedPreferences 无需定义 Schema、DAO、Migration，适合中期快速迭代；</li>
+<li><strong>读取速度快</strong>：50 条历史记录在本地闪存读取时间 &lt; 1ms，满足「秒开」体验。</li>
+</ol>
+<p><strong>局限性</strong>：无并发锁保护、无云端备份、不支持复杂查询。后续若增加长期统计图表或多用户数据，可平滑迁移到 Room。</p>
+<h4 id="q4_1">Q4：类图和包图设计说明</h4>
+<p><strong>高分回答</strong>：</p>
+<p>类图详见 2.3.4。包结构可划分为：</p>
+<pre><code>com.example.healthmanager
+├── ui          # Activity、Adapter、自定义 View
+├── engine      # MedicineRecognitionEngine、RecognitionCallback
+├── service     # AlarmService、AlarmReceiver、BootReceiver
+├── scheduler   # AlarmScheduler
+├── data        # AlarmStorageManager、HistoryStorageManager
+├── model       # MedicineAlarm、HistoryRecord
+└── util        # 时间格式化、权限工具、日志工具
+</code></pre>
+<p>包图体现了<strong>纵向分层 + 横向职责</strong>的划分：<code>ui</code> 只依赖 <code>engine</code>/<code>scheduler</code>/<code>data</code>；<code>data</code> 不依赖 <code>ui</code>；<code>service</code> 通过 <code>scheduler</code> 和 <code>data</code> 完成恢复。</p>
+<hr />
+<h3 id="33">3.3 软件过程模型类</h3>
+<h4 id="q1_2">Q1：本项目适合用什么过程模型？</h4>
+<p><strong>高分回答</strong>：</p>
+<p>推荐使用<strong>迭代/增量模型 + 原型模型</strong>相结合：</p>
+<ul>
+<li><strong>迭代/增量</strong>：把系统拆分为可运行的增量版本：</li>
+<li>第一轮：手动添加闹钟 + 基础提醒；</li>
+<li>第二轮：加入拍照识别 + AI 填表；</li>
+<li>第三轮：后台保活 + 重启恢复 + 历史记录。</li>
+<li><strong>原型模型</strong>：在正式编码前快速做出可点击原型，邀请老年用户试用，验证交互逻辑和字体大小是否合适。</li>
+</ul>
+<p><strong>理由</strong>：</p>
+<ol>
+<li>项目涉及外部 AI API，识别准确率和响应时间具有不确定性，需要快速试错；</li>
+<li>Android 后台保活策略在不同 ROM 上表现差异大，需要多次迭代适配；</li>
+<li>5 人团队规模适中，短周期迭代便于及时调整分工。</li>
+</ol>
+<h4 id="q2_2">Q2：为什么不完全用瀑布模型？</h4>
+<p><strong>高分回答</strong>：</p>
+<p>瀑布模型要求需求在前期完全确定，但本项目存在多处不确定性：</p>
+<ul>
+<li>百度 OCR + 智谱 AI 的实际识别效果在开发前难以精确评估；</li>
+<li>国产 ROM 对后台服务、精确闹钟的权限策略在不断变化；</li>
+<li>老年用户的真实操作习惯需要通过原型和测试逐步发现。</li>
+</ul>
+<p>如果采用纯瀑布模型，很可能在后期集成阶段才发现 AI 解析不稳定或闹钟被系统拦截，导致大规模返工。迭代模型可以在每个增量结束后及时验证并修正方向。</p>
+<h4 id="q3_1">Q3：敏捷方法在本项目中的体现</h4>
+<p><strong>高分回答</strong>：</p>
+<ul>
+<li><strong>小步快跑</strong>：每 1~2 周交付一个可演示增量；</li>
+<li><strong>每日站会</strong>：5 人团队每天同步进度、阻塞点和接口依赖；</li>
+<li><strong>角色自组织</strong>：根据模块接口划分任务，成员对自己的交付负责；</li>
+<li><strong>持续集成</strong>：使用 Android Studio + Git 频繁合并，及时解决冲突；</li>
+<li><strong>用户反馈驱动</strong>：通过原型和真机测试不断调整 UI 和提醒强度；</li>
+<li><strong>迭代回顾</strong>：每轮测试后召开缺陷复盘会，形成 BUG 清单和改进建议。</li>
+</ul>
+<hr />
+<h3 id="34">3.4 软件测试类</h3>
+<h4 id="q1-app">Q1：如何对这个 APP 进行测试？</h4>
+<p><strong>高分回答</strong>：</p>
+<p>采用<strong>分层测试策略</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>测试层级</th>
+<th>对象</th>
+<th>方法/工具</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>单元测试</strong></td>
+<td>JSON 解析、<code>AlarmScheduler</code> 时间计算、<code>StorageManager</code> 读写</td>
+<td>JUnit + Mockito</td>
+</tr>
+<tr>
+<td><strong>集成测试</strong></td>
+<td>CameraX → OCR → AI → UI 数据流；AlarmReceiver → Service → Notification</td>
+<td>真机调试 + Logcat</td>
+</tr>
+<tr>
+<td><strong>确认测试</strong></td>
+<td>对照需求规格说明书逐项验证 F1~F10</td>
+<td>测试用例表 + 黑盒测试</td>
+</tr>
+<tr>
+<td><strong>系统测试</strong></td>
+<td>完整链路：拍照 → 识别 → 保存 → 触发 → 确认 → 历史</td>
+<td>端到端回归测试 TEST-016</td>
+</tr>
+<tr>
+<td><strong>兼容性测试</strong></td>
+<td>不同 Android 版本、不同厂商 ROM 的后台行为</td>
+<td>OPPO/小米/华为等多设备</td>
+</tr>
+<tr>
+<td><strong>性能/稳定性测试</strong></td>
+<td>闹钟触发精度、后台保活、并发触发</td>
+<td><code>adb shell dumpsys alarm</code>、长时间压测</td>
+</tr>
+</tbody>
+</table>
+<h4 id="q2_3">Q2：单元测试、集成测试、确认测试分别测什么？</h4>
+<p><strong>高分回答</strong>：</p>
+<ul>
+<li><strong>单元测试</strong>：验证最小可测试单元的正确性。例如：</li>
+<li><code>MedicineAlarm</code> 的时间字符串解析是否正确；</li>
+<li><code>AlarmStorageManager.serializeToJson()</code> 和 <code>getAlarms()</code> 是否互逆；</li>
+<li><code>AlarmScheduler</code> 计算下一次触发时间是否考虑重复周期。</li>
+<li><strong>集成测试</strong>：验证多个模块组合后的行为。例如：</li>
+<li>拍照后图片能否正确传入识别引擎；</li>
+<li>AI 返回 JSON 后能否正确填充到 <code>EditAlarmActivity</code>；</li>
+<li><code>AlarmReceiver</code> 触发后能否正确启动 <code>AlarmService</code>。</li>
+<li><strong>确认测试</strong>：验证软件是否满足用户需求。例如：</li>
+<li>用户是否能在 30 秒内完成拍照识别；</li>
+<li>闹钟在息屏、杀后台、重启后是否都能触发；</li>
+<li>老年用户是否能独立完成一次用药提醒设置。</li>
+</ul>
+<h4 id="q3_2">Q3：黑盒测试用例设计（等价类、边界值）</h4>
+<p><strong>高分回答</strong>：</p>
+<p>以「手动添加闹钟」功能为例：</p>
+<table>
+<thead>
+<tr>
+<th>输入项</th>
+<th>有效等价类</th>
+<th>无效等价类</th>
+<th>边界值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>药品名</td>
+<td>1~100 字符的非空字符串</td>
+<td>空字符串；&gt;100 字符；仅特殊符号</td>
+<td>1 字符；100 字符；101 字符</td>
+</tr>
+<tr>
+<td>剂量</td>
+<td>"1片"、"2粒" 等</td>
+<td>空；纯数字无单位；负数</td>
+<td>—</td>
+</tr>
+<tr>
+<td>时间</td>
+<td>"HH:mm" 格式，00:00~23:59</td>
+<td>"25:00"、"12:60"、非时间格式</td>
+<td>"00:00"；"23:59"</td>
+</tr>
+<tr>
+<td>重复周期</td>
+<td>daily / 自定义星期</td>
+<td>非法字符串</td>
+<td>—</td>
+</tr>
+<tr>
+<td>历史记录数</td>
+<td>0~50</td>
+<td>超过 50</td>
+<td>0；50；51</td>
+</tr>
+</tbody>
+</table>
+<p>设计原则：每个等价类至少选一个代表值；边界值通常选取最小值、略高于最小值、正常值、略低于最大值、最大值。</p>
+<h4 id="q4_2">Q4：性能/稳定性测试（闹钟触发精度、后台保活）</h4>
+<p><strong>高分回答</strong>：</p>
+<ul>
+<li><strong>闹钟触发精度</strong>：</li>
+<li>设置多个闹钟，用 Logcat 记录 <code>AlarmReceiver.onReceive()</code> 的实际触发时间；</li>
+<li>计算偏差 $\Delta t = t_{actual} - t_{scheduled}$，要求 $|\Delta t| \le 100\,\text{ms}$；</li>
+<li>分别在息屏、Doze、后台被杀场景下测试。</li>
+<li><strong>后台保活</strong>：</li>
+<li>手动划掉应用进程，检查闹钟是否仍触发；</li>
+<li>开启「飞行模式+省电模式」测试服务行为；</li>
+<li>重启设备，验证 <code>BootReceiver</code> 是否恢复所有闹钟；</li>
+<li>使用 <code>adb shell dumpsys alarm</code> 查看 PendingIntent 注册状态。</li>
+<li><strong>并发触发</strong>：</li>
+<li>同一时刻设置 5 个以上闹钟，验证通知不堆叠丢失、TTS 不冲突。</li>
+</ul>
+<hr />
+<h3 id="35">3.5 软件质量与维护类</h3>
+<h4 id="q1_3">Q1：如何保证提醒不漏报？</h4>
+<p><strong>高分回答</strong>：</p>
+<p>本项目采用<strong>多层冗余 + 系统级调度</strong>策略：</p>
+<ol>
+<li><strong>精确闹钟调度</strong>：使用 <code>AlarmManager.setExactAndAllowWhileIdle()</code>，可在 Doze 模式下强制唤醒 CPU；</li>
+<li><strong>前台服务执行</strong>：触发后通过 <code>AlarmReceiver</code> 立即拉起 <code>AlarmService</code> 并 <code>startForeground()</code>，挂上不可清除的高优先级通知，避免被系统回收；</li>
+<li><strong>WakeLock 保护</strong>：在 <code>AlarmReceiver</code> 中获取 <code>PARTIAL_WAKE_LOCK</code>，确保关键逻辑执行期间 CPU 不睡眠；</li>
+<li><strong>服务自动重启</strong>：<code>AlarmService</code> 返回 <code>START_STICKY</code>，异常被杀后系统会尝试重建；</li>
+<li><strong>开机恢复</strong>：<code>BootReceiver</code> 监听 <code>BOOT_COMPLETED</code>，重启后重新注册所有闹钟；</li>
+<li><strong>用户引导</strong>：针对国产 ROM，引导开启「自启动」「电池优化白名单」「悬浮窗权限」等。</li>
+</ol>
+<p>用可靠性语言可表示为：设各层失效概率为 $p_1, p_2, \dots, p_n$，则漏报概率为：
+$$P_{miss} = \prod_{i=1}^{n} p_i$$
+多层独立冗余使得 $P_{miss}$ 显著降低。</p>
+<h4 id="q2ai">Q2：AI 识别错误的容错机制是什么？</h4>
+<p><strong>高分回答</strong>：</p>
+<p>医疗场景下，AI 错误可能导致严重后果，因此本项目坚持「AI 辅助、人工决策」原则：</p>
+<ol>
+<li><strong>人工二次确认</strong>：AI 返回的药名、剂量、时间只作为预填充，必须用户在 <code>EditAlarmActivity</code> 中确认后才能保存；</li>
+<li><strong>结果高亮提示</strong>：对 AI 填充字段使用醒目颜色，提醒用户重点核对；</li>
+<li><strong>手动输入降级</strong>：当网络不可用、API Key 失效或 OCR 失败时，自动跳转到手动输入界面，保证核心提醒功能不中断；</li>
+<li><strong>JSON 格式校验</strong>：解析 AI 返回体时加入 try-catch，关键字段缺失时提示具体错误；</li>
+<li><strong>Prompt 工程</strong>：在请求智谱 AI 时明确要求返回固定 JSON 格式，减少输出漂移。</li>
+</ol>
+<h4 id="q3_3">Q3：如果后续要扩展功能（如家人远程提醒、医生端），如何演化？</h4>
+<p><strong>高分回答</strong>：</p>
+<p>基于现有三层架构，可按以下方式演化：</p>
+<ol>
+<li><strong>家人远程提醒</strong>：<ul>
+<li>后端增加云端用户体系和推送服务（Firebase Cloud Messaging 或自建 MQTT）；</li>
+<li>患者端服药打卡后上传事件，家属端实时接收「已服药/未服药」通知；</li>
+<li>本地 <code>HistoryStorageManager</code> 可升级为 Room + 云端同步。</li>
+</ul>
+</li>
+<li><strong>医生端</strong>：<ul>
+<li>新增 Web 管理后台，医生可查看患者用药依从性报表；</li>
+<li>在 AI 分析阶段加入药品相互作用数据库，提升安全性评估准确性；</li>
+<li>通过 REST API 与 Android 端双向同步处方信息。</li>
+</ul>
+</li>
+<li><strong>架构调整</strong>：<ul>
+<li>数据层引入 Room 数据库处理多用户、长周期数据；</li>
+<li>业务层增加 Repository 模式，统一本地与远程数据源；</li>
+<li>UI 层拆分为患者 APP、家属 APP、医生 Web 三端，共享核心业务逻辑模块。</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h3 id="36">3.6 软件工程实践类</h3>
+<h4 id="q15">Q1：5 人团队如何分工避免代码冲突？</h4>
+<p><strong>高分回答</strong>：</p>
+<ul>
+<li><strong>模块边界清晰</strong>：按三层架构将 5 人分配到 UI、AI、保活、持久化、测试五个模块，模块间通过接口和实体通信；</li>
+<li><strong>接口先行</strong>：先定义 <code>MedicineAlarm</code> 数据类、<code>scheduleAlarm()</code>、<code>saveAlarm()</code> 等方法签名，再并行实现；</li>
+<li><strong>Git 分支管理</strong>：每人基于功能分支开发，完成后再合并到 <code>main</code>，避免直接在主分支修改；</li>
+<li><strong>每日集成</strong>：每天至少合并一次可编译代码，及时发现接口不匹配；</li>
+<li><strong>代码评审</strong>：关键模块（如 <code>AlarmScheduler</code>、<code>MedicineRecognitionEngine</code>）由组长或相关成员 Review 后再合并；</li>
+<li><strong>统一规范</strong>：命名规范、日志 TAG、错误码统一，便于后续测试和定位问题。</li>
+</ul>
+<h4 id="q2_4">Q2：项目中遇到了哪些软件危机表现？如何解决？</h4>
+<p><strong>高分回答</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>危机表现</th>
+<th>具体事件</th>
+<th>解决方案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>需求不明确</strong></td>
+<td>初期对「提醒强度」理解不一致，有人认为是普通通知，有人认为是全屏弹窗+语音</td>
+<td>通过用例图和原型明确需求，写入概要设计。</td>
+</tr>
+<tr>
+<td><strong>集成风险</strong></td>
+<td>AI 组返回 JSON 格式与 UI 组预期不一致，导致解析崩溃</td>
+<td>定义统一 <code>MedicineAlarm</code> 实体和 JSON Schema，增加 try-catch 容错。</td>
+</tr>
+<tr>
+<td><strong>外部依赖失控</strong></td>
+<td>智谱 AI 模型名 <code>glm-4</code> 不可用，API Key 过期</td>
+<td>改为 <code>glm-4-flash</code>，并将 Key 后续迁移到 <code>local.properties</code>。</td>
+</tr>
+<tr>
+<td><strong>构建环境危机</strong></td>
+<td>全局 Gradle 代理配置残留导致 <code>assembleDebug</code> 失败</td>
+<td>清理 <code>gradle.properties</code>，文档化环境配置。</td>
+</tr>
+<tr>
+<td><strong>平台差异危机</strong></td>
+<td>OPPO ColorOS 对后台服务限制严格，闹钟延迟</td>
+<td>引导用户开启自启动+电池白名单，并在测试中记录环境差异。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="q3-case">Q3：用了哪些 CASE 工具？</h4>
+<p><strong>高分回答</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>工具类别</th>
+<th>工具</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>IDE</strong></td>
+<td>Android Studio</td>
+<td>Kotlin 编码、布局设计、调试、构建</td>
+</tr>
+<tr>
+<td><strong>版本控制</strong></td>
+<td>Git + GitHub</td>
+<td>代码版本管理、分支协作</td>
+</tr>
+<tr>
+<td><strong>建模工具</strong></td>
+<td>PlantUML / Mermaid / draw.io</td>
+<td>用例图、类图、顺序图、状态图、数据流图</td>
+</tr>
+<tr>
+<td><strong>接口调试</strong></td>
+<td>Postman / curl</td>
+<td>百度 OCR、智谱 AI 接口预验证</td>
+</tr>
+<tr>
+<td><strong>日志分析</strong></td>
+<td>Logcat / <code>adb logcat</code></td>
+<td>运行时日志采集、问题定位</td>
+</tr>
+<tr>
+<td><strong>系统调试</strong></td>
+<td><code>adb shell dumpsys alarm/notification</code></td>
+<td>验证闹钟注册和通知状态</td>
+</tr>
+<tr>
+<td><strong>文档工具</strong></td>
+<td>Markdown / Pandoc</td>
+<td>需求、设计、测试文档编写</td>
+</tr>
+<tr>
+<td><strong>构建工具</strong></td>
+<td>Gradle</td>
+<td>APK 打包、依赖管理</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="10">四、例题参考答案（对应 10 分综合分析题）</h2>
+<h3 id="_4">典型题目</h3>
+<blockquote>
+<p>请结合你参与的项目，说明：
+1. 项目背景与主要功能；
+2. 采用了哪些软件系统建模方法？请结合图示说明；
+3. 项目采用了什么软件体系结构？如何体现高内聚低耦合？
+4. 在测试与质量保证方面做了哪些工作？</p>
+</blockquote>
+<h3 id="_5">参考答案</h3>
+<p><strong>1. 项目背景与主要功能</strong></p>
+<p>HealthManager 是为中老年慢性病患者设计的 Android 智能用药提醒应用。项目背景源于老年人漏服、错服药物的普遍问题，以及普通闹钟在 Android 后台限制下容易失效的痛点。主要功能包括：拍照识别药品（百度 OCR + 智谱 AI）、用药闹钟管理、高精度提醒（AlarmManager + 前台服务 + TTS）、设备重启恢复、用药历史记录。</p>
+<p><strong>2. 软件系统建模方法</strong></p>
+<p>本项目综合使用了面向对象建模和结构化建模：</p>
+<ul>
+<li><strong>用例图</strong>：识别患者、Android 系统、OCR/AI 服务三个 Actor，明确拍照识别、提醒触发、历史查看等 Use Case；</li>
+<li><strong>数据流图</strong>：描述从药品图像输入到提醒通知输出的完整数据变换过程；</li>
+<li><strong>顺序图</strong>：刻画拍照 → OCR → AI → 回调 UI → 保存闹钟的时序关系，明确跨线程通信机制；</li>
+<li><strong>类图</strong>：划分 Entity、UI_View、Controller_Service、Data_Storage 四个命名空间，展示三层架构的静态结构；</li>
+<li><strong>状态图</strong>：描述闹钟从「待触发」到「触发中」再到「已确认」的状态转换，指导异常恢复设计。</li>
+</ul>
+<p><strong>3. 软件体系结构</strong></p>
+<p>采用<strong>三层分层架构</strong>：表现层（Activity/Adapter）、业务逻辑层（AI 引擎/调度器/服务/接收器）、数据持久层（Manager/Entity）。高内聚体现在每个模块职责单一，如 <code>AlarmScheduler</code> 只负责闹钟调度；低耦合体现在上层通过统一接口调用下层，如 UI 不直接操作 <code>AlarmManager</code>，而是调用 <code>AlarmScheduler.scheduleAlarm(alarm)</code>，AI 引擎通过回调与 UI 通信。</p>
+<p><strong>4. 测试与质量保证</strong></p>
+<p>按照《测试计划》执行了 14 项测试用例，覆盖功能测试、接口测试、集成测试、弱网容错、边界测试、后台保活、重启恢复等。关键质量指标包括：</p>
+<ul>
+<li>识别总耗时 $T_{total} = T_{compress} + T_{ocr} + T_{ai} + T_{parse} \le 35\,\text{s}$；</li>
+<li>闹钟触发偏差 $|\Delta t| \le 100\,\text{ms}$；</li>
+<li>历史记录容量 $M_{history} \le 50$；</li>
+<li>测试通过率 14/14，发现 8 项缺陷并给出改进建议。</li>
+</ul>
+<p>通过以上工作，项目在中期阶段实现了核心功能的全链路打通，并具备了良好的可扩展性和可维护性。</p>
+<hr />
+<blockquote>
+<p><strong>附注</strong>：本文档中的项目图片已按 <code>assets/project/</code> 相对路径嵌入，请确保该目录与本文档位于同一父目录下，以便正确渲染。</p>
+</blockquote>
+<div class="footer">
+    <p><a href="index.html">← 返回索引</a></p>
+    <p>来源：软件工程课件（2026版）+ 2019/2020/2022上 期末试卷</p>
+</div>
+</div>
+</body>
+</html>
