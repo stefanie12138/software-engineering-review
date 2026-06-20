@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>软件工程画图教程</title>
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+        delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+        ]
+    });"></script>
+
+    
+<style>
+:root {
+    --bg: #fafafa;
+    --fg: #222;
+    --accent: #1565c0;
+    --card-bg: #fff;
+    --border: #e0e0e0;
+}
+* { box-sizing: border-box; }
+body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", "Noto Sans CJK SC", sans-serif;
+    line-height: 1.8;
+    color: var(--fg);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    background: var(--card-bg);
+    box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    min-height: 100vh;
+}
+h1, h2, h3, h4 {
+    color: var(--accent);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+h1 { font-size: 2rem; border-bottom: 3px solid var(--accent); padding-bottom: 0.5rem; }
+h2 { font-size: 1.6rem; border-bottom: 2px solid #e0e0e0; padding-bottom: 0.3rem; }
+h3 { font-size: 1.3rem; }
+h4 { font-size: 1.1rem; color: #333; }
+p { margin: 0.8rem 0; }
+ul, ol { margin: 0.8rem 0; padding-left: 1.8rem; }
+li { margin: 0.3rem 0; }
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1rem 0;
+    font-size: 0.95rem;
+}
+th, td {
+    border: 1px solid var(--border);
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+}
+th { background: #f5f5f5; font-weight: 600; }
+tr:nth-child(even) { background: #fafafa; }
+code {
+    background: #f4f4f4;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 0.9em;
+}
+pre {
+    background: #263238;
+    color: #aed581;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    line-height: 1.5;
+}
+pre code { background: transparent; color: inherit; padding: 0; }
+blockquote {
+    border-left: 4px solid var(--accent);
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    background: #f0f7ff;
+    color: #333;
+}
+img { max-width: 100%; height: auto; display: block; margin: 1rem auto; }
+.index-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: var(--fg);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+.card h2 { margin-top: 0; color: var(--accent); border: none; padding: 0; }
+.card p { color: #555; margin: 0.5rem 0 0; }
+.footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    color: #777;
+    font-size: 0.9rem;
+}
+</style>
+
+</head>
+<body>
+<div class="container">
+<h1 id="_1">软件工程画图实战教程</h1>
+<h2 id="_2">一、五种核心图速查表</h2>
+<table>
+<thead>
+<tr>
+<th>图类型</th>
+<th>回答的问题</th>
+<th>适用阶段</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用例图</td>
+<td>谁用系统？系统做什么？</td>
+<td>需求获取</td>
+</tr>
+<tr>
+<td>数据流图</td>
+<td>数据怎么流动？经过哪些加工？</td>
+<td>需求分析</td>
+</tr>
+<tr>
+<td>类图</td>
+<td>系统有哪些类？它们什么关系？</td>
+<td>设计阶段</td>
+</tr>
+<tr>
+<td>顺序图</td>
+<td>对象之间按什么顺序交互？</td>
+<td>详细设计</td>
+</tr>
+<tr>
+<td>状态图</td>
+<td>对象有哪些状态？怎么转换？</td>
+<td>详细设计</td>
+</tr>
+</tbody>
+</table>
+<h2 id="use-case-diagram">二、用例图（Use Case Diagram）</h2>
+<h3 id="21">2.1 图符与规则</h3>
+<table>
+<thead>
+<tr>
+<th>图符</th>
+<th>形状</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参与者（Actor）</td>
+<td>小人</td>
+<td>与系统交互的外部角色，可以是人、其他系统或硬件设备</td>
+</tr>
+<tr>
+<td>用例（Use Case）</td>
+<td>椭圆</td>
+<td>系统提供的一项功能，名称用动宾结构，如“查询图书”</td>
+</tr>
+<tr>
+<td>系统边界</td>
+<td>矩形框</td>
+<td>框内为用例，框外为参与者，框顶写系统名称</td>
+</tr>
+</tbody>
+</table>
+<p><strong>四种关系</strong>：</p>
+<ul>
+<li><strong>关联（Association）</strong>：Actor 与 Use Case 之间的实线，表示参与使用该功能。</li>
+<li><strong>包含（Include）</strong>：带 <code>&lt;&lt;include&gt;&gt;</code> 标签的虚线箭头，箭头指向被包含用例，表示某用例必然调用另一用例。</li>
+<li><strong>扩展（Extend）</strong>：带 <code>&lt;&lt;extend&gt;&gt;</code> 标签的虚线箭头，箭头由扩展用例指向基用例，表示在特定条件下扩展功能。</li>
+<li><strong>泛化（Generalization）</strong>：实线空心三角箭头，表示父子关系，如“普通用户”泛化为“用户”。</li>
+</ul>
+<h3 id="22">2.2 文字 → 用例图：四步法</h3>
+<ol>
+<li><strong>找名词 → Actor</strong>：把文本中涉及的人、部门、外部系统列出来。</li>
+<li><strong>找动词/功能 → Use Case</strong>：把“可以做什么”“能做什么”转成椭圆。</li>
+<li><strong>画系统边界</strong>：用矩形把所有用例框起来，Actor 放在外部。</li>
+<li><strong>建立关系</strong>：连线表示使用；需要公共流程的用 <code>include</code>；可选功能用 <code>extend</code>。</li>
+</ol>
+<h3 id="23">2.3 示例：图书馆管理系统</h3>
+<blockquote>
+<p>图书馆管理系统中，读者可以查询图书、借阅图书、归还图书；管理员可以录入新书、管理读者信息、处理逾期罚款。借阅图书时需要先检查库存（include），如果库存不足则推荐预约（extend）。</p>
+</blockquote>
+<p><img alt="图书馆管理用例图" src="assets/svg/tutorial/use-case-library.svg" /></p>
+<p><strong>图示说明</strong>：矩形框内为用例，左侧“读者”与“查询图书”“借阅图书”“归还图书”关联，右侧“管理员”与三个管理用例关联；“借阅图书”通过 <code>include</code> 指向“检查库存”，通过 <code>extend</code> 指向“推荐预约”。</p>
+<p><strong>常见错误</strong>：</p>
+<ul>
+<li>把系统内部功能（如“验证密码”）直接画成独立用例，应通过 <code>include</code> 引入。</li>
+<li>箭头方向画反：<code>include</code> 箭头指向被包含用例，<code>extend</code> 箭头由扩展用例指向基用例。</li>
+<li>用例名称写成名词，应使用动宾结构。</li>
+</ul>
+<h2 id="dfd">三、数据流图（DFD）</h2>
+<h3 id="31">3.1 图符与规则</h3>
+<table>
+<thead>
+<tr>
+<th>图符</th>
+<th>形状</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>外部实体</td>
+<td>矩形</td>
+<td>系统之外的数据源或数据去向，如“顾客”</td>
+</tr>
+<tr>
+<td>加工</td>
+<td>圆角矩形/圆圈</td>
+<td>对数据的处理，编号如 <code>1</code>、<code>1.1</code>、<code>1.2</code></td>
+</tr>
+<tr>
+<td>数据存储</td>
+<td>开口矩形/两条平行线</td>
+<td>数据保存处，命名如“D1 菜单数据”</td>
+</tr>
+<tr>
+<td>数据流</td>
+<td>带箭头的线</td>
+<td>数据移动方向，线上标注数据名称</td>
+</tr>
+</tbody>
+</table>
+<p><strong>编号规则</strong>：顶层图只有 1 个总加工 <code>0</code>；下层图按 <code>1</code>、<code>2</code> 展开为 <code>1.1</code>、<code>1.2</code> 等，层次清晰。</p>
+<h3 id="32-dfd0-1">3.2 文字 → DFD：四步法（0 层 → 1 层分解）</h3>
+<ol>
+<li><strong>找外部实体</strong>：列出系统之外与之交互的人、系统、组织。</li>
+<li><strong>找核心加工</strong>：把系统中的主要处理步骤抽象为加工。</li>
+<li><strong>找数据存储</strong>：找出需要保存和读取的数据文件、数据库表。</li>
+<li><strong>画数据流</strong>：按数据进入、处理、输出的顺序用箭头连接，并标注数据项。</li>
+</ol>
+<h3 id="33">3.3 示例：在线订餐系统</h3>
+<blockquote>
+<p>顾客浏览菜单并下单，订单信息进入订单处理系统；厨房接收订单准备餐品；配送员取餐并配送；顾客可以查询订单状态。系统保存菜单数据、订单数据和配送数据。</p>
+</blockquote>
+<p><img alt="在线订餐0层DFD" src="assets/svg/tutorial/dfd-food-order-0.svg" /></p>
+<p><img alt="在线订餐1层DFD" src="assets/svg/tutorial/dfd-food-order-1.svg" /></p>
+<p><strong>图示说明</strong>：0 层图展示顾客、厨房、配送员与“在线订餐系统”之间的数据交换；1 层图将“在线订餐系统”分解为顾客管理、订单处理、厨房出餐、配送管理等加工，并连接菜单、订单、配送等数据存储。</p>
+<p><strong>常见错误</strong>：</p>
+<ul>
+<li>加工与加工之间直接传递数据，缺少数据存储或外部实体支撑。</li>
+<li>数据流上标注的是动作而不是数据项，如应写“订单信息”而非“下订单”。</li>
+<li>把控制流（如“完成信号”）当成数据流，DFD 只表示数据流动。</li>
+</ul>
+<h2 id="class-diagram">四、类图（Class Diagram）</h2>
+<h3 id="41">4.1 图符与规则</h3>
+<table>
+<thead>
+<tr>
+<th>图符</th>
+<th>形状</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>类</td>
+<td>三栏矩形</td>
+<td>类名、属性、方法</td>
+</tr>
+<tr>
+<td>可见性</td>
+<td><code>+ - # ~</code></td>
+<td>分别表示 public、private、protected、package</td>
+</tr>
+</tbody>
+</table>
+<p><strong>五种关系</strong>：</p>
+<ul>
+<li><strong>关联（Association）</strong>：实线，表示类之间有联系，可带角色名和多重性（如 <code>1..*</code>）。</li>
+<li><strong>聚合（Aggregation）</strong>：空心菱形加实线，整体与部分，部分可独立存在。</li>
+<li><strong>组合（Composition）</strong>：实心菱形加实线，整体与部分，部分随整体销毁。</li>
+<li><strong>依赖（Dependency）</strong>：虚线箭头，一个类的变化可能影响另一个类。</li>
+<li><strong>泛化（Generalization）</strong>：实线空心三角箭头，表示继承关系。</li>
+</ul>
+<h3 id="42">4.2 文字 → 类图：五步法</h3>
+<ol>
+<li><strong>找名词 → 候选类</strong>：把文本中的实体名词全部列出来。</li>
+<li><strong>筛选有效类</strong>：去掉同义词、超出系统范围、属性误作类的名词。</li>
+<li><strong>确定属性与方法</strong>：属性是名词特征，方法是行为动词。</li>
+<li><strong>确定关系</strong>：判断类之间是关联、聚合、组合、依赖还是继承。</li>
+<li><strong>画图</strong>：按规范绘制类框与连线，标注多重性和角色。</li>
+</ol>
+<h3 id="43">4.3 示例：学生选课系统</h3>
+<blockquote>
+<p>学生可以选课、退课；每门课程由一名教师讲授；系统记录选课结果。学生有学号、姓名；课程有课程号、课程名、学分；教师有工号、姓名；选课记录包含选课时间和成绩。</p>
+</blockquote>
+<p><img alt="学生选课类图" src="assets/svg/tutorial/class-course-registration.svg" /></p>
+<p><strong>图示说明</strong>：核心类包括“学生”“课程”“选课记录”“教师”；“学生”与“课程”通过“选课记录”产生多对多关联；“教师”与“课程”为一对多关联；选课记录包含选课时间和成绩属性。</p>
+<p><strong>常见错误</strong>：</p>
+<ul>
+<li>把属性当作类，如“姓名”“学号”应放在“学生”类内部。</li>
+<li>关系方向或菱形类型混淆：组合比聚合更强，整体销毁部分也销毁。</li>
+<li>多重性遗漏，导致无法判断是一对多还是多对多。</li>
+</ul>
+<h2 id="sequence-diagram">五、顺序图（Sequence Diagram）</h2>
+<h3 id="51">5.1 图符与规则</h3>
+<table>
+<thead>
+<tr>
+<th>图符</th>
+<th>形状</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>对象</td>
+<td>顶部矩形</td>
+<td>参与交互的对象或角色</td>
+</tr>
+<tr>
+<td>生命线</td>
+<td>虚线</td>
+<td>表示对象存在的时间</td>
+</tr>
+<tr>
+<td>同步消息</td>
+<td>实心箭头</td>
+<td>调用并等待返回</td>
+</tr>
+<tr>
+<td>异步消息</td>
+<td>开放箭头</td>
+<td>调用后不等待返回</td>
+</tr>
+<tr>
+<td>返回消息</td>
+<td>虚线箭头</td>
+<td>方法调用返回</td>
+</tr>
+<tr>
+<td>激活条</td>
+<td>生命线上的窄矩形</td>
+<td>对象正在执行活动</td>
+</tr>
+<tr>
+<td>组合片段</td>
+<td>矩形框</td>
+<td><code>loop</code> 循环、<code>alt</code> 选择、<code>opt</code> 可选</td>
+</tr>
+</tbody>
+</table>
+<h3 id="52">5.2 文字 → 顺序图：三步法</h3>
+<ol>
+<li><strong>确定参与对象</strong>：找出交互中涉及的所有对象或角色。</li>
+<li><strong>按时间顺序排列消息</strong>：按事件发生的先后顺序自上而下绘制箭头。</li>
+<li><strong>标注循环/选择/返回</strong>：对需要重复或分支的地方用 <code>loop</code>、<code>alt</code> 等片段标注，并补全返回消息。</li>
+</ol>
+<h3 id="53-atm">5.3 示例：ATM 取款流程</h3>
+<blockquote>
+<p>用户插入银行卡并输入密码；ATM 向银行系统验证密码；验证成功后显示余额；用户输入取款金额；银行系统扣款；ATM 出钞并退卡。若密码错误则提示并退卡。</p>
+</blockquote>
+<p><img alt="ATM取款顺序图" src="assets/svg/tutorial/sequence-atm.svg" /></p>
+<p><strong>图示说明</strong>：对象从左到右依次为“用户”“ATM 界面”“账户验证系统”“银行账户”；用户插卡、输入密码、验证、显示余额、输入金额、扣款、出钞、退卡按时间顺序自上而下传递消息；密码错误分支用 <code>alt</code> 片段表示。</p>
+<p><strong>常见错误</strong>：</p>
+<ul>
+<li>消息箭头方向画反，应指向被调用对象。</li>
+<li>忘记画返回消息，导致调用结果不清晰。</li>
+<li>生命线过长或过短，应覆盖对象参与交互的全过程。</li>
+</ul>
+<h2 id="state-diagram">六、状态图（State Diagram）</h2>
+<h3 id="61">6.1 图符与规则</h3>
+<table>
+<thead>
+<tr>
+<th>图符</th>
+<th>形状</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>状态</td>
+<td>圆角矩形</td>
+<td>对象在生命周期中的某种情形</td>
+</tr>
+<tr>
+<td>转换</td>
+<td>带箭头的线</td>
+<td>状态之间的变化</td>
+</tr>
+<tr>
+<td>事件</td>
+<td>转换线上的文字</td>
+<td>触发转换的动作或信号</td>
+</tr>
+<tr>
+<td>监护条件</td>
+<td><code>[条件]</code></td>
+<td>仅在条件为真时才发生转换</td>
+</tr>
+<tr>
+<td>初始状态</td>
+<td>实心圆</td>
+<td>状态起点</td>
+</tr>
+<tr>
+<td>终止状态</td>
+<td>实心圆外加空心圆</td>
+<td>状态终点</td>
+</tr>
+</tbody>
+</table>
+<h3 id="62">6.2 文字 → 状态图：三步法</h3>
+<ol>
+<li><strong>找对象生命周期</strong>：选定一个具有明显状态变化的对象。</li>
+<li><strong>找状态</strong>：列出该对象可能出现的所有稳定状态。</li>
+<li><strong>找触发事件</strong>：找出导致状态转换的事件和条件，用箭头连接状态。</li>
+</ol>
+<h3 id="63">6.3 示例：订单生命周期</h3>
+<blockquote>
+<p>订单提交后进入“待支付”状态；支付成功后变为“待发货”；商家发货后变为“已发货”；用户确认收货后变为“已完成”。用户可在支付前取消订单；支付失败也回到“待支付”或进入“已取消”。</p>
+</blockquote>
+<p><img alt="订单状态图" src="assets/svg/tutorial/state-order.svg" /></p>
+<p><strong>图示说明</strong>：订单从“待支付”开始；支付成功后进入“待发货”，发货后变为“已发货”，收货确认后进入“已完成”；取消操作或支付失败会使订单进入“已取消”。</p>
+<p><strong>常见错误</strong>：</p>
+<ul>
+<li>把动作当作状态，如“支付”是事件，不是状态。</li>
+<li>状态之间缺少触发事件或监护条件。</li>
+<li>画成流程图，出现并行分支或判断菱形，状态图应体现对象的生命周期。</li>
+</ul>
+<h2 id="_3">七、扩展图型</h2>
+<h3 id="71-activity-diagram">7.1 活动图（Activity Diagram）</h3>
+<p><strong>图符与规则</strong></p>
+<table>
+<thead>
+<tr>
+<th>图符</th>
+<th>形状</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>起始/终止节点</td>
+<td>实心圆/同心圆</td>
+<td>流程起点和终点</td>
+</tr>
+<tr>
+<td>活动节点</td>
+<td>圆角矩形</td>
+<td>一个具体活动</td>
+</tr>
+<tr>
+<td>判断/合并节点</td>
+<td>菱形</td>
+<td>分支与汇合</td>
+</tr>
+<tr>
+<td>分叉/汇合节点</td>
+<td>粗黑线</td>
+<td>并行活动的开始与结束</td>
+</tr>
+<tr>
+<td>泳道</td>
+<td>纵向分区</td>
+<td>划分不同责任角色</td>
+</tr>
+</tbody>
+</table>
+<p><strong>文字 → 活动图：三步法</strong></p>
+<ol>
+<li>找出流程中的各个活动（动词短语）。</li>
+<li>确定活动的先后顺序与分支条件。</li>
+<li>用泳道划分责任角色，绘制流程。</li>
+</ol>
+<p><strong>示例：请假审批流程</strong></p>
+<blockquote>
+<p>员工提交请假申请；主管审批；若批准则进入人事备案并通知员工；若驳回则返回员工修改或取消。</p>
+</blockquote>
+<p><img alt="请假审批活动图" src="assets/svg/tutorial/activity-leave.svg" /></p>
+<p><strong>图示说明</strong>：泳道分为“员工”“主管”“人事”；员工提交申请，主管判断后分支，批准进入人事备案，驳回返回员工。</p>
+<h3 id="72-e-r">7.2 E-R 图</h3>
+<p><strong>图符与规则</strong></p>
+<table>
+<thead>
+<tr>
+<th>图符</th>
+<th>形状</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>实体</td>
+<td>矩形</td>
+<td>现实世界中可区分的事物</td>
+</tr>
+<tr>
+<td>属性</td>
+<td>椭圆</td>
+<td>实体的特征</td>
+</tr>
+<tr>
+<td>联系</td>
+<td>菱形</td>
+<td>实体之间的关联</td>
+</tr>
+<tr>
+<td>基数</td>
+<td>1:1、1:n、m:n</td>
+<td>实体参与联系的数量关系</td>
+</tr>
+</tbody>
+</table>
+<p><strong>文字 → E-R 图：三步法</strong></p>
+<ol>
+<li>找出实体。</li>
+<li>确定实体属性及主键。</li>
+<li>确定实体间联系及基数。</li>
+</ol>
+<p><strong>示例：图书借阅系统</strong></p>
+<blockquote>
+<p>图书借阅系统涉及读者、图书和借阅记录。读者有读者编号、姓名；图书有 ISBN、书名、作者；一次借阅产生一条借阅记录，包含借出日期和归还日期。</p>
+</blockquote>
+<p><img alt="图书借阅E-R图" src="assets/svg/tutorial/er-library.svg" /></p>
+<p><strong>图示说明</strong>：实体包括“读者”“图书”“借阅记录”；读者与图书之间通过“借阅”联系，通常为 m:n 关系，借阅记录作为独立联系实体记录借还日期。</p>
+<h3 id="73">7.3 构件图/部署图</h3>
+<p><strong>图符与规则</strong></p>
+<table>
+<thead>
+<tr>
+<th>图符</th>
+<th>形状</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>构件</td>
+<td>带两个标签的矩形</td>
+<td>可部署的软件模块</td>
+</tr>
+<tr>
+<td>接口</td>
+<td>小圆</td>
+<td>构件对外提供的服务</td>
+</tr>
+<tr>
+<td>节点</td>
+<td>立方体</td>
+<td>硬件或运行环境</td>
+</tr>
+<tr>
+<td>依赖</td>
+<td>虚线箭头</td>
+<td>构件或节点之间的依赖关系</td>
+</tr>
+</tbody>
+</table>
+<p><strong>适用场景</strong>：描述系统的物理结构、模块划分、软硬件部署关系。</p>
+<p><strong>示例：Web 应用部署</strong></p>
+<blockquote>
+<p>客户端浏览器通过 HTTP 访问 Web 服务器；Web 服务器与应用服务器通信；应用服务器连接数据库服务器，形成典型的三层部署结构。</p>
+</blockquote>
+<p><img alt="Web应用部署图" src="assets/svg/tutorial/deployment-web.svg" /></p>
+<p><strong>图示说明</strong>：三个节点分别为“客户端浏览器”“Web 服务器”“应用服务器”“数据库服务器”；节点之间用带通信协议标注的连线连接。</p>
+<h3 id="74-n-s-pad">7.4 N-S 图 / PAD 图</h3>
+<p><strong>图符与规则</strong></p>
+<table>
+<thead>
+<tr>
+<th>图符</th>
+<th>形状</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>顺序结构</td>
+<td>矩形框上下堆叠</td>
+<td>语句按顺序执行</td>
+</tr>
+<tr>
+<td>选择结构</td>
+<td>矩形框内嵌套分支</td>
+<td>if/else 判断</td>
+</tr>
+<tr>
+<td>循环结构</td>
+<td>矩形框内嵌套循环体</td>
+<td>while/for 循环</td>
+</tr>
+</tbody>
+</table>
+<p><strong>适用场景</strong>：结构化详细设计，清晰表达算法逻辑，避免流程线交叉。</p>
+<p><strong>示例：判断三角形类型</strong></p>
+<blockquote>
+<p>输入三条边 a、b、c，先判断能否构成三角形；若能，再判断是等边、等腰还是普通三角形；若不能则输出“不能构成三角形”。</p>
+</blockquote>
+<p><img alt="判断三角形N-S图" src="assets/svg/tutorial/ns-triangle.svg" /></p>
+<p><strong>图示说明</strong>：最外层判断“能否构成三角形”；内部再按等边、等腰、普通三角形顺序嵌套选择结构。</p>
+<h3 id="75">7.5 控制流图</h3>
+<p><strong>图符与规则</strong></p>
+<table>
+<thead>
+<tr>
+<th>图符</th>
+<th>形状</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>节点</td>
+<td>圆角矩形/圆圈</td>
+<td>程序基本块，内部语句顺序执行</td>
+</tr>
+<tr>
+<td>有向边</td>
+<td>箭头</td>
+<td>控制流向</td>
+</tr>
+<tr>
+<td>判定节点</td>
+<td>引出多条边的节点</td>
+<td>含分支条件</td>
+</tr>
+</tbody>
+</table>
+<p><strong>适用场景</strong>：白盒测试路径分析、计算环形复杂度。</p>
+<p><strong>环形复杂度公式</strong>：</p>
+<p>$$
+V(G) = E - N + 2P
+$$</p>
+<p>其中，$E$ 为边数，$N$ 为节点数，$P$ 为连通分量数（通常为 1）。</p>
+<p><strong>示例：简单函数控制流图</strong></p>
+<blockquote>
+<p>函数接收整数 x，若 x &gt; 0 则返回 x，否则返回 -x。</p>
+</blockquote>
+<p><img alt="控制流图示例" src="assets/svg/tutorial/cfg-example.svg" /></p>
+<p><strong>图示说明</strong>：起始节点接收 x，判定节点判断 x &gt; 0，分别引出“返回 x”和“返回 -x”两条分支，最终汇合到结束节点。</p>
+<h2 id="_4">八、综合练习（附参考答案）</h2>
+<h3 id="1">1. 用例图：医院预约挂号系统</h3>
+<p><strong>题目</strong>：医院预约挂号系统中，患者可以注册登录、查询医生排班、预约挂号、取消预约；医生可以查看自己的预约列表；系统每日自动发送就诊提醒。挂号时需要验证患者身份信息（include）。</p>
+<p><strong>参考答案</strong>：</p>
+<ul>
+<li><strong>Actor</strong>：患者、医生、定时任务（或系统）。</li>
+<li><strong>Use Case</strong>：注册登录、查询医生排班、预约挂号、取消预约、查看预约列表、发送就诊提醒、验证患者身份信息。</li>
+<li><strong>include</strong>：预约挂号 <code>include</code> 验证患者身份信息。</li>
+<li><strong>画图要点</strong>：患者位于系统边界左侧，关联注册登录、查询医生排班、预约挂号、取消预约；医生位于右侧，关联查看预约列表；定时任务关联发送就诊提醒。</li>
+</ul>
+<h3 id="2">2. 数据流图：快递包裹查询系统</h3>
+<p><strong>题目</strong>：快递包裹查询系统：用户输入快递单号，系统从快递数据库查询物流信息，返回给用户。快递员可以扫描包裹更新物流状态。</p>
+<p><strong>参考答案</strong>：</p>
+<ul>
+<li><strong>外部实体</strong>：用户、快递员。</li>
+<li><strong>加工</strong>：查询物流（1）、更新物流状态（2）。</li>
+<li><strong>数据存储</strong>：D1 快递数据库。</li>
+<li><strong>数据流</strong>：</li>
+<li>用户 → 快递单号 → 1 查询物流 → 物流信息 → 用户</li>
+<li>快递员 → 扫描信息 → 2 更新物流状态 → D1 快递数据库</li>
+<li><strong>0 层图</strong>：用户、快递员与“快递包裹查询系统”之间交换数据；1 层图将系统分解为查询物流和更新物流状态两个加工。</li>
+</ul>
+<h3 id="3">3. 类图：博客系统</h3>
+<p><strong>题目</strong>：博客系统：用户可以发布文章、评论文章。文章有标题、内容、发布时间。评论有内容和评论时间。用户可以关注其他用户。</p>
+<p><strong>参考答案</strong>：</p>
+<ul>
+<li><strong>类</strong>：用户（User）、文章（Article）、评论（Comment）。</li>
+<li><strong>属性</strong>：</li>
+<li>User：用户名、密码、注册时间。</li>
+<li>Article：标题、内容、发布时间。</li>
+<li>Comment：内容、评论时间。</li>
+<li><strong>方法</strong>：发布文章、发表评论、关注用户等。</li>
+<li><strong>关系</strong>：</li>
+<li>User 与 Article：一对多关联（一个用户发布多篇文章）。</li>
+<li>User 与 Comment：一对多关联（一个用户发表多条评论）。</li>
+<li>Article 与 Comment：一对多关联（一篇文章有多条评论）。</li>
+<li>User 与 User：自关联，表示关注关系（多对多）。</li>
+<li><strong>画图要点</strong>：为 User 类增加自关联线表示关注关系，线上标注多重性 <code>*</code> 对 <code>*</code>。</li>
+</ul>
+<div class="footer">
+    <p><a href="index.html">← 返回索引</a></p>
+    <p>来源：软件工程课件（2026版）+ 2019/2020/2022上 期末试卷</p>
+</div>
+</div>
+</body>
+</html>

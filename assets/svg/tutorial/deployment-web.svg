@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="350" viewBox="0 0 700 350">
+  <rect width="700" height="350" fill="#f8f9fa"/>
+  <text x="350" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#1565c0">Web 应用部署图</text>
+  
+  <!-- Client node -->
+  <rect x="50" y="70" width="140" height="120" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+  <text x="120" y="95" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">客户端设备</text>
+  <rect x="75" y="110" width="90" height="35" fill="#fff" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="120" y="132" text-anchor="middle" font-size="12" fill="#333">浏览器</text>
+  <rect x="75" y="155" width="90" height="25" fill="#fff" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="120" y="172" text-anchor="middle" font-size="12" fill="#333">HTTP/HTTPS</text>
+  
+  <!-- Server node -->
+  <rect x="280" y="70" width="160" height="200" fill="#fff3e0" stroke="#ef6c00" stroke-width="2"/>
+  <text x="360" y="95" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">应用服务器</text>
+  <rect x="305" y="110" width="110" height="35" fill="#fff" stroke="#ef6c00" stroke-width="1.5"/>
+  <text x="360" y="132" text-anchor="middle" font-size="12" fill="#333">Web 服务</text>
+  <rect x="305" y="155" width="110" height="35" fill="#fff" stroke="#ef6c00" stroke-width="1.5"/>
+  <text x="360" y="177" text-anchor="middle" font-size="12" fill="#333">业务逻辑</text>
+  <rect x="305" y="200" width="110" height="35" fill="#fff" stroke="#ef6c00" stroke-width="1.5"/>
+  <text x="360" y="222" text-anchor="middle" font-size="12" fill="#333">API 接口</text>
+  
+  <!-- Database node -->
+  <rect x="530" y="70" width="140" height="120" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="600" y="95" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">数据库服务器</text>
+  <rect x="555" y="110" width="90" height="35" fill="#fff" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="600" y="132" text-anchor="middle" font-size="12" fill="#333">MySQL</text>
+  <rect x="555" y="155" width="90" height="25" fill="#fff" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="600" y="172" text-anchor="middle" font-size="12" fill="#333">JDBC/SQL</text>
+  
+  <!-- Connections -->
+  <line x1="190" y1="140" x2="280" y2="140" stroke="#555" stroke-width="2" marker-end="url(#deparr)"/>
+  <text x="235" y="130" text-anchor="middle" font-size="11" fill="#333">请求</text>
+  
+  <line x1="440" y1="180" x2="530" y2="140" stroke="#555" stroke-width="2" marker-end="url(#deparr)"/>
+  <text x="485" y="155" text-anchor="middle" font-size="11" fill="#333">SQL</text>
+  
+  <defs>
+    <marker id="deparr" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#555"/>
+    </marker>
+  </defs>
+</svg>

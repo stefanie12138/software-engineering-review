@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500">
+  <rect width="500" height="500" fill="#f8f9fa"/>
+  <text x="250" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#1565c0">请假审批活动图</text>
+  
+  <!-- Swimlanes -->
+  <line x1="170" y1="50" x2="170" y2="470" stroke="#ddd" stroke-width="1"/>
+  <line x1="330" y1="50" x2="330" y2="470" stroke="#ddd" stroke-width="1"/>
+  <text x="85" y="70" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">员工</text>
+  <text x="250" y="70" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">直属经理</text>
+  <text x="415" y="70" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">HR</text>
+  
+  <!-- Start -->
+  <circle cx="85" cy="100" r="8" fill="#555"/>
+  
+  <!-- Activities -->
+  <rect x="35" y="140" width="100" height="40" rx="5" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="85" y="165" text-anchor="middle" font-size="12" fill="#333">填写请假申请</text>
+  
+  <line x1="85" y1="108" x2="85" y2="140" stroke="#555" stroke-width="2"/>
+  <line x1="85" y1="180" x2="85" y2="220" stroke="#555" stroke-width="2"/>
+  
+  <rect x="200" y="220" width="100" height="40" rx="5" fill="#fff3e0" stroke="#ef6c00" stroke-width="1.5"/>
+  <text x="250" y="245" text-anchor="middle" font-size="12" fill="#333">审批申请</text>
+  
+  <!-- Decision -->
+  <polygon points="250,290 280,315 250,340 220,315" fill="#fff" stroke="#555" stroke-width="1.5"/>
+  <text x="250" y="320" text-anchor="middle" font-size="11" fill="#333">同意?</text>
+  
+  <line x1="85" y1="220" x2="250" y2="240" stroke="#555" stroke-width="2" marker-end="url(#aarr)"/>
+  <text x="160" y="225" text-anchor="middle" font-size="11" fill="#333">提交</text>
+  
+  <line x1="250" y1="260" x2="250" y2="290" stroke="#555" stroke-width="2"/>
+  
+  <!-- No branch -->
+  <line x1="220" y1="315" x2="120" y2="315" stroke="#555" stroke-width="2" marker-end="url(#aarr)"/>
+  <text x="170" y="305" text-anchor="middle" font-size="11" fill="#333">否</text>
+  
+  <rect x="35" y="380" width="100" height="40" rx="5" fill="#ffebee" stroke="#c62828" stroke-width="1.5"/>
+  <text x="85" y="405" text-anchor="middle" font-size="12" fill="#333">修改/撤销</text>
+  
+  <line x1="85" y1="355" x2="85" y2="380" stroke="#555" stroke-width="2"/>
+  
+  <!-- Yes branch -->
+  <line x1="280" y1="315" x2="415" y2="315" stroke="#555" stroke-width="2" marker-end="url(#aarr)"/>
+  <text x="350" y="305" text-anchor="middle" font-size="11" fill="#333">是</text>
+  
+  <rect x="365" y="360" width="100" height="40" rx="5" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="415" y="385" text-anchor="middle" font-size="12" fill="#333">归档记录</text>
+  
+  <line x1="415" y1="315" x2="415" y2="360" stroke="#555" stroke-width="2"/>
+  
+  <!-- End -->
+  <circle cx="415" cy="430" r="8" fill="none" stroke="#555" stroke-width="2"/>
+  <circle cx="415" cy="430" r="4" fill="#555"/>
+  <line x1="415" y1="400" x2="415" y2="418" stroke="#555" stroke-width="2"/>
+  
+  <defs>
+    <marker id="aarr" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#555"/>
+    </marker>
+  </defs>
+</svg>
