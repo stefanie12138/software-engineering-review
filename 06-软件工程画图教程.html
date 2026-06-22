@@ -249,26 +249,95 @@ img { max-width: 100%; height: auto; display: block; margin: 1rem auto; }
 </tr>
 </tbody>
 </table>
-<p><strong>编号规则</strong>：顶层图只有 1 个总加工 <code>0</code>；下层图按 <code>1</code>、<code>2</code> 展开为 <code>1.1</code>、<code>1.2</code> 等，层次清晰。</p>
-<h3 id="32-dfd0-1">3.2 文字 → DFD：四步法（0 层 → 1 层分解）</h3>
+<p><strong>编号规则</strong>：</p>
+<ul>
+<li><strong>顶层图（上下文图）</strong>：只有 1 个总加工，编号为 <code>0</code>，表示整个系统。</li>
+<li><strong>0 层图</strong>：把顶层加工 <code>0</code> 分解为若干主要功能加工，编号为 <code>1</code>、<code>2</code>、<code>3</code>…</li>
+<li><strong>1 层图</strong>：对 0 层图中的加工进一步细化，编号为 <code>1.1</code>、<code>1.2</code>、<code>2.1</code>…</li>
+</ul>
+<blockquote>
+<p>记忆口诀：顶层是「一个圈」，0 层是「几大块」，1 层是「再细分」。</p>
+</blockquote>
+<h3 id="32-dfd">3.2 DFD 分层思想</h3>
+<p>为什么要分层画 DFD？因为一次性把所有细节画出来会过于复杂。分层画图可以逐步展开系统细节，每一层回答不同层次的问题：</p>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>关注的问题</th>
+<th>图中有什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>顶层图（上下文图）</td>
+<td>系统与哪些外部实体交互？交换什么数据？</td>
+<td>1 个总加工 + 外部实体 + 系统边界数据流</td>
+</tr>
+<tr>
+<td>0 层图</td>
+<td>系统内部有哪些主要功能？它们之间如何交换数据？</td>
+<td>主要加工 + 数据存储 + 数据流</td>
+</tr>
+<tr>
+<td>1 层图</td>
+<td>每个主要功能内部如何进一步实现？</td>
+<td>子加工 + 更细的数据流</td>
+</tr>
+</tbody>
+</table>
+<h3 id="33-dfd-0-1">3.3 文字 → DFD：完整步骤（顶层 → 0 层 → 1 层）</h3>
+<h4 id="1">步骤 1：画顶层图（上下文图）</h4>
 <ol>
-<li><strong>找外部实体</strong>：列出系统之外与之交互的人、系统、组织。</li>
-<li><strong>找核心加工</strong>：把系统中的主要处理步骤抽象为加工。</li>
-<li><strong>找数据存储</strong>：找出需要保存和读取的数据文件、数据库表。</li>
-<li><strong>画数据流</strong>：按数据进入、处理、输出的顺序用箭头连接，并标注数据项。</li>
+<li><strong>找外部实体</strong>：列出与系统交互的人、系统、组织。</li>
+<li><strong>用 1 个圆表示整个系统</strong>：编号为 <code>0</code>，写在圆内或圆旁。</li>
+<li><strong>画系统与外部实体之间的数据流</strong>：标注数据名称，表示系统与外界的输入输出。</li>
 </ol>
-<h3 id="33">3.3 示例：在线订餐系统</h3>
+<h4 id="2-0">步骤 2：画 0 层图</h4>
+<ol>
+<li><strong>把顶层加工 <code>0</code> 展开</strong>：将系统拆分为 3~7 个主要功能加工，编号 <code>1</code>、<code>2</code>、<code>3</code>…</li>
+<li><strong>保留外部实体</strong>：与顶层图一致。</li>
+<li><strong>加入数据存储</strong>：找出需要持久化的数据（菜单、订单、用户信息等）。</li>
+<li><strong>画数据流</strong>：<ul>
+<li>外部实体 → 加工</li>
+<li>加工 → 外部实体</li>
+<li>加工 → 数据存储（写入/更新）</li>
+<li>数据存储 → 加工（读取）</li>
+<li>加工 → 加工（数据传递）</li>
+</ul>
+</li>
+</ol>
+<h4 id="3-1">步骤 3：画 1 层图（视题目要求）</h4>
+<ol>
+<li><strong>选择一个复杂的 0 层加工</strong>，或按题目要求把全部 0 层加工都细化。</li>
+<li><strong>将该加工分解为子加工</strong>，编号 <code>1.1</code>、<code>1.2</code>、<code>2.1</code>…</li>
+<li><strong>保持输入输出一致</strong>：子图的输入输出数据流必须与父图对应加工的输入输出一致（平衡原则）。</li>
+<li><strong>补充内部数据流和数据存储读写</strong>。</li>
+</ol>
+<h3 id="34">3.4 示例：在线订餐系统</h3>
 <blockquote>
 <p>顾客浏览菜单并下单，订单信息进入订单处理系统；厨房接收订单准备餐品；配送员取餐并配送；顾客可以查询订单状态。系统保存菜单数据、订单数据和配送数据。</p>
 </blockquote>
-<p><img alt="在线订餐0层DFD" src="assets/svg/tutorial/dfd-food-order-0.svg" /></p>
-<p><img alt="在线订餐1层DFD" src="assets/svg/tutorial/dfd-food-order-1.svg" /></p>
-<p><strong>图示说明</strong>：0 层图展示顾客、厨房、配送员与“在线订餐系统”之间的数据交换；1 层图将“在线订餐系统”分解为顾客管理、订单处理、厨房出餐、配送管理等加工，并连接菜单、订单、配送等数据存储。</p>
-<p><strong>常见错误</strong>：</p>
+<h4 id="_3">顶层图（上下文图）</h4>
+<p><img alt="在线订餐系统顶层DFD" src="assets/svg/tutorial/dfd-food-order-top.svg" /></p>
+<p><strong>图示说明</strong>：顶层图用 1 个加工 <code>0</code> 表示整个「在线订餐系统」，外部实体包括顾客、商家、支付平台；系统与它们之间交换订单请求、支付信息、订单状态、订单详情、配送信息、出餐确认、支付请求/结果等数据。</p>
+<h4 id="0">0 层图</h4>
+<p><img alt="在线订餐系统0层DFD" src="assets/svg/tutorial/dfd-food-order-0.svg" /></p>
+<p><strong>图示说明</strong>：0 层图把顶层加工 <code>0</code> 分解为顾客管理、订单处理、支付处理、厨房出餐、配送管理 5 个主要加工，并加入菜单库、订单库、配送库 3 个数据存储。顾客通过「顾客管理」浏览菜单，通过「订单处理」下单，支付平台通过「支付处理」完成支付，商家接收厨房通知和配送信息。</p>
+<h4 id="1_1">1 层图</h4>
+<p><img alt="在线订餐系统1层DFD" src="assets/svg/tutorial/dfd-food-order-1.svg" /></p>
+<p><strong>图示说明</strong>：1 层图对每个 0 层加工进一步细化。例如「订单处理」分解为接收订单、检查库存、生成待支付订单、确认订单；「支付处理」分解为发起支付、验证支付；「配送管理」分解为分配配送员、更新配送状态、处理查询。图中保留了主要数据流，实际绘图时可根据题目要求增减细节。</p>
+<h3 id="35">3.5 平衡原则</h3>
+<p><strong>平衡原则</strong>：子图的输入输出数据流必须与父图中对应加工的输入输出保持一致。</p>
+<p>例如，顶层图中「在线订餐系统」从顾客接收「订单请求」和「支付信息」，向顾客输出「订单状态」；那么 0 层图中所有加工合计接收的输入和输出的输出，也必须包含这些相同的数据流。</p>
+<h3 id="36">3.6 常见错误</h3>
 <ul>
-<li>加工与加工之间直接传递数据，缺少数据存储或外部实体支撑。</li>
-<li>数据流上标注的是动作而不是数据项，如应写“订单信息”而非“下订单”。</li>
-<li>把控制流（如“完成信号”）当成数据流，DFD 只表示数据流动。</li>
+<li><strong>顶层图出现多个加工</strong>：顶层图只能有 1 个加工（编号 <code>0</code>），表示整个系统。</li>
+<li><strong>把顶层图和 0 层图混淆</strong>：顶层图是上下文图，0 层图才是系统内部的功能分解。</li>
+<li><strong>子图与父图数据流不平衡</strong>：1 层图的输入输出必须与 0 层对应加工的输入输出一致。</li>
+<li><strong>加工与加工之间直接传递数据，缺少数据存储或外部实体支撑</strong>：两个加工之间最好通过数据存储或外部实体中转，除非数据确实直接传递。</li>
+<li><strong>数据流上标注的是动作而不是数据项</strong>：如应写「订单信息」而非「下订单」，写「支付结果」而非「完成支付」。</li>
+<li><strong>把控制流当成数据流</strong>：DFD 只表示数据流动，不表示控制信号（如「完成信号」「开始信号」）。</li>
 </ul>
 <h2 id="class-diagram">四、类图（Class Diagram）</h2>
 <h3 id="41">4.1 图符与规则</h3>
@@ -459,7 +528,7 @@ img { max-width: 100%; height: auto; display: block; margin: 1rem auto; }
 <li>状态之间缺少触发事件或监护条件。</li>
 <li>画成流程图，出现并行分支或判断菱形，状态图应体现对象的生命周期。</li>
 </ul>
-<h2 id="_3">七、扩展图型</h2>
+<h2 id="_4">七、扩展图型</h2>
 <h3 id="71-activity-diagram">7.1 活动图（Activity Diagram）</h3>
 <p><strong>图符与规则</strong></p>
 <table>
@@ -670,8 +739,8 @@ $$</p>
 </blockquote>
 <p><img alt="控制流图示例" src="assets/svg/tutorial/cfg-example.svg" /></p>
 <p><strong>图示说明</strong>：起始节点接收 x，判定节点判断 x &gt; 0，分别引出“返回 x”和“返回 -x”两条分支，最终汇合到结束节点。</p>
-<h2 id="_4">八、综合练习（附参考答案）</h2>
-<h3 id="1">1. 用例图：医院预约挂号系统</h3>
+<h2 id="_5">八、综合练习（附参考答案）</h2>
+<h3 id="1_2">1. 用例图：医院预约挂号系统</h3>
 <p><strong>题目</strong>：医院预约挂号系统中，患者可以注册登录、查询医生排班、预约挂号、取消预约；医生可以查看自己的预约列表；系统每日自动发送就诊提醒。挂号时需要验证患者身份信息（include）。</p>
 <p><strong>参考答案</strong>：</p>
 <ul>
@@ -691,7 +760,8 @@ $$</p>
 <li><strong>数据流</strong>：</li>
 <li>用户 → 快递单号 → 1 查询物流 → 物流信息 → 用户</li>
 <li>快递员 → 扫描信息 → 2 更新物流状态 → D1 快递数据库</li>
-<li><strong>0 层图</strong>：用户、快递员与“快递包裹查询系统”之间交换数据；1 层图将系统分解为查询物流和更新物流状态两个加工。</li>
+<li><strong>顶层图（上下文图）</strong>：用户、快递员与“快递包裹查询系统”之间交换数据。</li>
+<li><strong>0 层图</strong>：将“快递包裹查询系统”分解为查询物流和更新物流状态两个加工。</li>
 </ul>
 <p><img alt="快递包裹查询系统 0 层 DFD" src="assets/svg/tutorial/dfd-express.svg" /></p>
 <h3 id="3">3. 类图：博客系统</h3>

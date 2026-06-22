@@ -463,12 +463,12 @@ img { max-width: 100%; height: auto; display: block; margin: 1rem auto; }
 <li>[ ] 并行活动用分叉/汇合表示。</li>
 </ul>
 <h3 id="36-dfd">3.6 DFD → 结构图</h3>
-<p><strong>步骤 1：画数据流图</strong></p>
+<p><strong>步骤 1：画数据流图（顶层 → 0 层 → 1 层）</strong></p>
 <ol>
-<li>找外部实体（矩形）。</li>
-<li>找加工（圆角矩形/圆圈），顶层 1 个总加工，下层按编号展开。</li>
-<li>找数据存储（开口矩形/双横线）。</li>
-<li>画数据流（带箭头的线，标注数据名称）。</li>
+<li><strong>顶层图（上下文图）</strong>：1 个总加工 <code>0</code> + 外部实体 + 系统边界数据流。</li>
+<li><strong>0 层图</strong>：把加工 <code>0</code> 分解为 <code>1</code>、<code>2</code>、<code>3</code>… 等主要功能加工，加入数据存储。</li>
+<li><strong>1 层图</strong>：对 0 层加工进一步细化，编号为 <code>1.1</code>、<code>1.2</code>、<code>2.1</code>…</li>
+<li>检查平衡原则：子图输入输出与父图对应加工保持一致。</li>
 </ol>
 <p><strong>步骤 2：判断数据流类型</strong></p>
 <ul>
@@ -749,7 +749,7 @@ $$</p>
 <li><strong>画用例图</strong>：明确 Actor、Use Case、系统边界、include/extend/泛化关系。</li>
 <li><strong>画顺序图</strong>：对象从左到右依次为 Actor → 边界类 → 控制类 → 实体类 → 外部接口；消息按时间自上而下传递，注意生命线、激活期、同步/异步/返回消息图符。</li>
 <li><strong>画类图</strong>：找类 → 定属性方法 → 定关系 → 标多重性；注意不要把属性当类，继承箭头方向正确。</li>
-<li><strong>画 DFD 并转化为结构图</strong>：先画 0 层和 1 层 DFD；区分变换型与事务型数据流图；映射为层次结构图。</li>
+<li><strong>画 DFD 并转化为结构图</strong>：先画顶层（上下文图），再画 0 层、1 层 DFD；区分变换型与事务型数据流图；映射为层次结构图。</li>
 <li><strong>程序流程图 + 环形复杂度 + 路径覆盖</strong>：正确绘制程序流程图，转换为控制流图，计算 $V(G)$，根据基本路径设计测试用例。</li>
 <li><strong>等价类划分 + 边界值分析</strong>：按范围、特定值、集合、布尔量划分有效/无效等价类；边界值重点选取边界点及其左右邻近值；给出输入、预期输出。</li>
 </ol>
