@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="520" viewBox="0 0 720 520">
+  <rect width="720" height="520" fill="#f8f9fa"/>
+  <text x="360" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#1565c0">变换型 DFD → 软件结构图</text>
+
+  <defs>
+    <marker id="tsArr" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Top: Transform DFD -->
+  <text x="360" y="55" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">变换型数据流图</text>
+
+  <!-- Input flow -->
+  <circle cx="80" cy="110" r="35" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="80" y="105" text-anchor="middle" font-size="11" fill="#333">A</text>
+  <text x="80" y="118" text-anchor="middle" font-size="10" fill="#333">读取</text>
+  <text x="80" y="128" text-anchor="middle" font-size="10" fill="#333">输入</text>
+
+  <circle cx="180" cy="110" r="35" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="180" y="105" text-anchor="middle" font-size="11" fill="#333">B</text>
+  <text x="180" y="118" text-anchor="middle" font-size="10" fill="#333">校验</text>
+  <text x="180" y="128" text-anchor="middle" font-size="10" fill="#333">格式</text>
+
+  <circle cx="280" cy="110" r="35" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="280" y="105" text-anchor="middle" font-size="11" fill="#333">C</text>
+  <text x="280" y="118" text-anchor="middle" font-size="10" fill="#333">组装</text>
+  <text x="280" y="128" text-anchor="middle" font-size="10" fill="#333">数据</text>
+
+  <!-- Transform center -->
+  <circle cx="400" cy="110" r="45" fill="#fff3e0" stroke="#ef6c00" stroke-width="2"/>
+  <text x="400" y="105" text-anchor="middle" font-size="12" fill="#333">D</text>
+  <text x="400" y="120" text-anchor="middle" font-size="11" fill="#333">变换中心</text>
+
+  <!-- Output flow -->
+  <circle cx="520" cy="110" r="35" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="520" y="105" text-anchor="middle" font-size="11" fill="#333">E</text>
+  <text x="520" y="118" text-anchor="middle" font-size="10" fill="#333">格式化</text>
+  <text x="520" y="128" text-anchor="middle" font-size="10" fill="#333">输出</text>
+
+  <circle cx="620" cy="110" r="35" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="620" y="105" text-anchor="middle" font-size="11" fill="#333">F</text>
+  <text x="620" y="118" text-anchor="middle" font-size="10" fill="#333">发送</text>
+  <text x="620" y="128" text-anchor="middle" font-size="10" fill="#333">结果</text>
+
+  <!-- DFD flows -->
+  <line x1="115" y1="110" x2="145" y2="110" stroke="#555" stroke-width="1.5" marker-end="url(#tsArr)"/>
+  <line x1="215" y1="110" x2="245" y2="110" stroke="#555" stroke-width="1.5" marker-end="url(#tsArr)"/>
+  <line x1="315" y1="110" x2="355" y2="110" stroke="#555" stroke-width="1.5" marker-end="url(#tsArr)"/>
+  <line x1="445" y1="110" x2="485" y2="110" stroke="#555" stroke-width="1.5" marker-end="url(#tsArr)"/>
+  <line x1="555" y1="110" x2="585" y2="110" stroke="#555" stroke-width="1.5" marker-end="url(#tsArr)"/>
+
+  <text x="360" y="95" text-anchor="middle" font-size="10" fill="#666">输入流</text>
+  <text x="560" y="95" text-anchor="middle" font-size="10" fill="#666">输出流</text>
+
+  <!-- Arrow down -->
+  <line x1="360" y1="160" x2="360" y2="190" stroke="#999" stroke-width="2" marker-end="url(#tsArr)"/>
+  <text x="400" y="178" text-anchor="middle" font-size="12" fill="#666">映射为结构图</text>
+
+  <!-- Bottom: Structure chart -->
+  <text x="360" y="215" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">软件结构图</text>
+
+  <!-- Main control -->
+  <rect x="310" y="235" width="100" height="40" fill="#1565c0" stroke="#0d47a1" stroke-width="2" rx="4"/>
+  <text x="360" y="260" text-anchor="middle" font-size="13" fill="#fff">主控模块</text>
+
+  <!-- Control modules -->
+  <rect x="120" y="310" width="100" height="40" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.5" rx="4"/>
+  <text x="170" y="335" text-anchor="middle" font-size="12" fill="#333">输入流控制</text>
+
+  <rect x="310" y="310" width="100" height="40" fill="#fff3e0" stroke="#ef6c00" stroke-width="1.5" rx="4"/>
+  <text x="360" y="335" text-anchor="middle" font-size="12" fill="#333">变换控制</text>
+
+  <rect x="500" y="310" width="100" height="40" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5" rx="4"/>
+  <text x="550" y="335" text-anchor="middle" font-size="12" fill="#333">输出流控制</text>
+
+  <!-- Sub modules -->
+  <rect x="60" y="390" width="60" height="35" fill="#fff" stroke="#1565c0" stroke-width="1.5" rx="3"/>
+  <text x="90" y="412" text-anchor="middle" font-size="10" fill="#333">A</text>
+
+  <rect x="140" y="390" width="60" height="35" fill="#fff" stroke="#1565c0" stroke-width="1.5" rx="3"/>
+  <text x="170" y="412" text-anchor="middle" font-size="10" fill="#333">B</text>
+
+  <rect x="220" y="390" width="60" height="35" fill="#fff" stroke="#1565c0" stroke-width="1.5" rx="3"/>
+  <text x="250" y="412" text-anchor="middle" font-size="10" fill="#333">C</text>
+
+  <rect x="330" y="390" width="60" height="35" fill="#fff" stroke="#ef6c00" stroke-width="1.5" rx="3"/>
+  <text x="360" y="412" text-anchor="middle" font-size="10" fill="#333">D</text>
+
+  <rect x="480" y="390" width="60" height="35" fill="#fff" stroke="#2e7d32" stroke-width="1.5" rx="3"/>
+  <text x="510" y="412" text-anchor="middle" font-size="10" fill="#333">E</text>
+
+  <rect x="560" y="390" width="60" height="35" fill="#fff" stroke="#2e7d32" stroke-width="1.5" rx="3"/>
+  <text x="590" y="412" text-anchor="middle" font-size="10" fill="#333">F</text>
+
+  <!-- Structure lines -->
+  <line x1="360" y1="275" x2="360" y2="295" stroke="#555" stroke-width="2"/>
+  <line x1="170" y1="295" x2="550" y2="295" stroke="#555" stroke-width="2"/>
+  <line x1="170" y1="295" x2="170" y2="310" stroke="#555" stroke-width="2"/>
+  <line x1="360" y1="295" x2="360" y2="310" stroke="#555" stroke-width="2"/>
+  <line x1="550" y1="295" x2="550" y2="310" stroke="#555" stroke-width="2"/>
+
+  <line x1="170" y1="350" x2="170" y2="365" stroke="#555" stroke-width="1.5"/>
+  <line x1="90" y1="365" x2="250" y2="365" stroke="#555" stroke-width="1.5"/>
+  <line x1="90" y1="365" x2="90" y2="390" stroke="#555" stroke-width="1.5"/>
+  <line x1="170" y1="365" x2="170" y2="390" stroke="#555" stroke-width="1.5"/>
+  <line x1="250" y1="365" x2="250" y2="390" stroke="#555" stroke-width="1.5"/>
+
+  <line x1="360" y1="350" x2="360" y2="390" stroke="#555" stroke-width="1.5"/>
+
+  <line x1="550" y1="350" x2="550" y2="365" stroke="#555" stroke-width="1.5"/>
+  <line x1="510" y1="365" x2="590" y2="365" stroke="#555" stroke-width="1.5"/>
+  <line x1="510" y1="365" x2="510" y2="390" stroke="#555" stroke-width="1.5"/>
+  <line x1="590" y1="365" x2="590" y2="390" stroke="#555" stroke-width="1.5"/>
+
+  <!-- Legend -->
+  <text x="30" y="470" font-size="11" fill="#666">说明：变换型 DFD 的输入流、变换中心、输出流分别映射为结构图中的输入控制、变换控制、输出控制模块。</text>
+  <text x="30" y="490" font-size="11" fill="#666">以在线订餐为例：顾客输入 → 订单处理（变换中心）→ 商家/配送输出。</text>
+</svg>
