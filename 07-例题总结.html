@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>例题总结</title>
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+        delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+        ]
+    });"></script>
+
+    
+<style>
+:root {
+    --bg: #fafafa;
+    --fg: #222;
+    --accent: #1565c0;
+    --card-bg: #fff;
+    --border: #e0e0e0;
+}
+* { box-sizing: border-box; }
+body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", "Noto Sans CJK SC", sans-serif;
+    line-height: 1.8;
+    color: var(--fg);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    background: var(--card-bg);
+    box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    min-height: 100vh;
+}
+h1, h2, h3, h4 {
+    color: var(--accent);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+h1 { font-size: 2rem; border-bottom: 3px solid var(--accent); padding-bottom: 0.5rem; }
+h2 { font-size: 1.6rem; border-bottom: 2px solid #e0e0e0; padding-bottom: 0.3rem; }
+h3 { font-size: 1.3rem; }
+h4 { font-size: 1.1rem; color: #333; }
+p { margin: 0.8rem 0; }
+ul, ol { margin: 0.8rem 0; padding-left: 1.8rem; }
+li { margin: 0.3rem 0; }
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1rem 0;
+    font-size: 0.95rem;
+}
+th, td {
+    border: 1px solid var(--border);
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+}
+th { background: #f5f5f5; font-weight: 600; }
+tr:nth-child(even) { background: #fafafa; }
+code {
+    background: #f4f4f4;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 0.9em;
+}
+pre {
+    background: #263238;
+    color: #aed581;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    line-height: 1.5;
+}
+pre code { background: transparent; color: inherit; padding: 0; }
+blockquote {
+    border-left: 4px solid var(--accent);
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    background: #f0f7ff;
+    color: #333;
+}
+img { max-width: 100%; height: auto; display: block; margin: 1rem auto; }
+.index-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: var(--fg);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+.card h2 { margin-top: 0; color: var(--accent); border: none; padding: 0; }
+.card p { color: #555; margin: 0.5rem 0 0; }
+.footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    color: #777;
+    font-size: 0.9rem;
+}
+</style>
+
+</head>
+<body>
+<div class="container">
+<h1 id="_1">软件工程 — 例题总结</h1>
+<p>本文档按「填空题 → 简答题 → 设计题 → 综合案例」整理各章高频例题与真题，并提供跳转到详细解析的链接。适合考前集中刷题使用。</p>
+<hr />
+<h2 id="_2">一、填空题高频例题</h2>
+<table>
+<thead>
+<tr>
+<th>题号</th>
+<th>题目（挖空版）</th>
+<th>答案关键词</th>
+<th>对应章节</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>软件 = ___ + ___ + ___</td>
+<td>程序、数据、文档</td>
+<td>SE1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>软件开发 = ___ + ___</td>
+<td>软件创作、软件生产</td>
+<td>SE1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>软件工程三要素 = ___ + ___ + ___</td>
+<td>过程、方法、工具</td>
+<td>SE2</td>
+</tr>
+<tr>
+<td>4</td>
+<td>软件工程诞生于 ___ 年 ___ 会议</td>
+<td>1968、NATO</td>
+<td>SE2</td>
+</tr>
+<tr>
+<td>5</td>
+<td>软件危机主要表现为：开发成本高、<strong><em>、</em></strong>、___、失败风险大</td>
+<td>进度难以控制、质量难以保证、维护困难</td>
+<td>SE2</td>
+</tr>
+<tr>
+<td>6</td>
+<td>需求类型包括：<strong><em>、</em></strong>、___</td>
+<td>功能需求、非功能需求、领域需求</td>
+<td>SE4</td>
+</tr>
+<tr>
+<td>7</td>
+<td>需求工程过程：___ → ___ → ___ → ___ → 管理</td>
+<td>获取、分析、文档化、确认验证</td>
+<td>SE4</td>
+</tr>
+<tr>
+<td>8</td>
+<td>需求获取方法：访谈、<strong><em>、</em></strong>、现场观摩、业务资料分析、原型、头脑风暴等</td>
+<td>问卷、会议</td>
+<td>SE5</td>
+</tr>
+<tr>
+<td>9</td>
+<td>需求分析三视角：用例视角、<strong><em>、</em></strong></td>
+<td>行为视角、结构视角</td>
+<td>SE6</td>
+</tr>
+<tr>
+<td>10</td>
+<td>软件设计核心原则：<strong><em>、</em></strong></td>
+<td>高内聚、低耦合</td>
+<td>SE7</td>
+</tr>
+<tr>
+<td>11</td>
+<td>常用设计原则：抽象、求精、<strong><em>、</em></strong>、多视点、关注点分离</td>
+<td>模块化、信息隐藏</td>
+<td>SE7</td>
+</tr>
+<tr>
+<td>12</td>
+<td>结构化设计方法学是面向 ___ 的设计方法学</td>
+<td>数据流</td>
+<td>SE7</td>
+</tr>
+<tr>
+<td>13</td>
+<td>常用数据流类型：<strong><em>、</em></strong></td>
+<td>变换流、事务流</td>
+<td>SE7</td>
+</tr>
+<tr>
+<td>14</td>
+<td>测试目的是 ___，不是证明无缺陷</td>
+<td>发现缺陷</td>
+<td>SE13</td>
+</tr>
+<tr>
+<td>15</td>
+<td>测试层次：___ → ___ → ___ → ___ → 回归测试</td>
+<td>单元测试、集成测试、确认测试、系统测试</td>
+<td>SE13</td>
+</tr>
+<tr>
+<td>16</td>
+<td>黑盒测试方法：等价类划分、___、决策表、因果图</td>
+<td>边界值分析</td>
+<td>SE13</td>
+</tr>
+<tr>
+<td>17</td>
+<td>白盒测试方法：语句覆盖、分支覆盖、___、基本路径测试</td>
+<td>路径覆盖</td>
+<td>SE13</td>
+</tr>
+<tr>
+<td>18</td>
+<td>确认测试包括 ___ 测试（开发方内部模拟用户）和 ___ 测试（典型用户实际环境使用）</td>
+<td>α、β</td>
+<td>SE13</td>
+</tr>
+<tr>
+<td>19</td>
+<td>单元测试需要 ___ 和 ___</td>
+<td>驱动程序、桩模块</td>
+<td>SE13</td>
+</tr>
+<tr>
+<td>20</td>
+<td>集成策略包括 ___ 和 ___</td>
+<td>自顶向下、自底向上</td>
+<td>SE13</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_3">二、简答题高频例题</h2>
+<h3 id="1">1. 什么是软件危机？</h3>
+<ul>
+<li><strong>考点</strong>：SE2 什么是软件工程</li>
+<li><strong>答题框架</strong>：定义 → 主要表现 → 产生原因</li>
+<li><strong>详细解析</strong>：<a href="01-软件工程基础与过程模型.html">01-软件工程基础与过程模型</a></li>
+</ul>
+<h3 id="2">2. 简述软件生命周期各阶段任务。</h3>
+<ul>
+<li><strong>考点</strong>：SE2/SE3 软件过程模型</li>
+<li><strong>答题框架</strong>：需求分析 → 概要设计 → 详细设计 → 编码实现 → 集成测试 → 确认测试，每阶段一句话说明核心任务与产出</li>
+<li><strong>详细解析</strong>：<a href="00-全书重点速查.html">00-全书重点速查</a></li>
+</ul>
+<h3 id="3">3. 软件工程三要素是什么？它们之间是什么关系？</h3>
+<ul>
+<li><strong>考点</strong>：SE2</li>
+<li><strong>答题框架</strong>：过程、方法、工具；过程定义活动顺序，方法提供技术手段，工具支持实现</li>
+<li><strong>详细解析</strong>：<a href="00-全书重点速查.html">00-全书重点速查</a></li>
+</ul>
+<h3 id="4">4. 简述五种基本软件过程模型及其适用场景。</h3>
+<ul>
+<li><strong>考点</strong>：SE3.1</li>
+<li><strong>答题框架</strong>：瀑布、增量、迭代、原型、螺旋；从指导思想、特点、适用场景三个维度列表对比</li>
+<li><strong>详细解析</strong>：<a href="00-全书重点速查.html">00-全书重点速查</a></li>
+</ul>
+<h3 id="5">5. 什么是需求工程？需求工程包括哪些活动？</h3>
+<ul>
+<li><strong>考点</strong>：SE4</li>
+<li><strong>答题框架</strong>：需求工程定义 → 获取 → 分析 → 文档化 → 确认验证 → 管理</li>
+<li><strong>详细解析</strong>：<a href="02-需求工程.html">02-需求工程</a></li>
+</ul>
+<h3 id="6">6. 需求获取有哪些常用方法？</h3>
+<ul>
+<li><strong>考点</strong>：SE5</li>
+<li><strong>答题框架</strong>：访谈、问卷、会议、现场观摩、业务资料分析、原型、头脑风暴等；简述 2~3 种方法的特点</li>
+<li><strong>详细解析</strong>：<a href="02-需求工程.html">02-需求工程</a></li>
+</ul>
+<h3 id="7">7. 简述顺序图与通信图（协作图）的区别。</h3>
+<ul>
+<li><strong>考点</strong>：SE6 UML 交互图</li>
+<li><strong>答题框架</strong>：同属 UML 交互图、语义等价、可相互转换；顺序图强调时间顺序，通信图强调对象结构与合作关系</li>
+<li><strong>详细解析</strong>：<a href="00-全书重点速查.html">00-全书重点速查</a></li>
+</ul>
+<h3 id="8">8. 什么是模块独立性？如何度量？</h3>
+<ul>
+<li><strong>考点</strong>：SE7 软件设计基础</li>
+<li><strong>答题框架</strong>：内聚度（越高越好）+ 耦合度（越低越好）；设计原则为高内聚、低耦合</li>
+<li><strong>详细解析</strong>：<a href="00-全书重点速查.html">00-全书重点速查</a></li>
+</ul>
+<h3 id="9">9. 黑盒测试与白盒测试有什么区别？</h3>
+<ul>
+<li><strong>考点</strong>：SE13 软件测试</li>
+<li><strong>答题框架</strong>：从依据、是否需了解代码、测试对象、典型方法、典型阶段等维度列表对比</li>
+<li><strong>详细解析</strong>：<a href="04-软件测试与维护.html">04-软件测试与维护</a></li>
+</ul>
+<h3 id="10">10. 简述软件测试的层次。</h3>
+<ul>
+<li><strong>考点</strong>：SE13</li>
+<li><strong>答题框架</strong>：单元测试 → 集成测试 → 确认测试 → 系统测试 → 回归测试；每阶段说明测试对象和方法</li>
+<li><strong>详细解析</strong>：<a href="04-软件测试与维护.html">04-软件测试与维护</a></li>
+</ul>
+<hr />
+<h2 id="_4">三、设计题综合例题</h2>
+<p>设计题共 60 分，是考试核心。以下按图类型整理常考例题与解题入口。</p>
+<h3 id="31">3.1 用例图</h3>
+<p><strong>例题来源</strong>：</p>
+<ul>
+<li>图书馆管理系统（读者、管理员、include/extend）</li>
+<li>医院预约挂号系统（患者、医生、定时任务）</li>
+</ul>
+<p><strong>解题步骤</strong>：</p>
+<ol>
+<li>找 Actor</li>
+<li>找 Use Case（动宾结构）</li>
+<li>画系统边界</li>
+<li>建立关联 / <code>&lt;&lt;include&gt;&gt;</code> / <code>&lt;&lt;extend&gt;&gt;</code></li>
+</ol>
+<p><strong>详细解析</strong>：</p>
+<ul>
+<li><a href="06-软件工程画图教程.html">06-软件工程画图教程：用例图</a></li>
+<li><a href="06-软件工程画图教程.html">06-综合练习 1：医院预约挂号系统</a></li>
+</ul>
+<h3 id="32">3.2 顺序图 / 通信图</h3>
+<p><strong>例题来源</strong>：</p>
+<ul>
+<li>ATM 取款流程</li>
+</ul>
+<p><strong>解题步骤</strong>：</p>
+<ol>
+<li>确定参与对象（Actor → 边界类 → 控制类 → 实体类 → 外部接口）</li>
+<li>画生命线</li>
+<li>按时间顺序画消息（同步/异步/返回）</li>
+<li>标激活条、<code>alt</code> / <code>opt</code> / <code>loop</code> 片段</li>
+</ol>
+<p><strong>详细解析</strong>：</p>
+<ul>
+<li><a href="06-软件工程画图教程.html">06-软件工程画图教程：顺序图</a></li>
+</ul>
+<h3 id="33">3.3 类图</h3>
+<p><strong>例题来源</strong>：</p>
+<ul>
+<li>学生选课系统</li>
+<li>博客系统</li>
+</ul>
+<p><strong>解题步骤</strong>：</p>
+<ol>
+<li>找名词 → 候选类</li>
+<li>筛选有效类</li>
+<li>确定属性与方法</li>
+<li>确定关系（关联/聚合/组合/泛化）并标多重性</li>
+</ol>
+<p><strong>详细解析</strong>：</p>
+<ul>
+<li><a href="06-软件工程画图教程.html">06-软件工程画图教程：类图</a></li>
+<li><a href="06-软件工程画图教程.html">06-综合练习 3：博客系统</a></li>
+</ul>
+<h3 id="34">3.4 状态图</h3>
+<p><strong>例题来源</strong>：</p>
+<ul>
+<li>订单生命周期</li>
+</ul>
+<p><strong>解题步骤</strong>：</p>
+<ol>
+<li>找对象生命周期</li>
+<li>列状态</li>
+<li>找触发事件和监护条件</li>
+<li>画初始/终止状态</li>
+</ol>
+<p><strong>详细解析</strong>：</p>
+<ul>
+<li><a href="06-软件工程画图教程.html">06-软件工程画图教程：状态图</a></li>
+</ul>
+<h3 id="35">3.5 活动图</h3>
+<p><strong>例题来源</strong>：</p>
+<ul>
+<li>请假审批流程</li>
+</ul>
+<p><strong>解题步骤</strong>：</p>
+<ol>
+<li>找活动</li>
+<li>定顺序与分支</li>
+<li>画泳道</li>
+<li>标 start / end</li>
+</ol>
+<p><strong>详细解析</strong>：</p>
+<ul>
+<li><a href="06-软件工程画图教程.html">06-软件工程画图教程：活动图</a></li>
+</ul>
+<h3 id="36-dfd">3.6 数据流图（DFD）</h3>
+<p><strong>例题来源</strong>：</p>
+<ul>
+<li>在线订餐系统（顶层 → 0 层 → 1 层）</li>
+<li>快递包裹查询系统</li>
+<li>发帖子系统（来自 03 真题）</li>
+<li>CCMS 信用卡管理系统（来自 03 真题）</li>
+</ul>
+<p><strong>解题步骤</strong>：</p>
+<ol>
+<li>画顶层图（上下文图）：1 个加工 <code>0</code> + 外部实体</li>
+<li>画 0 层图：分解为 <code>1</code>、<code>2</code>、<code>3</code>… 加工 + 数据存储</li>
+<li>画 1 层图：细化 0 层加工为 <code>1.1</code>、<code>1.2</code>…</li>
+<li>检查平衡原则</li>
+</ol>
+<p><strong>详细解析</strong>：</p>
+<ul>
+<li><a href="06-软件工程画图教程.html">06-软件工程画图教程：数据流图</a></li>
+<li><a href="03-软件设计与实现.html">03-相关真题与解析：发帖子系统 / CCMS</a></li>
+</ul>
+<h3 id="37-dfd">3.7 DFD → 软件结构图</h3>
+<p><strong>例题来源</strong>：</p>
+<ul>
+<li>发帖子系统</li>
+<li>CCMS 信用卡管理系统</li>
+<li>在线订餐系统（变换型 / 事务型两种角度）</li>
+</ul>
+<p><strong>解题步骤</strong>：</p>
+<ol>
+<li>判断 DFD 类型：变换型 or 事务型</li>
+<li>变换型：确定输入流 / 变换中心 / 输出流 → 一级分解 → 二级分解</li>
+<li>事务型：确定事务中心 / 接收路径 / 动作路径 → 一级分解 → 处理每条路径</li>
+<li>优化模块结构</li>
+</ol>
+<p><strong>详细解析</strong>：</p>
+<ul>
+<li><a href="06-软件工程画图教程.html">06-软件工程画图教程：DFD → 软件结构图</a></li>
+<li><a href="03-软件设计与实现.html">03-相关真题与解析</a></li>
+</ul>
+<h3 id="38">3.8 程序流程图 + 环形复杂度 + 路径覆盖</h3>
+<p><strong>例题来源</strong>：</p>
+<ul>
+<li>04 真题中的 Func 函数示例</li>
+</ul>
+<p><strong>解题步骤</strong>：</p>
+<ol>
+<li>画程序流程图</li>
+<li>转换为控制流图</li>
+<li>计算 $V(G) = E - N + 2$ 或 $V(G) = P + 1$</li>
+<li>列出基本路径</li>
+<li>为每条路径设计测试用例</li>
+</ol>
+<p><strong>详细解析</strong>：</p>
+<ul>
+<li><a href="04-软件测试与维护.html">04-软件测试与维护</a></li>
+</ul>
+<h3 id="39">3.9 等价类划分 + 边界值分析</h3>
+<p><strong>例题来源</strong>：</p>
+<ul>
+<li>04 真题中的 $z = \text{func}(x, y)$ 示例</li>
+</ul>
+<p><strong>解题步骤</strong>：</p>
+<ol>
+<li>划分有效等价类 / 无效等价类</li>
+<li>边界值分析（范围端点、次大/次小）</li>
+<li>设计测试用例（输入、所属等价类、预期输出）</li>
+</ol>
+<p><strong>详细解析</strong>：</p>
+<ul>
+<li><a href="04-软件测试与维护.html">04-软件测试与维护</a></li>
+</ul>
+<h3 id="310-n-s">3.10 N-S 图 / 控制流图</h3>
+<p><strong>例题来源</strong>：</p>
+<ul>
+<li>判断三角形类型</li>
+<li>简单函数控制流图</li>
+</ul>
+<p><strong>详细解析</strong>：</p>
+<ul>
+<li><a href="06-软件工程画图教程.html">06-软件工程画图教程：扩展图型</a></li>
+</ul>
+<hr />
+<h2 id="_5">四、综合案例分析</h2>
+<h3 id="health-manager">Health Manager 智能用药提醒系统</h3>
+<p><strong>适用题型</strong>：综合分析题 / 答辩题 / 课程设计答辩</p>
+<p><strong>案例内容</strong>：基于团队真实项目，涵盖用例图、类图、顺序图、数据流图、状态图、测试策略等。</p>
+<p><strong>常考问题</strong>：</p>
+<ol>
+<li>请画出本系统的用例图。</li>
+<li>请说明系统的核心类及关系。</li>
+<li>拍照识别 → AI 解析 → 保存提醒的顺序图如何画？</li>
+<li>系统的数据流图是怎样的？</li>
+<li>本项目采用了哪些测试方法？</li>
+</ol>
+<p><strong>详细解析</strong>：</p>
+<ul>
+<li><a href="05-自建项目案例分析.html">05-自建项目案例分析</a></li>
+</ul>
+<hr />
+<blockquote>
+<p>提示：本文档为「例题索引」精简版。每道题的完整题目描述、详细答案和示例图，请点击对应链接查看原章节。</p>
+</blockquote>
+<div class="footer">
+    <p><a href="index.html">← 返回索引</a></p>
+    <p>来源：软件工程课件（2026版）+ 2019/2020/2022上 期末试卷</p>
+</div>
+</div>
+</body>
+</html>
